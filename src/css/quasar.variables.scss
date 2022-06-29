@@ -1,0 +1,60 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$primary: #c8a2d1;
+$secondary: #4a4a4a;
+$accent: #990066;
+$positive: #21ba45;
+$negative: #c10015;
+$info: #31ccec;
+$warning: #f2c037;
+$dark: #1d1d1d;
+$orchid: #c079ba;
+$greyish-brown: #4a4a4a;
+$nr: #4a4a4a;
+
+$typography-font-family: "IBM Plex Sans", "Roboto", "-apple-system",
+  "Helvetica Neue", Helvetica, Arial, sans-serif;
+$typography-font-style: normal;
+$typography-font-weight: normal;
+$generic-border-radius: 0px;
+$menu-box-shadow: 2px 2px 0 0;
+
+$light-dimmed-background: rgba(255, 255, 255, 0.9);
+
+q-dialog__title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.0125em;
+}
+q-dialog__message {
+  opacity: 0.6;
+}
+q-dialog__inner {
+  outline: 0;
+  & > div {
+    pointer-events: all;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+    border-radius: $generic-border-radius;
+    box-shadow: 2px 2px 0 0 rgba(192, 121, 186, 0.5);
+  }
+}
+q-dialog__backdrop {
+  z-index: -1;
+  pointer-events: all;
+  background: rgba(245, 190, 240, 0.76);
+}
