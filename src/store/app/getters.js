@@ -16,11 +16,11 @@ export function tags(state) {
 }
 
 export function name(state) {
-  return state.user._profile.profile.name;
+  return state.user.profile.name;
 }
 
 export function avatar(state) {
-  return state.user._profile.profile.image[0].contentUrl;
+  return state.user.profile.image[0].contentUrl;
 }
 
 export function colors(state) {
@@ -69,18 +69,17 @@ export function filterNotes(state) {
         note.fave && !note.trash && (re.test(note.text) || re.test(note.title))
     );
   } else if (state.labelFilter.startsWith("color:")) {
-    const colorFilter = state.labelFilter.split(":")[1];
+    let colorFilter = state.labelFilter.split(":")[1];
     return state.notes.filter((note) => {
       note.color === colorFilter &&
-        !note.trash &&
-        (re.test(note.text) || re.test(note.title));
+        (re.test(note.text) || re.test(note.title)) &&
+        !note.trash;
     });
   } else {
     // user generated label
     return state.notes.filter(
       (note) =>
         note.tags.includes(state.labelFilter) &&
-        note.color === state.colorFilter &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );

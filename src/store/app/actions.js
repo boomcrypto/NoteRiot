@@ -12,7 +12,7 @@ export async function setUser(context, userSession) {
   );
   const bnsName = await res.json();
   const username = userData.username || bnsName.names[0];
-  context.commit("setUser", person);
+  context.commit("setUser", userData);
   context.commit("setUsername", username);
 
   context.dispatch("fetchData");
