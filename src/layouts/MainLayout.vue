@@ -36,8 +36,9 @@
               <div class="column items-center">
                 <div class="column items-center">
                   <q-avatar size="72px">
-                    <img :src="userAvatar" />
+                    <img :src="avatar" />
                   </q-avatar>
+                  <div>{{ name }}</div>
                   <q-btn
                     v-close-popup
                     no-caps
@@ -156,7 +157,10 @@
               v-if="color"
             >
               <q-item-section avatar>
-                <q-icon :color="color" name="circle" />
+                <q-icon
+                  :color="color"
+                  :name="color === 'none' ? 'block' : 'circle'"
+                />
               </q-item-section>
               <q-item-section>
                 {{ color.replace("-2", "") }}
@@ -208,16 +212,6 @@ export default {
   computed: {
     ...mapState("app", ["user", "labelFilter", "username", "colorFilter"]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
-    userAvatar() {
-      return this.user?.avatarUrl() || "/images/avataaars.svg";
-    },
-    name() {
-      if (this.user) {
-        return this.user.name();
-      } else {
-        return "";
-      }
-    },
   },
   methods: {
     ...mapActions("app", ["signOut", "setLabelFilter", "setColorFilter"]),
