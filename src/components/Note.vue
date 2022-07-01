@@ -26,26 +26,7 @@
           :style="`backgroundImage: url('${attachment.url}')`"
         ></div>
       </q-card-section>
-      <q-card-section class="absolute-bottom row q-gutter-sm">
-        <q-chip
-          clickable
-          dense
-          square
-          text-color="white"
-          class="solo-tag"
-          color="primary"
-          @click="$emit('selected', tag)"
-          v-for="(tag, index) in currentTags"
-          :key="`${tag}-${index}`"
-        >
-          <template #default>
-            <div class="solo-tag-text">
-              {{ tag }}
-            </div>
-          </template>
-        </q-chip>
-      </q-card-section>
-      <q-inner-loading :showing="true">
+      <q-inner-loading :showing="buttonBarVisibility">
         <div
           class="text-center note-title"
           :class="data.title ? '' : 'text-grey text-italic'"
@@ -133,6 +114,25 @@
             </q-tooltip>
           </q-btn>
         </div>
+        <q-card-section class="absolute-bottom row q-gutter-sm">
+          <q-chip
+            clickable
+            dense
+            square
+            text-color="white"
+            class="solo-tag"
+            color="primary"
+            @click="$emit('selected', tag)"
+            v-for="(tag, index) in currentTags"
+            :key="`${tag}-${index}`"
+          >
+            <template #default>
+              <div class="solo-tag-text">
+                {{ tag }}
+              </div>
+            </template>
+          </q-chip>
+        </q-card-section>
       </q-inner-loading>
     </q-card>
     <!-- <q-dialog v-model="showDialog">
