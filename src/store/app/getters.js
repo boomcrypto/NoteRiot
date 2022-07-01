@@ -70,11 +70,12 @@ export function filterNotes(state) {
     );
   } else if (state.labelFilter.startsWith("color:")) {
     let colorFilter = state.labelFilter.split(":")[1];
-    return state.notes.filter((note) => {
-      note.color === colorFilter &&
+    return state.notes.filter(
+      (note) =>
+        note.color === colorFilter &&
         (re.test(note.text) || re.test(note.title)) &&
-        !note.trash;
-    });
+        !note.trash
+    );
   } else {
     // user generated label
     return state.notes.filter(
