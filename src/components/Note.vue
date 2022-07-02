@@ -15,8 +15,18 @@
       "
       :key="data.id"
     >
+      <q-toolbar class="bg-transparent">
+        <div class="column">
+          <div class="note-title col">
+            {{ data.title }}
+          </div>
+          <div class="col timestamp">
+            {{ lastModified }}
+          </div>
+        </div>
+      </q-toolbar>
       <q-card-section style="overflow: hidden">
-        <viewer :initialValue="preview" />
+        <viewer :initialValue="data.text" :key="data.modified" />
       </q-card-section>
       <q-card-section class="attachment-previews" v-if="data.attachments">
         <div
@@ -27,13 +37,6 @@
         ></div>
       </q-card-section>
       <q-inner-loading :showing="buttonBarVisibility">
-        <div
-          class="text-center note-title"
-          :class="data.title ? '' : 'text-grey text-italic'"
-        >
-          {{ data.title || "Untitled" }}
-        </div>
-        <div class="text-center timestamp">{{ lastModified }}</div>
         <div class="row text-center q-mt-md" @click.stop>
           <q-btn dense round flat @click.stop="handleFave()">
             <q-icon>
@@ -135,13 +138,6 @@
         </q-card-section>
       </q-inner-loading>
     </q-card>
-    <!-- <q-dialog v-model="showDialog">
-      <component
-        :is="displayComponent"
-        v-bind="data"
-        @update-note="handleUpdates"
-      />
-    </q-dialog> -->
     <q-dialog v-model="showTagManager">
       <SelectTag :note="this.data" @update-note="handleUpdates" />
     </q-dialog>
@@ -209,6 +205,8 @@ export default {
       showColorManager: false,
       showEditor: false,
       currentTags: this.data.tags,
+      content: this.data.text,
+      contentKey: this.data.modified,
     };
   },
   computed: {
@@ -222,17 +220,16 @@ export default {
       }
     },
     lastModified() {
-      return timeago.format(this.data.lastModified);
-    },
-    preview() {
-      return DOMPurify.sanitize(marked.parse(this.data.text));
+      return timeago.format(this.data.modified);
     },
   },
-
   methods: {
     ...mapActions("app", ["updateNote"]),
+
     async handleUpdates(updates) {
       const notestatus = await this.updateNote(updates);
+      this.note = Object.assign({}, this.note, updates);
+      this.contentKey = `${this.note.id}-${this.note.modified}`;
       console.log("note status after update", notestatus);
     },
     handleMouseOver() {

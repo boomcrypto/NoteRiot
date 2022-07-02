@@ -88,7 +88,8 @@ export default {
       this.newNote = null;
     },
     async handleUpdates(updates) {
-      await this.updateNote(updates);
+      const notestatus = await this.updateNote(updates);
+      console.log("note status after update", notestatus);
     },
   },
 };

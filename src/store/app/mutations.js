@@ -28,7 +28,7 @@ export function setColorFilter(state, payload) {
 export function updateNote(state, payload) {
   console.log("updateNote: ", payload);
   let idx = state.notes.findIndex((note) => note.id === payload.id);
-  if (idx > 0) {
+  if ((idx) => 0) {
     let currentNote = Object.assign({}, state.notes[idx], payload.updates);
     state.notes.splice(idx, 1, currentNote);
   } else {
