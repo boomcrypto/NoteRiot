@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="480" height="583" viewBox="0 0 480 583">
+    <defs>
+        <path id="a" d="M30.767 0h416.466c10.699 0 14.578 1.114 18.49 3.206 3.91 2.091 6.98 5.16 9.071 9.072 2.092 3.911 3.206 7.79 3.206 18.489v518.466c0 10.699-1.114 14.578-3.206 18.49-2.091 3.91-5.16 6.98-9.072 9.071-3.911 2.092-7.79 3.206-18.489 3.206H30.767c-10.699 0-14.578-1.114-18.49-3.206-3.91-2.091-6.98-5.16-9.071-9.072C1.114 563.811 0 559.932 0 549.233V30.767c0-10.699 1.114-14.578 3.206-18.49 2.091-3.91 5.16-6.98 9.072-9.071C16.189 1.114 20.068 0 30.767 0z"/>
+        <filter id="b" width="100.8%" height="100.7%" x="-.2%" y="-.2%" filterUnits="objectBoundingBox">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feComposite in="shadowOffsetOuter1" in2="SourceAlpha" operator="out" result="shadowOffsetOuter1"/>
+            <feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 0.757958174 0 0 0 0 0.466465354 0 0 0 0 0.734878302 0 0 0 0.5 0"/>
+        </filter>
+        <path id="d" d="M30.767 0h416.466c10.699 0 14.578 1.114 18.49 3.206 3.91 2.091 6.98 5.16 9.071 9.072 2.092 3.911 3.206 7.79 3.206 18.489v518.466c0 10.699-1.114 14.578-3.206 18.49-2.091 3.91-5.16 6.98-9.072 9.071-3.911 2.092-7.79 3.206-18.489 3.206H30.767c-10.699 0-14.578-1.114-18.49-3.206-3.91-2.091-6.98-5.16-9.071-9.072C1.114 563.811 0 559.932 0 549.233V30.767c0-10.699 1.114-14.578 3.206-18.49 2.091-3.91 5.16-6.98 9.072-9.071C16.189 1.114 20.068 0 30.767 0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(0 1)">
+        <mask id="c" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <use fill="#000" filter="url(#b)" xlink:href="#a"/>
+        <path fill="#FFF" stroke="#C079BA" stroke-linejoin="square" d="M30.767.5c-9.679 0-13.89.813-18.253 3.146C8.69 5.692 5.692 8.69 3.646 12.514 1.313 16.876.5 21.088.5 30.767v518.466c0 9.679.813 13.89 3.146 18.253 2.046 3.824 5.044 6.822 8.868 8.868 4.362 2.333 8.574 3.146 18.253 3.146h416.466c9.679 0 13.89-.813 18.253-3.146 3.824-2.046 6.822-5.044 8.868-8.868 2.333-4.362 3.146-8.574 3.146-18.253V30.767c0-9.679-.813-13.89-3.146-18.253-2.046-3.824-5.044-6.822-8.868-8.868C461.124 1.313 456.912.5 447.233.5H30.767z"/>
+        <g font-family="IBMPlexSerif, IBM Plex Serif" mask="url(#c)">
+            <text font-size="30" transform="translate(40 40)">
+                <tspan x="0" y="31" fill="#74758C"># My Story</tspan>
+            </text>
+            <text font-size="20" transform="translate(40 40)">
+                <tspan x="0" y="75" fill="#74758C">**Chapter 1: The Beginning**</tspan>
+            </text>
+            <text font-size="20" transform="translate(40 40)">
+                <tspan x="0" y="116" fill="#74758C">The pavement was hot that late summer day in </tspan> <tspan x="0" y="141" fill="#74758C">August. </tspan> <tspan x="75.84" y="141" fill="#74758C" font-family="IBMPlexSerif-Italic, IBM Plex Serif" font-style="italic">*Sole-of-your-shoe-melting hot.*</tspan> <tspan x="349.86" y="141" fill="#74758C"> That was </tspan> <tspan x="0" y="166" fill="#74758C">normal. And it was about to be the </tspan> <tspan x="324.74" y="166" fill="#74758C" font-family="IBMPlexSerif-Italic, IBM Plex Serif" font-style="italic">*only*</tspan> <tspan x="377.7" y="166" fill="#74758C"> normal</tspan>
+            </text>
+        </g>
+        <g mask="url(#c)">
+            <text font-family="IBMPlexSans-Bold, IBM Plex Sans" font-size="30" font-weight="bold" transform="translate(40 349)">
+                <tspan x="0" y="31" fill="#74758C">My Story</tspan>
+            </text>
+            <g fill="#74758C">
+                <path d="M40 404h536v1H40zM40 407h536v1H40z"/>
+            </g>
+            <text font-family="IBMPlexSans-SemiBold, IBM Plex Sans" font-size="20" font-weight="500" transform="translate(40 349)">
+                <tspan x="0" y="95" fill="#74758C">Chapter 1: The Beginning</tspan>
+            </text>
+            <text font-family="IBMPlexSans, IBM Plex Sans" font-size="20" transform="translate(40 349)">
+                <tspan x="0" y="136" fill="#74758C">The pavement was hot that late summer day in </tspan> <tspan x="0" y="161" fill="#74758C">August. </tspan> <tspan x="72.8" y="161" fill="#74758C" font-family="IBMPlexSans-Italic, IBM Plex Sans" font-style="italic">Sole-of-your-shoe-melting hot. </tspan> <tspan x="348.7" y="161" fill="#74758C">That was </tspan> <tspan x="0" y="186" fill="#74758C">normal. And it was about to be the </tspan> <tspan x="312.22" y="186" fill="#74758C" font-family="IBMPlexSans-Italic, IBM Plex Sans" font-style="italic">only</tspan> <tspan x="349.38" y="186" fill="#74758C"> normal thing</tspan>
+            </text>
+        </g>
+        <g mask="url(#c)">
+            <path fill="#F9F4FA" d="M0 260h478v40H0z"/>
+            <g transform="translate(203 244)">
+                <circle cx="36" cy="36" r="35" fill="#F9F4FA"/>
+                <g stroke="#C079BA" stroke-width="3">
+                    <path d="M24 23l6-6 6 6M30 17v27"/>
+                    <g>
+                        <path d="M36 50l6 6 6-6M42 56V29"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+        <path stroke="#C079BA" d="M30.767.5c-9.679 0-13.89.813-18.253 3.146C8.69 5.692 5.692 8.69 3.646 12.514 1.313 16.876.5 21.088.5 30.767v518.466c0 9.679.813 13.89 3.146 18.253 2.046 3.824 5.044 6.822 8.868 8.868 4.362 2.333 8.574 3.146 18.253 3.146h416.466c9.679 0 13.89-.813 18.253-3.146 3.824-2.046 6.822-5.044 8.868-8.868 2.333-4.362 3.146-8.574 3.146-18.253V30.767c0-9.679-.813-13.89-3.146-18.253-2.046-3.824-5.044-6.822-8.868-8.868C461.124 1.313 456.912.5 447.233.5H30.767z"/>
+    </g>
+</svg>
