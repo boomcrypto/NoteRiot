@@ -17,8 +17,33 @@
     >
       <q-toolbar class="bg-transparent">
         <div class="column">
-          <div class="note-title col">
+          <div class="note-title col row nowrap">
             {{ data.title }}
+            <q-space />
+            <q-btn
+              dense
+              round
+              flat
+              @click.stop
+              :icon="
+                fave
+                  ? 'img:/images/favorited.svg'
+                  : 'img:/images/favorite-available.svg'
+              "
+            />
+            <q-btn dense round flat icon="more_vert" @click.stop>
+              <q-menu>
+                <q-list style="min-width: 100px">
+                  <q-item clickable v-close-popup>
+                    <q-item-section>New tab</q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item clickable v-close-popup>
+                    <q-item-section>New incognito tab</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </div>
           <div class="col timestamp">
             {{ lastModified }}
@@ -36,8 +61,51 @@
           :style="`backgroundImage: url('${attachment.url}')`"
         ></div>
       </q-card-section>
-      <q-inner-loading :showing="buttonBarVisibility">
-        <div class="row text-center q-mt-md" @click.stop>
+      <!-- <q-inner-loading :showing="buttonBarVisibility">
+        <div class="row text-center q-mt-md">
+          <q-btn-group>
+            <q-btn
+              dense
+              round
+              flat
+              @click.stop
+              :icon="
+                fave
+                  ? 'img:/images/favorited.svg'
+                  : 'img:/images/favorite-available.svg'
+              "
+            />
+            <q-btn dense round flat @click.stop icon="img:/images/label.svg" />
+            <q-btn
+              dense
+              round
+              flat
+              @click.stop
+              icon="img:/images/download.svg"
+            />
+            <q-btn dense round flat @click.stop icon="img:/images/palette.svg">
+              <q-menu @hover="buttonBarVisibility">
+                <q-list style="min-width: 100px">
+                  <q-item clickable v-close-popup>
+                    <q-item-section>New tab</q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item clickable v-close-popup>
+                    <q-item-section>New incognito tab</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+
+            <q-btn dense round flat @click.stop icon="img:/images/share.svg" />
+            <q-btn
+              dense
+              round
+              flat
+              @click.stop
+              icon="img:/images/restore.svg"
+            />
+          </q-btn-group>
           <q-btn dense round flat @click.stop="handleFave()">
             <q-icon>
               <img
@@ -136,7 +204,7 @@
             </template>
           </q-chip>
         </q-card-section>
-      </q-inner-loading>
+      </q-inner-loading> -->
     </q-card>
     <q-dialog v-model="showTagManager">
       <SelectTag :note="this.data" @update-note="handleUpdates" />
