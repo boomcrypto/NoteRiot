@@ -1,7 +1,6 @@
 <template>
   <div>
     <q-card
-      flat
       class="boom-card note-list-item relative-position"
       :class="`bg-${data.color}-4`"
       @mouseover="handleMouseOver"
@@ -15,40 +14,41 @@
       "
       :key="data.id"
     >
-      <q-toolbar class="bg-transparent">
+      <q-toolbar class="bg-transparent q-pa-none">
         <div class="column">
           <div class="note-title col row nowrap">
-            {{ data.title }}
-            <q-space />
-            <q-btn
-              dense
-              round
-              flat
-              @click.stop
-              :icon="
-                fave
-                  ? 'img:/images/favorited.svg'
-                  : 'img:/images/favorite-available.svg'
-              "
-            />
-            <q-btn dense round flat icon="more_vert" @click.stop>
-              <q-menu>
-                <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New tab</q-item-section>
-                  </q-item>
-                  <q-separator />
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New incognito tab</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
+            {{ displayTitle }}
           </div>
           <div class="col timestamp">
             {{ lastModified }}
           </div>
         </div>
+        <q-space />
+        <NoteActions :note="data" />
+        <!-- <q-btn
+          dense
+          round
+          flat
+          @click.stop
+          :icon="
+            fave
+              ? 'img:/images/favorited.svg'
+              : 'img:/images/favorite-available.svg'
+          "
+        />
+        <q-btn dense round flat icon="more_vert" @click.stop>
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section>New tab</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section>New incognito tab</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn> -->
       </q-toolbar>
       <q-card-section style="overflow: hidden">
         <viewer :initialValue="data.text" :key="data.modified" />
@@ -247,6 +247,7 @@ export default {
     SelectColor: () => import("components/SelectColor"),
     SelectTag: () => import("components/SelectTag"),
     Editor: () => import("components/Editor.vue"),
+    NoteActions: () => import("components/NoteActions.vue"),
     Viewer,
   },
   props: {
@@ -280,6 +281,16 @@ export default {
   computed: {
     ...mapGetters("app", ["tags"]),
     ...mapState("app", ["noteColors"]),
+    displayTitle() {
+      const titleLength = this.data.title.length;
+      if (titleLength > 18) {
+        return `${this.data.title.substring(0, 15)}...`;
+      } else if (titleLength === 0) {
+        return "Untitled";
+      } else {
+        return this.data.title;
+      }
+    },
     tagMenuLabel() {
       if (this.data.tags.length) {
         return "Tags";
@@ -370,18 +381,6 @@ export default {
 </script>
 
 <style scoped>
-.note-bg-hover {
-  background-color: rgba(192, 121, 186, 0.1) !important;
-}
-.note-title {
-  font-size: 24px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #4a4a4a;
-}
 .timestamp {
   font-family: "IBM Plex Sans";
   font-size: 13px;
@@ -410,9 +409,9 @@ export default {
   -ms-flex-align: center;
   align-items: center;
 }
-.boom-card:hover,
+/* .boom-card:hover,
 .boom-card:focus-within {
   transition: all 0.2s ease-in-out;
   transform: scale(105%);
-}
+} */
 </style>
