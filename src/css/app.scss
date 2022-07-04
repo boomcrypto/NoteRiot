@@ -89,3 +89,39 @@ html {
 .boom-shadow {
   box-shadow: 0 8px 16px rgba(120, 93, 153, 0.1), inset 0 -1px 0 #e9d1f2;
 }
+
+.note-title {
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+.effin-border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c079ba;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+.grid-icons {
+  position: absolute;
+  left: auto;
+  bottom: auto;
+  display: none;
+  padding: 4px 8px 6px 10px;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  border-style: none none solid solid;
+  border-width: 1px;
+  border-color: #c079ba #d8d8d8 #d8d8d8 #d8d8d8;
+  border-bottom-left-radius: 24px;
+  background-color: hsla(0, 0%, 100%, 0.8);
+}
+
+.grid-icons.no-offset {
+  margin-top: -16px;
+}
