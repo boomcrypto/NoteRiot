@@ -1635,7 +1635,7 @@ body.body--dark {
 .header-anchor-link {
   margin-left: 24px;
   font-family: "IBM Plex Sans", sans-serif;
-  color: #4a4a4a;
+  color: #4a4a4a !important;
   text-decoration: none;
 }
 
