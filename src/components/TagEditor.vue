@@ -115,10 +115,10 @@
       </q-card-section>
     </div>
     <q-card-section style="max-height: 150px; padding: 0px" class="scroll">
-      <div class="available-tags" v-if="note.keywords.length > 0">
+      <div class="available-tags" v-if="note.tags.length > 0">
         <div class="all-caps-action">CURRENT TAGS</div>
         <div class="available-tag-list">
-          <template v-for="id in note.keywords">
+          <template v-for="id in note.tags">
             <div
               class="supercooltag"
               :class="`solo-tag tag-${tags[id].color}`"
@@ -202,7 +202,7 @@ export default {
   computed: {
     ...mapState(["tags"]),
     showCurrentTags() {
-      if (note.keywords.length) return true;
+      if (note.tags.length) return true;
       else return false;
     },
   },
@@ -211,7 +211,7 @@ export default {
     ...mapActions("tags", ["addTag"]),
     removeTagFromNote(del) {
       console.log("removing tag: ", del);
-      let noteTags = this.note.keywords.slice();
+      let noteTags = this.note.tags.slice();
       noteTags.splice(noteTags.indexOf(del), 1);
       const payload = {
         id: this.id,
@@ -220,7 +220,7 @@ export default {
       this.updateNote(payload);
     },
     addTagToNote(newtag) {
-      let noteTags = this.note.keywords;
+      let noteTags = this.note.tags;
       noteTags.push(newtag);
       const payload = {
         id: this.id,
