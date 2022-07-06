@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-card
-      class="boom-card note-list-item relative-position"
+      class="boom-card"
       :class="`bg-${data.color}-4`"
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
@@ -14,42 +14,19 @@
       "
       :key="data.id"
     >
-      <q-toolbar class="bg-transparent q-pa-none">
-        <div class="column">
-          <div class="note-title col row nowrap">
-            {{ displayTitle }}
-          </div>
-          <div class="col timestamp">
-            {{ lastModified }}
-          </div>
-        </div>
-        <q-space />
-        <NoteActions :note="data" />
-        <!-- <q-btn
-          dense
-          round
-          flat
-          @click.stop
-          :icon="
-            fave
-              ? 'img:/images/favorited.svg'
-              : 'img:/images/favorite-available.svg'
-          "
-        />
-        <q-btn dense round flat icon="more_vert" @click.stop>
-          <q-menu>
-            <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup>
-                <q-item-section>New tab</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable v-close-popup>
-                <q-item-section>New incognito tab</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn> -->
-      </q-toolbar>
+      <q-item>
+        <q-item-section>
+          <q-item-label class="note-title">{{ displayTitle }}</q-item-label>
+          <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
+        </q-item-section>
+        <q-item-section side top>
+          <NoteActions
+            v-if="buttonBarVisibility"
+            :note="data"
+            style="margin-top: -8px; margin-right: -16px"
+          />
+        </q-item-section>
+      </q-item>
       <q-card-section style="overflow: hidden">
         <viewer :initialValue="data.text" :key="data.modified" />
       </q-card-section>
@@ -61,150 +38,6 @@
           :style="`backgroundImage: url('${attachment.url}')`"
         ></div>
       </q-card-section>
-      <!-- <q-inner-loading :showing="buttonBarVisibility">
-        <div class="row text-center q-mt-md">
-          <q-btn-group>
-            <q-btn
-              dense
-              round
-              flat
-              @click.stop
-              :icon="
-                fave
-                  ? 'img:/images/favorited.svg'
-                  : 'img:/images/favorite-available.svg'
-              "
-            />
-            <q-btn dense round flat @click.stop icon="img:/images/label.svg" />
-            <q-btn
-              dense
-              round
-              flat
-              @click.stop
-              icon="img:/images/download.svg"
-            />
-            <q-btn dense round flat @click.stop icon="img:/images/palette.svg">
-              <q-menu @hover="buttonBarVisibility">
-                <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New tab</q-item-section>
-                  </q-item>
-                  <q-separator />
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New incognito tab</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-
-            <q-btn dense round flat @click.stop icon="img:/images/share.svg" />
-            <q-btn
-              dense
-              round
-              flat
-              @click.stop
-              icon="img:/images/restore.svg"
-            />
-          </q-btn-group>
-          <q-btn dense round flat @click.stop="handleFave()">
-            <q-icon>
-              <img
-                :src="
-                  fave
-                    ? '/images/favorited.svg'
-                    : '/images/favorite-available.svg'
-                "
-              />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Toggle Favorite
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="showTagManager = true">
-            <q-icon>
-              <img src="/images/label.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Manage tags
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="downloadNote()">
-            <q-icon>
-              <img src="/images/download.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Download note
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="showColorManager = true">
-            <q-icon>
-              <img src="/images/palette.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Change color
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="handleShareNote()">
-            <q-icon>
-              <img src="/images/share.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Share ...
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="restoreNote()" v-if="note.trash">
-            <q-icon color="accent">
-              <img src="/images/restore.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Restore from archive
-            </q-tooltip>
-          </q-btn>
-        </div>
-        <q-card-section class="absolute-bottom row q-gutter-sm">
-          <q-chip
-            clickable
-            dense
-            square
-            text-color="white"
-            class="solo-tag"
-            color="primary"
-            @click="$emit('selected', tag)"
-            v-for="(tag, index) in currentTags"
-            :key="`${tag}-${index}`"
-          >
-            <template #default>
-              <div class="solo-tag-text">
-                {{ tag }}
-              </div>
-            </template>
-          </q-chip>
-        </q-card-section>
-      </q-inner-loading> -->
     </q-card>
     <q-dialog v-model="showTagManager">
       <SelectTag :note="this.data" @update-note="handleUpdates" />

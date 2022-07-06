@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div class="grid-icons">
-      <div id="fave" @click.stop="handleFave">
-        <img
-          :src="
-            note.isFavorite
-              ? '/images/favorited.svg'
-              : '/images/favorite-available.svg'
-          "
-        />
-      </div>
+  <div class="grid-icons">
+    <div @click.stop="handleFave">
+      <img
+        :src="
+          note.isFavorite
+            ? '/images/favorited.svg'
+            : '/images/favorite-available.svg'
+        "
+      />
     </div>
     <NoteMenu :note="note" :id="note.id" />
   </div>

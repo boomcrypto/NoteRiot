@@ -22,7 +22,6 @@ html {
   border: 1px solid #e9d1f2 !important;
   box-sizing: border-box;
   border-radius: 8px;
-  padding: 8px;
   position: relative;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
@@ -98,30 +97,4 @@ html {
   line-height: normal;
   letter-spacing: normal;
   color: #4a4a4a;
-}
-.effin-border {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #c079ba;
-  font-family: "IBM Plex Sans", sans-serif;
-}
-.grid-icons {
-  position: absolute;
-  left: auto;
-  bottom: auto;
-  display: none;
-  padding: 4px 8px 6px 10px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  border-style: none none solid solid;
-  border-width: 1px;
-  border-color: #c079ba #d8d8d8 #d8d8d8 #d8d8d8;
-  border-bottom-left-radius: 24px;
-  background-color: hsla(0, 0%, 100%, 0.8);
-}
-
-.grid-icons.no-offset {
-  margin-top: -16px;
 }

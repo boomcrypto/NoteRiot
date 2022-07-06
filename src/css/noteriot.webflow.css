@@ -228,7 +228,6 @@ body.body--dark {
   border-width: 1px;
   border-color: #cfcfcf;
   border-radius: 0px;
-  font-family: "IBM Plex Sans", sans-serif;
   color: rgba(74, 74, 74, 0.5);
   font-size: 16px;
   font-weight: 700;
@@ -265,7 +264,6 @@ body.body--dark {
 }
 
 .text-block-3 {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #c079ba;
   line-height: 26px;
   font-weight: 700;
@@ -424,7 +422,6 @@ body.body--dark {
 }
 
 .note-title {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   line-height: 18px;
   font-weight: 700;
@@ -443,7 +440,6 @@ body.body--dark {
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
-  font-family: "IBM Plex Sans", sans-serif;
   color: #adadad;
   font-size: 10px;
   line-height: 10px;
@@ -503,7 +499,6 @@ body.body--dark {
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
-  font-family: "IBM Plex Sans", sans-serif;
   color: #838383;
   font-size: 13px;
   line-height: 17px;
@@ -585,7 +580,6 @@ body.body--dark {
 
 .solo-tag-text {
   margin: 1px 2px;
-  font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
   font-size: 11px;
   line-height: 14px;
@@ -594,7 +588,6 @@ body.body--dark {
 
 .solo-tag-text-2 {
   margin: 1px 2px;
-  font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
   font-size: 13px;
   line-height: 16px;
@@ -734,7 +727,6 @@ body.body--dark {
 }
 
 .new-note-title-text {
-  font-family: "IBM Plex Sans", sans-serif;
   color: rgba(74, 74, 74, 0.5);
   font-size: 22px;
   line-height: 32px;
@@ -760,7 +752,7 @@ body.body--dark {
   border-width: 1px;
   border-color: #cfcfcf;
   background-color: #fff;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #c079ba;
   font-size: 14px;
   font-weight: 700;
@@ -816,7 +808,7 @@ body.body--dark {
 .text-block-4 {
   margin-right: 12px;
   opacity: 0.5;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   line-height: 18px;
 }
@@ -987,7 +979,7 @@ body.body--dark {
 
 .chip-text-unselected {
   margin: 10px 16px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 13px;
   font-weight: 500;
@@ -1159,14 +1151,14 @@ body.body--dark {
   -ms-flex-item-align: center;
   -ms-grid-row-align: center;
   align-self: center;
-  font-family: "IBM Plex Sans", sans-serif;
+
   font-size: 16px;
   font-weight: 700;
 }
 
 .chip-text-selected {
   margin: 10px 16px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #fff;
   font-size: 13px;
   font-weight: 500;
@@ -1227,7 +1219,6 @@ body.body--dark {
 }
 
 .partially-filled-name-text {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   font-size: 13px;
   line-height: 17px;
@@ -1406,7 +1397,7 @@ body.body--dark {
 
 .create-tag-3 {
   background-color: #c079ba !important;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #ffffff;
   font-size: 14px;
   display: -webkit-box;
@@ -1421,7 +1412,6 @@ body.body--dark {
 }
 
 .text-block-7 {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   font-size: 12px;
 }
@@ -1432,7 +1422,7 @@ body.body--dark {
   border-width: 1px;
   border-color: #cfcfcf;
   background-color: #fff;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 13px;
   line-height: 17px;
@@ -1512,7 +1502,6 @@ body.body--dark {
 }
 
 .all-caps-action {
-  font-family: "IBM Plex Sans", sans-serif;
   color: rgba(74, 74, 74, 0.5);
   font-size: 10px;
   font-weight: 700;
@@ -1520,7 +1509,6 @@ body.body--dark {
 }
 
 .all-caps-action-2 {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #ffffff;
   font-size: 10px;
   font-weight: 700;
@@ -1528,7 +1516,6 @@ body.body--dark {
 }
 
 .all-caps-action-4 {
-  font-family: "IBM Plex Sans", sans-serif;
   color: rgba(74, 74, 74, 1);
   font-size: 10px;
   font-weight: 700;
@@ -1541,7 +1528,7 @@ body.body--dark {
   border-width: 1px;
   border-color: #cfcfcf; */
   background-color: #fff;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 13px;
   line-height: 17px;
@@ -1562,7 +1549,7 @@ body.body--dark {
   border-width: 1px;
   border-color: #cfcfcf;
   background-color: #fff;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 13px;
   line-height: 17px;
@@ -1634,7 +1621,7 @@ body.body--dark {
 
 .header-anchor-link {
   margin-left: 24px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a !important;
   text-decoration: none;
 }
@@ -1660,7 +1647,6 @@ body.body--dark {
 }
 
 .sign-in-blockstack-text {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   font-size: 18px;
   line-height: 24px;
@@ -1711,7 +1697,7 @@ body.body--dark {
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: rgba(74, 74, 74, 0.8);
   font-size: 24px;
   line-height: 38px;
@@ -1739,7 +1725,7 @@ body.body--dark {
 
 .feature-headline {
   margin-bottom: 16px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 40px;
   line-height: 56px;
@@ -2070,7 +2056,7 @@ body.body--dark {
 
 .features-title {
   margin-bottom: 16px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #4a4a4a;
   font-size: 24px;
   line-height: 32px;
@@ -2082,7 +2068,6 @@ body.body--dark {
 }
 
 .features-body {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   font-size: 18px;
   line-height: 26px;
@@ -2313,7 +2298,7 @@ body.body--dark {
 
 .faqs-title {
   margin-bottom: 16px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #fff;
   font-size: 24px;
   line-height: 32px;
@@ -2325,14 +2310,12 @@ body.body--dark {
 }
 
 .faqs-body {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
   font-size: 18px;
   line-height: 26px;
 }
 
 .sign-in-blockstack-text-nav {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #4a4a4a;
   font-size: 14px;
   font-weight: 700;
@@ -2446,7 +2429,7 @@ body.body--dark {
 
 .text-block-8 {
   padding-right: 8px;
-  font-family: "IBM Plex Sans", sans-serif;
+
   color: #fff;
   font-size: 16px;
   text-align: right;
@@ -2474,7 +2457,6 @@ body.body--dark {
 }
 
 .connect-text {
-  font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
   font-size: 16px;
 }
@@ -2870,8 +2852,8 @@ body.body--dark {
   position: absolute;
   left: auto;
   bottom: auto;
-  display: none;
   padding: 4px 8px 6px 10px;
+  display: flex;
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
@@ -3105,7 +3087,6 @@ attach-3 {
   border-style: solid;
   border-width: 1px;
   border-color: #c079ba;
-  font-family: "IBM Plex Sans", sans-serif;
 }
 
 @media (max-width: 991px) {
@@ -3354,7 +3335,7 @@ attach-3 {
 
   .new-note-text {
     margin-right: 24px;
-    font-family: "IBM Plex Sans", sans-serif;
+
     color: #4a4a4a;
     line-height: 18px;
     font-weight: 700;
