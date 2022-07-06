@@ -67,10 +67,7 @@
       dark
     >
       <q-toolbar>
-        <q-avatar square size="36px">
-          <img src="/images/logo.png" />
-        </q-avatar>
-        <div class="text-h5 q-pl-sm">NoteRiot</div>
+        <img height="40px" src="/images/noteriot-round-wordmark.svg" />
       </q-toolbar>
       <q-scroll-area style="height: 100%; margin-top: 60px">
         <q-list>
