@@ -70,7 +70,7 @@ export async function updateNote(context, update) {
 export async function addNote(context) {
   const note = new Note();
   context.commit("addNote", note);
-  saveFile(JSON.stringify(context.state.notes));
+  await saveFile(JSON.stringify(context.state.notes));
   return note;
 }
 
