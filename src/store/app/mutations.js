@@ -14,7 +14,14 @@ export function setLoading(state, payload) {
 }
 
 export function setNotes(state, payload) {
-  state.notes = payload;
+  console.log(`payload size: ${payload.length}`);
+  payload.forEach((note) => {
+    console.log(`adding note: ${note.id} @ ${Date.now()}`);
+    if (!state.notes.find((n) => n.id === note.id)) {
+      state.notes.push(note);
+    }
+    console.log(`notes size: ${state.notes.length}`);
+  });
 }
 
 export function setLabelFilter(state, payload) {
