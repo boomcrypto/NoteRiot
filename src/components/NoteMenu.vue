@@ -1,7 +1,6 @@
 <template>
-  <div id="menu" @click.stop>
-    <img src="/images/more.svg" />
-    <q-menu anchor="bottom left" self="top right">
+  <div>
+    <q-menu persistent anchor="bottom left" self="top right">
       <div class="effin-border">
         <q-list style="min-width: 100px">
           <q-item clickable v-close-popup @click.stop="downloadNote(note)">
