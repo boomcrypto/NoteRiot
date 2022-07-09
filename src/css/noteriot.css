@@ -1,3 +1,124 @@
+text-orchid {
+  color: #c079ba;
+}
+text-greyish-brown {
+  color: #4a4a4a;
+}
+text-nr {
+  color: #4a4a4a;
+}
+text-brown-grey {
+  color: #838383;
+}
+text-very-light-pink {
+  color: #cfcfcf;
+}
+text-black {
+  color: #1b1b1b;
+}
+text-pale-grey {
+  color: #f9f4fa;
+}
+text-white {
+  color: #f5f5f5;
+}
+text-fuschia {
+  color: #fc3177;
+}
+text-red {
+  color: #ff3728;
+}
+text-orange {
+  color: #f79d1a;
+}
+text-yellow {
+  color: #ffeb3b;
+}
+text-lime {
+  color: #8bc34a;
+}
+text-green {
+  color: #4caf4f;
+}
+text-teal {
+  color: #009588;
+}
+text-cyan {
+  color: #00bcd4;
+}
+text-blue {
+  color: #2096f3;
+}
+text-steel {
+  color: #607d8b;
+}
+text-gray {
+  color: #757575;
+}
+text-brown {
+  color: #795548;
+}
+bg-orchid {
+  background: #c079ba;
+}
+bg-greyish-brown {
+  background: #4a4a4a;
+}
+bg-nr {
+  background: #4a4a4a;
+}
+bg-brown-grey {
+  background: #838383;
+}
+bg-very-light-pink {
+  background: #cfcfcf;
+}
+bg-black {
+  background: #1b1b1b;
+}
+bg-pale-grey {
+  background: #f9f4fa;
+}
+bg-white {
+  background: #f5f5f5;
+}
+bg-fuschia {
+  background: #fc3177;
+}
+bg-red {
+  background: #ff3728;
+}
+bg-orange {
+  background: #f79d1a;
+}
+bg-yellow {
+  background: #ffeb3b;
+}
+bg-lime {
+  background: #8bc34a;
+}
+bg-green {
+  background: #4caf4f;
+}
+bg-teal {
+  background: #009588;
+}
+bg-cyan {
+  background: #00bcd4;
+}
+bg-blue {
+  background: #2096f3;
+}
+bg-steel {
+  background: #607d8b;
+}
+bg-gray {
+  background: #757575;
+}
+bg-brown {
+  background: #795548;
+}
+
 .w-layout-grid {
   display: -ms-grid;
   display: grid;
@@ -606,10 +727,6 @@ body.body--dark {
   margin-right: 8px;
   margin-top: 0px;
   margin-bottom: 2px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
 }
 
 .solo-tag.tag-white {
@@ -617,62 +734,90 @@ body.body--dark {
   border-width: 1px;
   border-color: #adadad;
   background-color: #fff;
+  color: #000;
+  cursor: pointer;
 }
 
 .solo-tag.tag-orchid {
   background-color: #c079ba;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-fuschia {
   background-color: #fc3177;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-red {
   background-color: #ff3728;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-orange {
   background-color: #f79d1a;
+  color: #fff;
+  cursor: pointer;
 }
-
 .solo-tag.tag-yellow {
   background-color: #ffeb3b;
+  color: #000;
+  cursor: pointer;
 }
 
 .solo-tag.tag-lime {
   background-color: #8bc34a;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-green {
   background-color: #4caf4f;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-teal {
   background-color: #009588;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-cyan {
   background-color: #00bcd4;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-blue {
   background-color: #2096f3;
+  color: #fff;
+  cursor: pointer;
 }
-
 .solo-tag.tag-steel {
   background-color: #607d8b;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-gray {
   background-color: #757575;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-brown {
   background-color: #795548;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.tag-black {
   background-color: #000;
+  color: #fff;
+  cursor: pointer;
 }
 
 .solo-tag.grid {
@@ -1503,7 +1648,6 @@ body.body--dark {
 
 .all-caps-action {
   color: rgba(74, 74, 74, 0.5);
-  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1524,11 +1668,10 @@ body.body--dark {
 
 .supercooltag {
   padding: 2px 4px;
-  /* border-style: solid;
+  border-style: solid;
   border-width: 1px;
-  border-color: #cfcfcf; */
+  border-color: #cfcfcf;
   background-color: #fff;
-
   color: #4a4a4a;
   font-size: 13px;
   line-height: 17px;
