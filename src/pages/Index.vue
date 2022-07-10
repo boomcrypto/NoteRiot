@@ -8,7 +8,7 @@
             <Note
               :data="note"
               v-for="note in filterNotes"
-              class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-xl-1"
+              class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
               :key="note.id"
             />
           </div>
