@@ -15,7 +15,7 @@
       :style="buttonBarVisibility ? 'cursor: pointer' : ''"
       :key="data.id"
     >
-      <q-item>
+      <q-item class="q-px-none">
         <q-item-section>
           <q-item-label class="note-title">{{ displayTitle }}</q-item-label>
           <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
@@ -32,7 +32,10 @@
       <q-card-section style="overflow: hidden">
         <viewer :initialValue="data.text" :key="data.modified" />
       </q-card-section>
-      <q-card-section class="attachment-previews" v-if="data.attachments">
+      <q-card-section
+        class="attachment-previews q-px-none"
+        v-if="data.attachments"
+      >
         <div
           class="media-thumb-unique"
           v-for="(attachment, index) in data.attachments"
