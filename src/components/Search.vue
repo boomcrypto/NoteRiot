@@ -1,14 +1,38 @@
 <template>
-  <q-input
-    outlined
-    v-model="searchTerm"
-    color="primary"
-    type="search"
-    label="Search"
-    clearable
-    @input="handleSearch"
-    @keyup.enter="handleSearch"
-  />
+  <div class="row">
+    <q-input
+      outlined
+      v-model="searchTerm"
+      color="accent"
+      type="search"
+      label="Search"
+      class="grow"
+      clearable
+      @input="handleSearch"
+      @keyup.enter="handleSearch"
+    >
+      <template #prepend>
+        <q-icon>
+          <img src="/images/search.svg" />
+        </q-icon>
+      </template>
+    </q-input>
+    <q-btn
+      outline
+      color="accent"
+      icon="sort"
+      label="Sort"
+      @click="onClick"
+      class="q-mx-md"
+    />
+    <q-btn
+      outline
+      color="accent"
+      icon="img:/images/filter.svg"
+      label="Filter"
+      @click="onClick"
+    />
+  </div>
 </template>
 
 <script>
