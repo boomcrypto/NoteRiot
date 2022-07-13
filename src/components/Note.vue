@@ -251,6 +251,9 @@ export default {
     handleMouseOver() {
       this.buttonBarVisibility = true;
     },
+    downloadNote() {
+      alert("implement download note");
+    },
     handleMouseLeave() {
       this.buttonBarVisibility = false;
     },
