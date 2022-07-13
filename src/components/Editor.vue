@@ -14,7 +14,7 @@
           :input-class="currentTitle.length < 50 ? 'text-h3' : 'text-h5'"
           maxlength="80"
           placeholder="Untitled note"
-          input-style="color: grey; font-weight: bold"
+          :input-style="$q.dark.isActive?{color: 'white','font-weight': 'bold'}:{color: 'grey','font-weight': 'bold'}"
         >
         </q-input>
       </q-toolbar-title>
