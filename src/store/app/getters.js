@@ -80,6 +80,10 @@ export function filterNotes(state) {
     );
   } else {
     // user generated label
+    console.log("user generated label");
+    console.log("filter: ", state.labelFilter);
+    console.log("searchTerm: ", state.searchTerm);
+    console.log("notes: ", state.notes);
     return state.notes.filter(
       (note) =>
         note.tags.includes(state.labelFilter) &&

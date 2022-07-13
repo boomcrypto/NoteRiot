@@ -1,13 +1,89 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-dark" style="border-bottom: 1px solid pink">
+    <q-header class="bg-transparent">
       <q-toolbar>
         <q-space />
-        <q-btn flat dense round icon="settings" aria-label="Menu">
-          <q-menu auto-close>
+        <Search />
+        <q-btn flat rounded color="accent" icon="sort" @click="handleSort">
+          <q-menu>
+            <q-card flat class="boom-card">
+              <q-card-section class="q-pa-none">
+                <q-list>
+                  <q-item
+                    :active="sortBy === 'title'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('title')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="sort_by_alpha" />
+                    </q-item-section>
+                    <q-item-section> Title </q-item-section>
+                  </q-item>
+                  <q-item
+                    :active="sortBy === 'createdAt'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('createdAt')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="access_time" />
+                    </q-item-section>
+                    <q-item-section> Date </q-item-section>
+                  </q-item>
+                  <q-item
+                    :active="sortBy === 'updatedAt'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('updatedAt')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="update" />
+                    </q-item-section>
+                    <q-item-section> Updated </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card-section>
+            </q-card>
+          </q-menu>
+        </q-btn>
+        <q-btn
+          flat
+          round
+          color="accent"
+          icon="img:/images/filter.svg"
+          @click="handleFilter"
+        >
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section
+                  >Tag(s):
+                  <q-select v-model="tagFilter" :options="tags" />
+                </q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section
+                  >Color:
+                  <q-select v-model="colorFilter" :options="colors" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+        <q-btn flat round color="dark" aria-label="Menu">
+          <q-avatar size="36px">
+            <img :src="avatar" />
+          </q-avatar>
+          <q-menu v-close-popup>
             <div class="row no-wrap q-pa-md">
               <div class="column col">
-                <q-list dense>
+                <div>{{ name }}</div>
+                <q-list dense class="q-pt-md">
                   <q-item
                     v-ripple
                     dense
@@ -31,26 +107,17 @@
                 <div class="text-caption q-pl-md text-grey-7">
                   NoteRiot v0.3.0
                 </div>
-              </div>
-              <q-separator inset vertical class="q-mx-md" />
-              <div class="column items-center">
-                <div class="column items-center">
-                  <q-avatar size="72px">
-                    <img :src="avatar" />
-                  </q-avatar>
-                  <div>{{ name }}</div>
-                  <q-btn
-                    v-close-popup
-                    no-caps
-                    unelevated
-                    outlined
-                    class="boom-border q-mt-lg"
-                    color="accent"
-                    label="Sign out"
-                    text-color="white"
-                    @click="logout"
-                  />
-                </div>
+                <q-btn
+                  v-close-popup
+                  no-caps
+                  unelevated
+                  outlined
+                  class="boom-border q-mt-lg"
+                  color="accent"
+                  label="Sign out"
+                  text-color="white"
+                  @click="logout"
+                />
               </div>
             </div>
           </q-menu>
@@ -61,10 +128,9 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="300"
-      class="text-nr"
+      :width="250"
+      class="text-nr bg-primary"
       :breakpoint="400"
-      dark
     >
       <q-toolbar>
         <img height="40px" src="/images/noteriot-round-wordmark.svg" />
@@ -196,6 +262,7 @@ export default {
   components: {
     BackupManager,
     ImportTool,
+    Search: () => import("components/Search.vue"),
   },
   data() {
     return {
@@ -212,6 +279,12 @@ export default {
   },
   methods: {
     ...mapActions("app", ["signOut", "setLabelFilter", "setColorFilter"]),
+    handleSort() {
+      console.log("handle sort");
+    },
+    handleFilter() {
+      console.log("handle filter");
+    },
     handleSignOut() {
       this.$q
         .dialog({

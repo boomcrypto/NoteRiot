@@ -1,42 +1,27 @@
 <template>
-  <div class="row">
-    <q-input
-      outlined
-      v-model="searchTerm"
-      color="accent"
-      type="search"
-      label="Search"
-      class="grow"
-      clearable
-      @input="handleSearch"
-      @keyup.enter="handleSearch"
-    >
-      <template #prepend>
-        <q-icon>
-          <img src="/images/search.svg" />
-        </q-icon>
-      </template>
-    </q-input>
-    <q-btn
-      outline
-      color="accent"
-      icon="sort"
-      label="Sort"
-      @click="onClick"
-      class="q-mx-md"
-    />
-    <q-btn
-      outline
-      color="accent"
-      icon="img:/images/filter.svg"
-      label="Filter"
-      @click="onClick"
-    />
-  </div>
+  <q-input
+    outlined
+    rounded
+    dense
+    v-model="searchTerm"
+    color="accent"
+    type="search"
+    label="Search"
+    class="q-mr-md"
+    clearable
+    @input="handleSearch"
+    @keyup.enter="handleSearch"
+  >
+    <template #prepend>
+      <q-icon>
+        <img src="/images/search.svg" />
+      </q-icon>
+    </template>
+  </q-input>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "SearchComponent",
@@ -44,6 +29,9 @@ export default {
     return {
       searchTerm: "",
     };
+  },
+  computed: {
+    ...mapGetters("app", ["tags", "colors"]),
   },
   methods: {
     ...mapActions("app", ["setSearchTerm"]),

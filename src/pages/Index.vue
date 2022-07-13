@@ -1,7 +1,6 @@
 <template>
   <q-page>
     <Container>
-      <Search class="q-my-lg" />
       <div v-if="notes.length">
         <div v-if="filterNotes.length">
           <div class="row q-col-gutter-md items-start">
@@ -59,7 +58,6 @@ export default {
     Container: () => import("components/Container.vue"),
     EmptyFilter,
     NoNotes,
-    Search: () => import("components/Search.vue"),
     Editor: () => import("components/Editor.vue"),
   },
   data() {
@@ -73,8 +71,14 @@ export default {
     ...mapState("app", ["notes"]),
   },
   methods: {
-    ...mapActions("app", ["addNote", "updateNote", "deleteNote"]),
+    ...mapActions("app", [
+      "addNote",
+      "updateNote",
+      "deleteNote",
+      "setLabelFilter",
+    ]),
     async handleAddNote() {
+      this.setLabelFilter = "";
       this.newNote = await this.addNote();
       this.showEditor = true;
       // const newNote = await this.addNote();
