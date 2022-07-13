@@ -32,7 +32,7 @@
       />
     </q-toolbar>
 
-    <q-card-section>
+    <q-card-section :class="$q.dark.isActive?'toastui-editor-dark':''">
       <editor
         ref="noteEditor"
         :initialValue="data.text"
@@ -49,6 +49,7 @@
 
 <script>
 import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { Editor } from "@toast-ui/vue-editor";
 import { mapActions, mapState } from "vuex";
 import { debounce } from "quasar";
@@ -92,6 +93,7 @@ export default {
     this.onContentChange = debounce(this.onContentChange, 1000, {
       maxWait: 3000,
     });
+
   },
   computed: {
     savingMessage() {

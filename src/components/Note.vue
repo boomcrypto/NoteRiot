@@ -157,7 +157,7 @@
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <q-card>
+      <q-card :class="$q.dark.isActive?'toastui-editor-dark':''">
         <Editor
           :data="this.data"
           @update-note="handleUpdates"
@@ -176,6 +176,7 @@ import { Viewer } from "@toast-ui/vue-editor";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 
 export default {
   name: "Note",
