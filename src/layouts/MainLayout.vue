@@ -59,14 +59,14 @@
         >
           <q-menu>
             <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup>
+              <q-item clickable>
                 <q-item-section
                   >Tag(s):
                   <q-select v-model="tagFilter" :options="tags" />
                 </q-item-section>
               </q-item>
               <q-separator />
-              <q-item clickable v-close-popup>
+              <q-item clickable>
                 <q-item-section
                   >Color:
                   <q-select v-model="colorFilter" :options="colors" />
@@ -75,6 +75,13 @@
             </q-list>
           </q-menu>
         </q-btn>
+        <q-btn
+          class="q-mr-xs"
+          flat
+          round :color="$q.dark.isActive ?'white':'grey-8'"
+          @click="$q.dark.toggle()"
+          :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
+        />
         <q-btn flat round color="dark" aria-label="Menu">
           <q-avatar size="36px">
             <img :src="avatar" />
@@ -135,7 +142,9 @@
       <q-toolbar>
         <img height="40px" src="/images/noteriot-round-wordmark.svg" />
       </q-toolbar>
-      <q-scroll-area style="height: 100%; margin-top: 60px">
+<!--      margin-top: 60px-->
+<!--      Removed Margin-->
+      <q-scroll-area style="height: 100%;margin-top: 10px">
         <q-list>
           <q-item-label header>Filters</q-item-label>
           <q-item
@@ -274,7 +283,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("app", ["user", "labelFilter", "username", "colorFilter"]),
+    ...mapState("app", ["user", "labelFilter", "username", "colorFilter", "tagFilter"]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
   methods: {
