@@ -2,7 +2,7 @@
   <div>
     <q-card
       class="boom-card"
-      :class="`bg-${data.color}-4`"
+      :class="`bg-${data.color}-4`+($q.dark.isActive?' boom-card-dark':'')"
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
       @click="handleEditNote"
@@ -12,13 +12,13 @@
         border-radius: 8px;
         overflow: hidden;
       "
-      :style="buttonBarVisibility ? 'cursor: pointer' : ''"
+      :style="buttonBarVisibility ? 'cursor: pointer' : '' + ( $q.dark.isActive ? 'color: white' : '')"
       :key="data.id"
     >
       <q-item class="q-px-none">
         <q-item-section>
-          <q-item-label class="note-title">{{ displayTitle }}</q-item-label>
-          <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
+          <q-item-label class="note-title" :style="$q.dark.isActive ? 'color: white' : ''">{{ displayTitle }}</q-item-label>
+          <q-item-label class="timestamp" :style="$q.dark.isActive ? 'color: white' : ''">{{ lastModified }}</q-item-label>
         </q-item-section>
         <!-- <q-item-section side top>
           <NoteActions
@@ -29,7 +29,7 @@
           />
         </q-item-section> -->
       </q-item>
-      <q-card-section style="overflow: hidden">
+      <q-card-section style="overflow: hidden" :class="$q.dark.isActive ?'toastui-editor-contents-dark':''">
         <viewer :initialValue="data.text" :key="data.modified" />
       </q-card-section>
       <q-card-section
@@ -157,7 +157,7 @@
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <q-card>
+      <q-card :class="$q.dark.isActive?'toastui-editor-dark':''">
         <Editor
           :data="this.data"
           @update-note="handleUpdates"
@@ -176,6 +176,7 @@ import { Viewer } from "@toast-ui/vue-editor";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 
 export default {
   name: "Note",

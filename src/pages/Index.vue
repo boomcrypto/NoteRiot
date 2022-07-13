@@ -33,7 +33,7 @@
     </q-page-sticky>
     <q-dialog
       v-model="showEditor"
-      maximized
+      maximized :class="$q.dark.isActive?'toastui-editor-dark':''"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
@@ -50,6 +50,7 @@
 import { mapGetters, mapState, mapActions } from "vuex";
 import EmptyFilter from "../components/EmptyFilter.vue";
 import NoNotes from "../components/NoNotes.vue";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 
 export default {
   name: "PageIndex",

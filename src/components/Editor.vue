@@ -14,7 +14,7 @@
           :input-class="currentTitle.length < 50 ? 'text-h3' : 'text-h5'"
           maxlength="80"
           placeholder="Untitled note"
-          input-style="color: grey; font-weight: bold"
+          :input-style="$q.dark.isActive?{color: 'white','font-weight': 'bold'}:{color: 'grey','font-weight': 'bold'}"
         >
         </q-input>
       </q-toolbar-title>
@@ -32,7 +32,7 @@
       />
     </q-toolbar>
 
-    <q-card-section>
+    <q-card-section :class="$q.dark.isActive?'toastui-editor-dark':''">
       <editor
         ref="noteEditor"
         :initialValue="data.text"
@@ -49,6 +49,7 @@
 
 <script>
 import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { Editor } from "@toast-ui/vue-editor";
 import { mapActions, mapState } from "vuex";
 import { debounce } from "quasar";
@@ -92,6 +93,7 @@ export default {
     this.onContentChange = debounce(this.onContentChange, 1000, {
       maxWait: 3000,
     });
+
   },
   computed: {
     savingMessage() {

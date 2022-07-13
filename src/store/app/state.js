@@ -6,6 +6,7 @@ export default () => {
     loadingMsg: "",
     labelFilter: "all",
     colorFilter: "",
+    tagFilter: "",
     searchTerm: "",
     noteColors: [
       "none",
