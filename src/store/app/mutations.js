@@ -52,5 +52,8 @@ export function setSearchTerm(state, st) {
 }
 
 export function setSortBy(state, payload) {
+  if(state.sortBy===payload){
+    state.sortDirection = state.sortDirection==='desc'?'asc':'desc'
+  }
   state.sortBy = payload;
 }

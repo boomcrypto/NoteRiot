@@ -50,20 +50,21 @@ export function filterNotes(state) {
   let re = new RegExp(state.searchTerm, "i");
   // pre-defined filters
   if (state.labelFilter === "all") {
-    return state.notes.filter(
+    const filteredNotes = state.notes.filter(
       (note) => !note.trash && (re.test(note.text) || re.test(note.title))
     );
+    return sortFilter(state,filteredNotes);
   } else if (state.labelFilter === "archive") {
     const filteredNotes = state.notes.filter(
       (note) => note.trash && (re.test(note.text) || re.test(note.title))
     );
-    return sortFilter(filteredNotes);
+    return sortFilter(state,filteredNotes);
   } else if (state.labelFilter === "favorite") {
     const filteredNotes = state.notes.filter(
       (note) =>
         note.fave && !note.trash && (re.test(note.text) || re.test(note.title))
     );
-    return sortFilter(filteredNotes);
+    return sortFilter(state,filteredNotes);
   } else if (state.labelFilter.startsWith("color:")) {
     let colorFilter = state.labelFilter.split(":")[1];
     const filteredNotes = state.notes.filter(
@@ -72,7 +73,7 @@ export function filterNotes(state) {
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );
-    return sortFilter(filteredNotes);
+    return sortFilter(state,filteredNotes);
   } else {
     // user generated label
     const filteredNotes = state.notes.filter(
@@ -82,7 +83,7 @@ export function filterNotes(state) {
         !note.trash
     );
 
-    return sortFilter(filteredNotes);
+    return sortFilter(state,filteredNotes);
   }
 }
 
@@ -91,14 +92,26 @@ export function getNoteById(state, id) {
 }
 
 function sortFilter(state, notes) {
+
   console.log("sortFilter: ", notes);
   if (state.sortBy === "title") {
-    return orderby(notes, ["title"], [state.sortDirection]);
+    return sortNotes(notes,state.sortDirection,'title');
   } else if (state.sortBy === "createdAt") {
-    return orderby(notes, ["created"], [state.sortDirection]);
+    return sortNotes(notes,state.sortDirection,'created');
   } else if (state.sortBy === "updatedAt") {
-    return orderby(notes, ["modified"], [state.sortDirection]);
+    return sortNotes(notes,state.sortDirection,'modified')
   } else {
     return state.notes;
   }
+}
+
+function sortNotes(data, direction, field) {
+  data.sort((a, b) => {
+    if (!(direction==='asc'))
+      return (a[field] === null) - (b[field] === null) || +(a[field] > b[field]) || -(a[field] < b[field]);
+    else {
+      return (a[field] === null) - (b[field] === null) || -(a[field] > b[field]) || +(a[field] < b[field]);
+    }
+  })
+  return data
 }
