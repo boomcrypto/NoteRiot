@@ -6,49 +6,57 @@
         <Search />
         <q-btn flat rounded color="accent" icon="sort">
           <q-menu>
-            <!--            <q-card flat class="boom-card">-->
-            <!--              <q-card-section class="q-pa-none">-->
-            <q-list>
-              <q-item
-                :active="sortBy === 'title'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                v-close-popup
-                @click="handleSetCurrentSortBy('title')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="sort_by_alpha" class="col" />
-                </q-item-section>
-                <q-item-section> Title</q-item-section>
-              </q-item>
-              <q-item
-                :active="sortBy === 'createdAt'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                @click="handleSetCurrentSortBy('createdAt')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="access_time" />
-                </q-item-section>
-                <q-item-section> Date</q-item-section>
-              </q-item>
-              <q-item
-                :active="sortBy === 'updatedAt'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                @click="handleSetCurrentSortBy('updatedAt')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="update" />
-                </q-item-section>
-                <q-item-section> Updated</q-item-section>
-              </q-item>
-            </q-list>
-            <!--              </q-card-section>-->
-            <!--            </q-card>-->
+<!--            <q-card flat class="boom-card">-->
+<!--              <q-card-section class="q-pa-none">-->
+                <q-list>
+                  <q-item
+                    :active="sortBy === 'title'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('title')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="sort_by_alpha" class="col"/>
+                    </q-item-section>
+                    <q-item-section> Title</q-item-section>
+                    <q-item-section side>
+                      <q-icon v-if="sortBy === 'title'" :name="sortDirection==='asc'?'north_east':'south_east'" size="14px" class="col"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    :active="sortBy === 'createdAt'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('createdAt')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="access_time"/>
+                    </q-item-section>
+                    <q-item-section> Date</q-item-section>
+                    <q-item-section side>
+                      <q-icon v-if="sortBy === 'createdAt'" :name="sortDirection==='asc'?'north_east':'south_east'" size="14px" class="col"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    :active="sortBy === 'updatedAt'"
+                    active-class="activeSort"
+                    clickable
+                    v-ripple
+                    @click="handleSetCurrentSortBy('updatedAt')"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="update"/>
+                    </q-item-section>
+                    <q-item-section> Updated</q-item-section>
+                    <q-item-section side>
+                      <q-icon v-if="sortBy === 'updatedAt'" :name="sortDirection==='asc'?'north_east':'south_east'" size="14px"  class="col"/>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+<!--              </q-card-section>-->
+<!--            </q-card>-->
           </q-menu>
         </q-btn>
         <q-btn
@@ -338,6 +346,7 @@ export default {
       "colorFilter",
       "tagFilter",
       "sortBy",
+      "sortDirection"
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
