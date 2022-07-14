@@ -16,7 +16,7 @@ export function tags(state) {
 }
 
 export function name(state) {
-  return state.user.profile?.name || "";
+  return state.user.profile.hasOwnProperty('name')?state.user.profile.name : "";
 }
 
 export function avatar(state) {
