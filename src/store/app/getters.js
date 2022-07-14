@@ -16,11 +16,16 @@ export function tags(state) {
 }
 
 export function name(state) {
-  return state.user.profile.hasOwnProperty('name')?state.user.profile.name : "";
+  return state.user.profile.hasOwnProperty("name")
+    ? state.user.profile.name
+    : "";
 }
 
 export function avatar(state) {
-  return state.user.profile.hasOwnProperty('image') && state.user.profile.image.length>0?state.user.profile.image[0].contentUrl :"/images/avataaars.svg";
+  return state.user.profile.hasOwnProperty("image") &&
+    state.user.profile.image.length > 0
+    ? state.user.profile.image[0].contentUrl
+    : "/images/avataaars.svg";
 }
 
 export function colors(state) {
@@ -53,18 +58,18 @@ export function filterNotes(state) {
     const filteredNotes = state.notes.filter(
       (note) => !note.trash && (re.test(note.text) || re.test(note.title))
     );
-    return sortFilter(state,filteredNotes);
+    return sortFilter(state, filteredNotes);
   } else if (state.labelFilter === "archive") {
     const filteredNotes = state.notes.filter(
       (note) => note.trash && (re.test(note.text) || re.test(note.title))
     );
-    return sortFilter(state,filteredNotes);
+    return sortFilter(state, filteredNotes);
   } else if (state.labelFilter === "favorite") {
     const filteredNotes = state.notes.filter(
       (note) =>
         note.fave && !note.trash && (re.test(note.text) || re.test(note.title))
     );
-    return sortFilter(state,filteredNotes);
+    return sortFilter(state, filteredNotes);
   } else if (state.labelFilter.startsWith("color:")) {
     let colorFilter = state.labelFilter.split(":")[1];
     const filteredNotes = state.notes.filter(
@@ -73,17 +78,22 @@ export function filterNotes(state) {
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );
-    return sortFilter(state,filteredNotes);
+    return sortFilter(state, filteredNotes);
   } else {
     // user generated label
-    const filteredNotes = state.notes.filter(
-      (note) =>
-        note.tags.includes(state.labelFilter) &&
-        (re.test(note.text) || re.test(note.title)) &&
-        !note.trash
-    );
+    const filteredNotes = state.notes.filter((note) => {
+      if (note.hasOwnProperty("tags")) {
+        return (
+          note.tags.includes(state.labelFilter) &&
+          (re.test(note.text) || re.test(note.title)) &&
+          !note.trash
+        );
+      } else {
+        console.log("missing tags: ", note);
+      }
+    });
 
-    return sortFilter(state,filteredNotes);
+    return sortFilter(state, filteredNotes);
   }
 }
 
@@ -92,14 +102,13 @@ export function getNoteById(state, id) {
 }
 
 function sortFilter(state, notes) {
-
   console.log("sortFilter: ", notes);
   if (state.sortBy === "title") {
-    return sortNotes(notes,state.sortDirection,'title');
+    return sortNotes(notes, state.sortDirection, "title");
   } else if (state.sortBy === "createdAt") {
-    return sortNotes(notes,state.sortDirection,'created');
+    return sortNotes(notes, state.sortDirection, "created");
   } else if (state.sortBy === "updatedAt") {
-    return sortNotes(notes,state.sortDirection,'modified')
+    return sortNotes(notes, state.sortDirection, "modified");
   } else {
     return state.notes;
   }
@@ -107,11 +116,19 @@ function sortFilter(state, notes) {
 
 function sortNotes(data, direction, field) {
   data.sort((a, b) => {
-    if (!(direction==='asc'))
-      return (a[field] === null) - (b[field] === null) || +(a[field] > b[field]) || -(a[field] < b[field]);
+    if (!(direction === "asc"))
+      return (
+        (a[field] === null) - (b[field] === null) ||
+        +(a[field] > b[field]) ||
+        -(a[field] < b[field])
+      );
     else {
-      return (a[field] === null) - (b[field] === null) || -(a[field] > b[field]) || +(a[field] < b[field]);
+      return (
+        (a[field] === null) - (b[field] === null) ||
+        -(a[field] > b[field]) ||
+        +(a[field] < b[field])
+      );
     }
-  })
-  return data
+  });
+  return data;
 }
