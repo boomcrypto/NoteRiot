@@ -92,10 +92,13 @@
               <q-list style="min-width: 250px">
                 <q-item-label header class="text-weight-bold">
                   <span>Add Filters</span>
-                  <span
+                  <q-btn
+                    flat
+                    dense
+                    @click="handleClearFilters"
                     class="float-right text-caption"
                     style="margin-top: -1px"
-                    >Clear All</span
+                    >Clear All</q-btn
                   >
                 </q-item-label>
 
@@ -129,9 +132,11 @@
                   <q-item-section>
                     <q-select
                       dense
+                      use-chips
                       v-model="colorFilter"
                       class="full-width"
                       :options="colors"
+                      @input="handleSetColorFilter"
                     />
                   </q-item-section>
                 </q-item>
@@ -225,7 +230,7 @@
       </q-tabs>
     </q-footer>
 
-    <q-drawer
+    <!-- <q-drawer
       v-if="$q.screen.gt.xs"
       v-model="leftDrawerOpen"
       show-if-above
@@ -320,14 +325,7 @@
           </template>
         </q-list>
       </q-scroll-area>
-      <!-- <div class="absolute-top">
-        <q-card dark flat class="q-mb-md">
-          <q-card-section>
-            <div class="text-h5">NoteRiot</div>
-          </q-card-section>
-        </q-card>
-      </div> -->
-    </q-drawer>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -363,6 +361,7 @@ export default {
       data: null,
       showDialog: false,
       tagFilter: null,
+      colorFilter: null,
     };
   },
   computed: {
@@ -370,21 +369,30 @@ export default {
       "user",
       "labelFilter",
       "username",
-      "colorFilter",
       "sortBy",
       "sortDirection",
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
   methods: {
-    ...mapActions("app", [
-      "signOut",
-      "setLabelFilter",
-      "setColorFilter",
-      "setSortBy",
-    ]),
+    ...mapActions("app", ["signOut", "setLabelFilter", "setSortBy"]),
+    handleClearFilters() {
+      this.setLabelFilter("all");
+      this.tagFilter = null;
+    },
+    handleSetColorFilter() {
+      if (this.colorFilter !== null) {
+        this.setLabelFilter(`color:${this.colorFilter}`);
+      } else {
+        this.setLabelFilter("all");
+      }
+    },
     handleSetTagFilter() {
-      this.setLabelFilter(this.tagFilter);
+      if (this.tagFilter !== null) {
+        this.setLabelFilter(this.tagFilter);
+      } else {
+        this.setLabelFilter("all");
+      }
     },
     handleFilter() {
       console.log("handle filter");
