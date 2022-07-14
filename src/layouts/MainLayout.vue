@@ -88,49 +88,55 @@
           @click="handleFilter"
         >
           <q-menu fit>
-            <q-list style="min-width: 250px">
-              <q-item-label header class="text-weight-bold">
-                <span>Add Filters</span>
-                <span class="float-right text-caption" style="margin-top: -1px"
-                  >Clear All</span
-                >
-              </q-item-label>
+            <q-card flat class="boom-card">
+              <q-list style="min-width: 250px">
+                <q-item-label header class="text-weight-bold">
+                  <span>Add Filters</span>
+                  <span
+                    class="float-right text-caption"
+                    style="margin-top: -1px"
+                    >Clear All</span
+                  >
+                </q-item-label>
 
-              <q-item clickable class="q-pa-none">
-                <q-item-section side>
-                  <div>
-                    <q-icon name="sell" class="q-mr-sm" size="14px" />
-                    Tag(s)
-                  </div>
-                </q-item-section>
-                <q-item-section>
-                  <q-select
-                    dense
-                    v-model="tagFilter"
-                    :options="tags"
-                    class="full-width"
-                    style="width: 120px"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable class="q-pa-none">
-                <q-item-section side>
-                  <div>
-                    <q-icon name="palette" class="q-mr-sm" size="14px" />
-                    Color
-                  </div>
-                </q-item-section>
-                <q-item-section>
-                  <q-select
-                    dense
-                    v-model="colorFilter"
-                    class="full-width"
-                    :options="colors"
-                  />
-                </q-item-section>
-              </q-item>
-            </q-list>
+                <q-item clickable class="q-pa-none">
+                  <q-item-section side>
+                    <div>
+                      <q-icon name="sell" class="q-mr-sm" size="14px" />
+                      Tag(s)
+                    </div>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-select
+                      dense
+                      use-chips
+                      v-model="tagFilter"
+                      :options="tags"
+                      class="full-width"
+                      style="width: 120px"
+                      @input="handleSetTagFilter"
+                    />
+                  </q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable class="q-pa-none">
+                  <q-item-section side>
+                    <div>
+                      <q-icon name="palette" class="q-mr-sm" size="14px" />
+                      Color
+                    </div>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-select
+                      dense
+                      v-model="colorFilter"
+                      class="full-width"
+                      :options="colors"
+                    />
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
           </q-menu>
         </q-btn>
         <q-btn
@@ -356,6 +362,7 @@ export default {
       component: null,
       data: null,
       showDialog: false,
+      tagFilter: null,
     };
   },
   computed: {
@@ -364,7 +371,6 @@ export default {
       "labelFilter",
       "username",
       "colorFilter",
-      "tagFilter",
       "sortBy",
       "sortDirection",
     ]),
@@ -377,6 +383,9 @@ export default {
       "setColorFilter",
       "setSortBy",
     ]),
+    handleSetTagFilter() {
+      this.setLabelFilter(this.tagFilter);
+    },
     handleFilter() {
       console.log("handle filter");
     },
