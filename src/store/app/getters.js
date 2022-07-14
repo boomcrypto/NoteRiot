@@ -16,11 +16,11 @@ export function tags(state) {
 }
 
 export function name(state) {
-  return state.user.profile?.name || "";
+  return state.user.profile.hasOwnProperty('name')?state.user.profile.name : "";
 }
 
 export function avatar(state) {
-  return state.user.profile?.image[0]?.contentUrl || "/images/avataaars.svg";
+  return state.user.profile.hasOwnProperty('image') && state.user.profile.image.length>0?state.user.profile.image[0].contentUrl :"/images/avataaars.svg";
 }
 
 export function colors(state) {
