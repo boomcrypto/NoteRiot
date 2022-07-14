@@ -20,7 +20,7 @@ export function name(state) {
 }
 
 export function avatar(state) {
-  return state.user.profile?.image[0]?.contentUrl || "/images/avataaars.svg";
+  return state.user.profile.hasOwnProperty('image') && state.user.profile.image.length>0?state.user.profile.image[0].contentUrl :"/images/avataaars.svg";
 }
 
 export function colors(state) {
