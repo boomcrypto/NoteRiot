@@ -119,15 +119,23 @@
             </q-tooltip>
           </q-btn>
           <q-btn dense round flat @click.stop="restoreNote()" v-if="note.trash">
-            <q-icon color="accent">
-              <img src="/images/restore.svg" />
-            </q-icon>
+            <q-icon color="accent" name="img:/images/restore.svg" />
             <q-tooltip
               anchor="bottom middle"
               self="bottom middle"
               :offset="[10, 30]"
             >
               Restore from archive
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense round flat @click.stop="deleteNote()" v-else>
+            <q-icon color="accent" name="img:/images/trash.svg" />
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Archive note
             </q-tooltip>
           </q-btn>
         </div>
