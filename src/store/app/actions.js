@@ -91,3 +91,7 @@ const getAllFiles = async () => {
 export function setSearchTerm(context, searchTerm) {
   context.commit("setSearchTerm", searchTerm);
 }
+
+export function setSortBy(context, payload) {
+  context.commit("setSortBy", payload);
+}

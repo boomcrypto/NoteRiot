@@ -7,6 +7,8 @@ export default () => {
     labelFilter: "all",
     colorFilter: "",
     tagFilter: "",
+    sortBy: "createdAt",
+    sortDirection: "asc",
     searchTerm: "",
     noteColors: [
       "none",

@@ -55,44 +55,52 @@ export function filterNotes(state) {
     return state.notes.filter(
       (note) => !note.trash && (re.test(note.text) || re.test(note.title))
     );
-  } else if (state.labelFilter === "recents") {
-    let recentNotes = state.notes.filter(
-      (note) => !note.trash && (re.test(note.text) || re.test(note.title))
-    );
-    recentNotes = orderby(recentNotes, "modified", "desc");
-    return recentNotes;
   } else if (state.labelFilter === "archive") {
-    return state.notes.filter(
+    const filteredNotes = state.notes.filter(
       (note) => note.trash && (re.test(note.text) || re.test(note.title))
     );
+    return sortFilter(filteredNotes);
   } else if (state.labelFilter === "favorite") {
-    return state.notes.filter(
+    const filteredNotes = state.notes.filter(
       (note) =>
         note.fave && !note.trash && (re.test(note.text) || re.test(note.title))
     );
+    return sortFilter(filteredNotes);
   } else if (state.labelFilter.startsWith("color:")) {
     let colorFilter = state.labelFilter.split(":")[1];
-    return state.notes.filter(
+    const filteredNotes = state.notes.filter(
       (note) =>
         note.color === colorFilter &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );
+    return sortFilter(filteredNotes);
   } else {
     // user generated label
-    console.log("user generated label");
-    console.log("filter: ", state.labelFilter);
-    console.log("searchTerm: ", state.searchTerm);
-    console.log("notes: ", state.notes);
-    return state.notes.filter(
+    const filteredNotes = state.notes.filter(
       (note) =>
         note.tags.includes(state.labelFilter) &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );
+
+    return sortFilter(filteredNotes);
   }
 }
 
 export function getNoteById(state, id) {
   return state.notes.find((note) => note.id === id);
+}
+
+function sortFilter(state, notes) {
+  console.log("sortFilter: ", notes);
+  if (state.sortBy === "title") {
+    return orderby(notes, ["title"], [state.sortDirection]);
+  } else if (state.sortBy === "createdAt") {
+    return orderby(notes, ["created"], [state.sortDirection]);
+  } else if (state.sortBy === "updatedAt") {
+    return orderby(notes, ["modified"], [state.sortDirection]);
+  } else {
+    return state.notes;
+  }
 }

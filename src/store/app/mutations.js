@@ -50,3 +50,7 @@ export function addNote(state, note) {
 export function setSearchTerm(state, st) {
   state.searchTerm = st;
 }
+
+export function setSortBy(state, payload) {
+  state.sortBy = payload;
+}

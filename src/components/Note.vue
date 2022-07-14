@@ -2,37 +2,44 @@
   <div>
     <q-card
       class="boom-card"
-      :class="`bg-${data.color}-4`+($q.dark.isActive?' boom-card-dark':'')"
+      :class="
+        `bg-${data.color}-4` + ($q.dark.isActive ? ' boom-card-dark' : '')
+      "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
       @click="handleEditNote"
-      style="
-        border: 1px solid #d8d8d8;
-        height: 310px;
-        border-radius: 8px;
-        overflow: hidden;
+      style="height: 310px; overflow: hidden"
+      :style="
+        buttonBarVisibility
+          ? 'cursor: pointer'
+          : '' + ($q.dark.isActive ? 'color: white' : '')
       "
-      :style="buttonBarVisibility ? 'cursor: pointer' : '' + ( $q.dark.isActive ? 'color: white' : '')"
       :key="data.id"
     >
-      <q-item class="q-px-none">
-        <q-item-section>
-          <q-item-label class="note-title" :style="$q.dark.isActive ? 'color: white' : ''">{{ displayTitle }}</q-item-label>
-          <q-item-label class="timestamp" :style="$q.dark.isActive ? 'color: white' : ''">{{ lastModified }}</q-item-label>
-        </q-item-section>
-        <!-- <q-item-section side top>
-          <NoteActions
-            v-if="buttonBarVisibility"
-            :note="data"
-            style="margin-top: -8px; margin-right: -16px"
-            @update-note="handleUpdates"
-          />
-        </q-item-section> -->
-      </q-item>
-      <q-card-section style="overflow: hidden" :class="$q.dark.isActive ?'toastui-editor-contents-dark':''">
-        <viewer :initialValue="data.text" :key="data.modified" />
+      <q-img
+        v-if="data.attachments.length"
+        :src="data.attachments[0].url"
+        :ratio="16 / 9"
+        spinner-color="accent"
+        spinner-size="48px"
+      />
+      <q-card-section>
+        <div class="note-title">
+          {{ displayTitle }}
+        </div>
+        <div class="timestamp">
+          {{ lastModified }}
+        </div>
+        <div :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''">
+          <viewer :initialValue="data.text" :key="data.modified" />
+        </div>
       </q-card-section>
-      <q-card-section
+      <!-- <q-card-section
+        style="overflow: hidden"
+        :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
+      >
+      </q-card-section> -->
+      <!-- <q-card-section
         class="attachment-previews q-px-none"
         v-if="data.attachments"
       >
@@ -42,8 +49,8 @@
           :key="`${data.id}-${index}`"
           :style="`backgroundImage: url('${attachment.url}')`"
         ></div>
-      </q-card-section>
-      <q-inner-loading :showing="buttonBarVisibility">
+      </q-card-section> -->
+      <!-- <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
           <q-btn dense round flat @click.stop="handleFave()">
             <q-icon>
@@ -143,7 +150,7 @@
             </template>
           </q-chip>
         </q-card-section>
-      </q-inner-loading>
+      </q-inner-loading> -->
     </q-card>
     <q-dialog v-model="showTagManager">
       <TagEditor :note="this.data" @update-note="handleUpdates" />
@@ -157,7 +164,7 @@
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <q-card :class="$q.dark.isActive?'toastui-editor-dark':''">
+      <q-card :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
         <Editor
           :data="this.data"
           @update-note="handleUpdates"
@@ -322,16 +329,6 @@ export default {
 </script>
 
 <style scoped>
-.timestamp {
-  font-family: "IBM Plex Sans";
-  font-size: 13px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #4a4a4a;
-}
 .media-thumb-unique {
   width: 64px;
   height: 64px;
@@ -350,9 +347,9 @@ export default {
   -ms-flex-align: center;
   align-items: center;
 }
-/* .boom-card:hover,
+.boom-card:hover,
 .boom-card:focus-within {
   transition: all 0.2s ease-in-out;
-  transform: scale(105%);
-} */
+  transform: scale(103%);
+}
 </style>

@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-space />
         <Search />
-        <q-btn flat rounded color="accent" icon="sort" @click="handleSort">
+        <q-btn flat rounded color="accent" icon="sort">
           <q-menu>
             <q-card flat class="boom-card">
               <q-card-section class="q-pa-none">
@@ -14,10 +14,11 @@
                     active-class="activeSort"
                     clickable
                     v-ripple
+                    v-close-popup
                     @click="handleSetCurrentSortBy('title')"
                   >
                     <q-item-section avatar>
-                      <q-icon name="sort_by_alpha" />
+                      <q-icon name="sort_by_alpha" class="col" />
                     </q-item-section>
                     <q-item-section> Title </q-item-section>
                   </q-item>
@@ -78,7 +79,8 @@
         <q-btn
           class="q-mr-xs"
           flat
-          round :color="$q.dark.isActive ?'white':'grey-8'"
+          round
+          :color="$q.dark.isActive ? 'white' : 'grey-8'"
           @click="$q.dark.toggle()"
           :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
         />
@@ -142,9 +144,8 @@
       <q-toolbar>
         <img height="40px" src="/images/noteriot-round-wordmark.svg" />
       </q-toolbar>
-<!--      margin-top: 60px-->
-<!--      Removed Margin-->
-      <q-scroll-area style="height: 100%;margin-top: 10px">
+
+      <q-scroll-area style="height: 100%; margin-top: 10px">
         <q-list>
           <q-item-label header>Filters</q-item-label>
           <q-item
@@ -172,20 +173,6 @@
             </q-item-section>
 
             <q-item-section> Favorites </q-item-section>
-          </q-item>
-
-          <q-item
-            :active="labelFilter === 'recents'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('recents')"
-          >
-            <q-item-section avatar>
-              <q-icon name="more_time" />
-            </q-item-section>
-
-            <q-item-section> Recents </q-item-section>
           </q-item>
 
           <q-item
@@ -283,14 +270,23 @@ export default {
     };
   },
   computed: {
-    ...mapState("app", ["user", "labelFilter", "username", "colorFilter", "tagFilter"]),
+    ...mapState("app", [
+      "user",
+      "labelFilter",
+      "username",
+      "colorFilter",
+      "tagFilter",
+      "sortBy",
+    ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
   methods: {
-    ...mapActions("app", ["signOut", "setLabelFilter", "setColorFilter"]),
-    handleSort() {
-      console.log("handle sort");
-    },
+    ...mapActions("app", [
+      "signOut",
+      "setLabelFilter",
+      "setColorFilter",
+      "setSortBy",
+    ]),
     handleFilter() {
       console.log("handle filter");
     },
@@ -326,6 +322,7 @@ export default {
         this.leftDrawerOpen = false;
       }
     },
+
     handleSetCurrentLabelFilter(tag) {
       this.setLabelFilter(tag);
       if (this.$route.name !== "Index") {
@@ -334,6 +331,9 @@ export default {
       if (this.$q.screen.xs) {
         this.leftDrawerOpen = false;
       }
+    },
+    handleSetCurrentSortBy(val) {
+      this.setSortBy(val);
     },
     handleOpenBackupManager() {
       this.$router.push({ name: "BackupManager" });
@@ -356,5 +356,8 @@ export default {
   /* background-color: #f5ebf6; */
   background-color: white;
   border-right: none !important;
+}
+.activeSort {
+  color: #9c27b0;
 }
 </style>
