@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div :class="$q.screen.xs ? 'q-pa-sm' : 'q-pa-xl'">
     <slot></slot>
   </div>
 </template>
