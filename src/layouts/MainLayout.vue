@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-transparent">
+    <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
       <q-toolbar>
         <q-space/>
         <Search/>
@@ -150,7 +150,37 @@
       </q-toolbar>
     </q-header>
 
+    <q-footer
+      v-if="$q.screen.xs"
+      elevated
+      class="bg-white"
+      style="
+        max-width: 480px;
+        margin: auto;
+        box-shadow: inset 0px 1px 0px #e9d1f2;
+      "
+    >
+      <q-tabs indicator-color="transparent">
+        <q-tab
+          no-caps
+          class="webbyTab"
+          active-class="text-accent activeTab"
+          icon="menu"
+          name="menu"
+        />
+        <q-space />
+        <q-tab
+          no-caps
+          class="webbyTab"
+          active-class="activeTab text-accent"
+          icon="search"
+          name="search"
+        />
+      </q-tabs>
+    </q-footer>
+
     <q-drawer
+      v-if="$q.screen.gt.xs"
       v-model="leftDrawerOpen"
       show-if-above
       :width="250"
@@ -214,7 +244,7 @@
             @click="handleSetCurrentLabelFilter(tag)"
           >
             <q-item-section avatar>
-              <q-icon name="label"/>
+              <q-icon name="img:/images/label.svg" />
             </q-item-section>
             <q-item-section>
               {{ tag }}
@@ -259,6 +289,9 @@
         <component :is="component" :data="data"/>
       </q-dialog>
     </q-page-container>
+    <q-page-sticky class="override-bottom-space" position="bottom-right">
+      <img src="/images/bottom-right.svg" />
+    </q-page-sticky>
   </q-layout>
 </template>
 
@@ -376,5 +409,8 @@ export default {
 
 .activeSort {
   color: #9c27b0;
+}
+.webbyTab {
+  max-width: 120px !important;
 }
 </style>

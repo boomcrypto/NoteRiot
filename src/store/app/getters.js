@@ -19,10 +19,8 @@ export function name(state) {
   return state.user.profile?.name || "";
 }
 
-// TODO: refactor avatar display
 export function avatar(state) {
-  // return state.user.profile?.image[0].contentUrl || "/images/avataaars.svg";
-  return "/images/avataaars.svg";
+  return state.user.profile?.image[0]?.contentUrl || "/images/avataaars.svg";
 }
 
 export function colors(state) {

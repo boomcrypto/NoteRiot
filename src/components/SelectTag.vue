@@ -1,7 +1,7 @@
 <template>
   <q-card flat class="dialog-card">
     <q-toolbar class="bg-transparent">
-      <q-icon flat round dense name="label" />
+      <q-icon flat round dense name="img:/images/label.svg" />
       <q-toolbar-title>Tag Manager</q-toolbar-title>
       <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar>

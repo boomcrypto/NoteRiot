@@ -20,7 +20,11 @@
         <NoNotes />
       </div>
     </Container>
-    <q-page-sticky position="bottom-right" :offset="[50, 50]">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[50, 50]"
+      v-if="$q.screen.gt.xs"
+    >
       <q-btn
         round
         size="48px"
@@ -31,9 +35,21 @@
         padding="30px"
       />
     </q-page-sticky>
+    <q-page-sticky position="bottom" :offset="[10, -10]" v-else>
+      <q-btn
+        round
+        size="24px"
+        fab
+        icon="add"
+        color="accent"
+        @click="handleAddNote"
+        padding="30px"
+      />
+    </q-page-sticky>
     <q-dialog
       v-model="showEditor"
-      maximized :class="$q.dark.isActive?'toastui-editor-dark':''"
+      maximized
+      :class="$q.dark.isActive ? 'toastui-editor-dark' : ''"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
