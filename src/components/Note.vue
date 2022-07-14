@@ -50,7 +50,7 @@
           :style="`backgroundImage: url('${attachment.url}')`"
         ></div>
       </q-card-section> -->
-      <!-- <q-inner-loading :showing="buttonBarVisibility">
+      <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
           <q-btn dense round flat @click.stop="handleFave()">
             <q-icon>
@@ -150,7 +150,7 @@
             </template>
           </q-chip>
         </q-card-section>
-      </q-inner-loading> -->
+      </q-inner-loading>
     </q-card>
     <q-dialog v-model="showTagManager">
       <TagEditor :note="this.data" @update-note="handleUpdates" />
