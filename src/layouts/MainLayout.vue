@@ -2,53 +2,53 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
       <q-toolbar>
-        <q-space/>
-        <Search/>
+        <q-space />
+        <Search />
         <q-btn flat rounded color="accent" icon="sort">
           <q-menu>
-<!--            <q-card flat class="boom-card">-->
-<!--              <q-card-section class="q-pa-none">-->
-                <q-list>
-                  <q-item
-                    :active="sortBy === 'title'"
-                    active-class="activeSort"
-                    clickable
-                    v-ripple
-                    v-close-popup
-                    @click="handleSetCurrentSortBy('title')"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="sort_by_alpha" class="col"/>
-                    </q-item-section>
-                    <q-item-section> Title</q-item-section>
-                  </q-item>
-                  <q-item
-                    :active="sortBy === 'createdAt'"
-                    active-class="activeSort"
-                    clickable
-                    v-ripple
-                    @click="handleSetCurrentSortBy('createdAt')"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="access_time"/>
-                    </q-item-section>
-                    <q-item-section> Date</q-item-section>
-                  </q-item>
-                  <q-item
-                    :active="sortBy === 'updatedAt'"
-                    active-class="activeSort"
-                    clickable
-                    v-ripple
-                    @click="handleSetCurrentSortBy('updatedAt')"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="update"/>
-                    </q-item-section>
-                    <q-item-section> Updated</q-item-section>
-                  </q-item>
-                </q-list>
-<!--              </q-card-section>-->
-<!--            </q-card>-->
+            <!--            <q-card flat class="boom-card">-->
+            <!--              <q-card-section class="q-pa-none">-->
+            <q-list>
+              <q-item
+                :active="sortBy === 'title'"
+                active-class="activeSort"
+                clickable
+                v-ripple
+                v-close-popup
+                @click="handleSetCurrentSortBy('title')"
+              >
+                <q-item-section avatar>
+                  <q-icon name="sort_by_alpha" class="col" />
+                </q-item-section>
+                <q-item-section> Title</q-item-section>
+              </q-item>
+              <q-item
+                :active="sortBy === 'createdAt'"
+                active-class="activeSort"
+                clickable
+                v-ripple
+                @click="handleSetCurrentSortBy('createdAt')"
+              >
+                <q-item-section avatar>
+                  <q-icon name="access_time" />
+                </q-item-section>
+                <q-item-section> Date</q-item-section>
+              </q-item>
+              <q-item
+                :active="sortBy === 'updatedAt'"
+                active-class="activeSort"
+                clickable
+                v-ripple
+                @click="handleSetCurrentSortBy('updatedAt')"
+              >
+                <q-item-section avatar>
+                  <q-icon name="update" />
+                </q-item-section>
+                <q-item-section> Updated</q-item-section>
+              </q-item>
+            </q-list>
+            <!--              </q-card-section>-->
+            <!--            </q-card>-->
           </q-menu>
         </q-btn>
         <q-btn
@@ -62,30 +62,43 @@
             <q-list style="min-width: 250px">
               <q-item-label header class="text-weight-bold">
                 <span>Add Filters</span>
-                <span class="float-right text-caption" style="margin-top: -1px">Clear All</span>
+                <span class="float-right text-caption" style="margin-top: -1px"
+                  >Clear All</span
+                >
               </q-item-label>
 
               <q-item clickable class="q-pa-none">
                 <q-item-section side>
                   <div>
-                    <q-icon name="sell" class="q-mr-sm" size="14px"/>
+                    <q-icon name="sell" class="q-mr-sm" size="14px" />
                     Tag(s)
                   </div>
                 </q-item-section>
                 <q-item-section>
-                  <q-select dense v-model="tagFilter" :options="tags" class="full-width" style="width: 120px"/>
+                  <q-select
+                    dense
+                    v-model="tagFilter"
+                    :options="tags"
+                    class="full-width"
+                    style="width: 120px"
+                  />
                 </q-item-section>
               </q-item>
-              <q-separator/>
+              <q-separator />
               <q-item clickable class="q-pa-none">
                 <q-item-section side>
                   <div>
-                    <q-icon name="palette" class="q-mr-sm" size="14px"/>
+                    <q-icon name="palette" class="q-mr-sm" size="14px" />
                     Color
                   </div>
                 </q-item-section>
                 <q-item-section>
-                  <q-select dense v-model="colorFilter" class="full-width" :options="colors"/>
+                  <q-select
+                    dense
+                    v-model="colorFilter"
+                    class="full-width"
+                    :options="colors"
+                  />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -101,7 +114,7 @@
         />
         <q-btn flat round color="dark" aria-label="Menu">
           <q-avatar size="36px">
-            <img :src="avatar"/>
+            <img :src="avatar" />
           </q-avatar>
           <q-menu v-close-popup>
             <div class="row no-wrap q-pa-md">
@@ -115,9 +128,8 @@
                     @click="handleGoToBackupManager"
                   >
                     <q-item-section class="text-no-wrap"
-                    >Backup Manager
-                    </q-item-section
-                    >
+                      >Backup Manager
+                    </q-item-section>
                   </q-item>
                   <q-item v-ripple dense clickable @click="handleImport">
                     <q-item-section>Import</q-item-section>
@@ -188,7 +200,7 @@
       :breakpoint="400"
     >
       <q-toolbar>
-        <img height="40px" src="/images/noteriot-round-wordmark.svg"/>
+        <img height="40px" src="/images/noteriot-round-wordmark.svg" />
       </q-toolbar>
 
       <q-scroll-area style="height: 100%; margin-top: 10px">
@@ -202,7 +214,7 @@
             @click="handleSetCurrentLabelFilter('all')"
           >
             <q-item-section avatar>
-              <q-icon name="select_all"/>
+              <q-icon name="select_all" />
             </q-item-section>
 
             <q-item-section> All</q-item-section>
@@ -215,7 +227,7 @@
             @click="handleSetCurrentLabelFilter('favorite')"
           >
             <q-item-section avatar>
-              <q-icon name="favorite"/>
+              <q-icon name="img:/images/favorited.svg" />
             </q-item-section>
 
             <q-item-section> Favorites</q-item-section>
@@ -229,7 +241,7 @@
             @click="handleSetCurrentLabelFilter('archive')"
           >
             <q-item-section avatar>
-              <q-icon name="archive"/>
+              <q-icon name="img:/images/archive.svg" />
             </q-item-section>
 
             <q-item-section> Archive</q-item-section>
@@ -250,7 +262,7 @@
               {{ tag }}
             </q-item-section>
           </q-item>
-          <q-separator dark/>
+          <q-separator dark />
           <template v-for="color in colors">
             <q-item
               :active="labelFilter.substring(7) === color"
@@ -284,9 +296,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view/>
+      <router-view />
       <q-dialog v-model="showDialog">
-        <component :is="component" :data="data"/>
+        <component :is="component" :data="data" />
       </q-dialog>
     </q-page-container>
     <q-page-sticky class="override-bottom-space" position="bottom-right">
@@ -296,11 +308,11 @@
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import BackupManager from "components/BackupManager.vue";
 import ImportTool from "components/Import.vue";
-import {userSession} from "../boot/stacks";
-import {openURL} from "quasar";
+import { userSession } from "../boot/stacks";
+import { openURL } from "quasar";
 
 export default {
   name: "MainLayout",
@@ -365,7 +377,7 @@ export default {
     handleSetCurrentColorFilter(color) {
       this.setLabelFilter(`color:${color}`);
       if (this.$route.name !== "Index") {
-        this.$router.replace({name: "Index"});
+        this.$router.replace({ name: "Index" });
       }
       if (this.$q.screen.xs) {
         this.leftDrawerOpen = false;
@@ -375,7 +387,7 @@ export default {
     handleSetCurrentLabelFilter(tag) {
       this.setLabelFilter(tag);
       if (this.$route.name !== "Index") {
-        this.$router.replace({name: "Index"});
+        this.$router.replace({ name: "Index" });
       }
       if (this.$q.screen.xs) {
         this.leftDrawerOpen = false;
@@ -385,7 +397,7 @@ export default {
       this.setSortBy(val);
     },
     handleOpenBackupManager() {
-      this.$router.push({name: "BackupManager"});
+      this.$router.push({ name: "BackupManager" });
     },
     logout() {
       userSession.signUserOut("/");
