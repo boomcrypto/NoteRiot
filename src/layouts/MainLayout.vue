@@ -2,6 +2,13 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
       <q-toolbar>
+        <img
+          src="/images/noteriot-round-wordmark.svg"
+          :ration="16 / 9"
+          spinner-color="accent"
+          spinner-size="28px"
+          style="height: 36px"
+        />
         <q-space />
         <Search />
         <q-btn flat rounded color="accent" icon="sort">
