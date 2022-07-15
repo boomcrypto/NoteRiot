@@ -106,7 +106,7 @@
               Change color
             </q-tooltip>
           </q-btn>
-          <q-btn dense round flat @click.stop="handleShareNote()">
+          <!-- <q-btn dense round flat @click.stop="handleShareNote()">
             <q-icon>
               <img src="/images/share.svg" />
             </q-icon>
@@ -117,18 +117,30 @@
             >
               Share ...
             </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="restoreNote()" v-if="note.trash">
-            <q-icon color="accent" name="img:/images/restore.svg" />
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Restore from archive
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="deleteNote()" v-else>
+          </q-btn> -->
+          <div v-if="note.trash">
+            <q-btn dense round flat @click.stop="restoreNote">
+              <q-icon color="accent" name="img:/images/restore.svg" />
+              <q-tooltip
+                anchor="bottom middle"
+                self="bottom middle"
+                :offset="[10, 30]"
+              >
+                Restore from archive
+              </q-tooltip>
+            </q-btn>
+            <q-btn dense round flat @click.stop="permanentlyDelete">
+              <q-icon color="accent" name="img:/images/restore.svg" />
+              <q-tooltip
+                anchor="bottom middle"
+                self="bottom middle"
+                :offset="[10, 30]"
+              >
+                Permanently delete ...
+              </q-tooltip>
+            </q-btn>
+          </div>
+          <q-btn dense round flat @click.stop="deleteNote" v-else>
             <q-icon color="accent" name="img:/images/trash.svg" />
             <q-tooltip
               anchor="bottom middle"
