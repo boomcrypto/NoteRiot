@@ -87,13 +87,7 @@
             <!--            </q-card>-->
           </q-menu>
         </q-btn>
-        <q-btn
-          flat
-          round
-          color="accent"
-          icon="img:/images/filter.svg"
-          @click="handleFilter"
-        >
+        <q-btn flat round color="accent" icon="img:/images/filter.svg">
           <q-menu fit>
             <q-card flat class="boom-card">
               <q-list style="min-width: 250px">
@@ -108,7 +102,30 @@
                     >Clear All</q-btn
                   >
                 </q-item-label>
-
+                <q-item
+                  clickable
+                  class="q-pa-none"
+                  @click.stop="setLabelFilter('favorite')"
+                >
+                  <q-item-section side>
+                    <div>
+                      <q-icon name="sell" class="q-mr-sm" size="14px" />
+                      Favorites
+                    </div>
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  class="q-pa-none"
+                  @click.stop="setLabelFilter('archive')"
+                >
+                  <q-item-section side>
+                    <div>
+                      <q-icon name="sell" class="q-mr-sm" size="14px" />
+                      Archived
+                    </div>
+                  </q-item-section>
+                </q-item>
                 <q-item clickable class="q-pa-none">
                   <q-item-section side>
                     <div>
