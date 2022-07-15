@@ -52,8 +52,15 @@ export function setSearchTerm(state, st) {
 }
 
 export function setSortBy(state, payload) {
-  if(state.sortBy===payload){
-    state.sortDirection = state.sortDirection==='desc'?'asc':'desc'
+  if (state.sortBy === payload) {
+    state.sortDirection = state.sortDirection === "desc" ? "asc" : "desc";
   }
   state.sortBy = payload;
+}
+
+export function deleteNote(state, id) {
+  let idx = state.notes.findIndex((note) => note.id === id);
+  if (idx > -1) {
+    state.notes.splice(idx, 1);
+  }
 }

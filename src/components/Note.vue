@@ -129,7 +129,7 @@
                 Restore from archive
               </q-tooltip>
             </q-btn>
-            <q-btn dense round flat @click.stop="permanentlyDelete">
+            <q-btn dense round flat @click.stop="permanentlyDeleteNote">
               <q-icon color="accent" name="img:/images/restore.svg" />
               <q-tooltip
                 anchor="bottom middle"
@@ -270,11 +270,34 @@ export default {
     },
   },
   methods: {
-    ...mapActions("app", ["updateNote"]),
+    ...mapActions("app", ["updateNote", "deleteNote"]),
     async handleUpdates(updates) {
       this.contentKey = `${updates.id}-${updates.updates.modified}`;
       const notestatus = await this.updateNote(updates);
       this.note = Object.assign({}, this.note, updates);
+    },
+    restoreNote() {
+      const payload = {
+        id: this.data.id,
+        updates: {
+          trash: false,
+          modified: Date.now(),
+        },
+      };
+      this.handleUpdates(payload);
+    },
+    deleteNote() {
+      const payload = {
+        id: this.data.id,
+        updates: {
+          trash: true,
+          modified: Date.now(),
+        },
+      };
+      this.handleUpdates(payload);
+    },
+    permanentlyDeleteNote() {
+      this.deleteNote(this.note.id);
     },
     handleMouseOver() {
       this.buttonBarVisibility = true;
