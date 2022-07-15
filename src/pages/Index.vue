@@ -1,23 +1,26 @@
 <template>
   <q-page>
     <Container>
-      <div v-if="notes.length">
-        <div v-if="filterNotes.length">
-          <div class="row q-col-gutter-md items-start">
-            <Note
-              :data="note"
-              v-for="note in filterNotes"
-              class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
-              :key="note.id"
-            />
+      <FilterBar v-if="showFilterBar" />
+      <div class="q-mt-sm">
+        <div v-if="notes.length">
+          <div v-if="filterNotes.length">
+            <div class="row q-col-gutter-md items-start">
+              <Note
+                :data="note"
+                v-for="note in filterNotes"
+                class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+                :key="note.id"
+              />
+            </div>
+          </div>
+          <div v-else>
+            <EmptyFilter />
           </div>
         </div>
         <div v-else>
-          <EmptyFilter />
+          <NoNotes />
         </div>
-      </div>
-      <div v-else>
-        <NoNotes />
       </div>
     </Container>
     <q-page-sticky
@@ -76,6 +79,7 @@ export default {
     EmptyFilter,
     NoNotes,
     Editor: () => import("components/Editor.vue"),
+    FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {
@@ -84,8 +88,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["filterNotes"]),
-    ...mapState("app", ["notes"]),
+    ...mapGetters("app", ["filterNotes", "tags", "colors"]),
+    ...mapState("app", ["notes", "showFilterBar"]),
   },
   methods: {
     ...mapActions("app", [

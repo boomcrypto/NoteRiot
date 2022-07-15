@@ -100,3 +100,7 @@ export async function deleteNote(context, id) {
   context.commit("deleteNote", id);
   await saveFile(JSON.stringify(context.state.notes));
 }
+
+export function setShowFilterBar(context, status) {
+  context.commit("setShowFilterBar", status);
+}
