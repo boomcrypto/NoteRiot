@@ -96,6 +96,7 @@ export function setSortBy(context, payload) {
   context.commit("setSortBy", payload);
 }
 
-export function deleteNote(context, id) {
+export async function deleteNote(context, id) {
   context.commit("deleteNote", id);
+  await saveFile(JSON.stringify(context.state.notes));
 }
