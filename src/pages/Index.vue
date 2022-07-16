@@ -1,7 +1,6 @@
 <template>
   <q-page>
     <Container>
-      <FilterBar v-if="showFilterBar" />
       <div class="q-mt-sm">
         <div v-if="notes.length">
           <div v-if="filterNotes.length">
@@ -79,7 +78,7 @@ export default {
     EmptyFilter,
     NoNotes,
     Editor: () => import("components/Editor.vue"),
-    FilterBar: () => import("components/FilterBar.vue"),
+    // FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {

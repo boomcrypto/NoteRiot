@@ -78,6 +78,9 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
+      <q-toolbar inset v-if="showFilterBar">
+        <FilterBar class="q-mr-auto q-ml-auto" />
+      </q-toolbar>
     </q-header>
 
     <q-footer
@@ -108,103 +111,6 @@
       </q-tabs>
     </q-footer>
 
-    <!-- <q-drawer
-      v-if="$q.screen.gt.xs"
-      v-model="leftDrawerOpen"
-      show-if-above
-      :width="250"
-      class="text-nr bg-primary"
-      :breakpoint="400"
-    >
-      <q-toolbar>
-        <img height="40px" src="/images/noteriot-round-wordmark.svg" />
-      </q-toolbar>
-
-      <q-scroll-area style="height: 100%; margin-top: 10px">
-        <q-list>
-          <q-item-label header>Filters</q-item-label>
-          <q-item
-            :active="labelFilter === 'all'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('all')"
-          >
-            <q-item-section avatar>
-              <q-icon name="select_all" />
-            </q-item-section>
-
-            <q-item-section> All</q-item-section>
-          </q-item>
-          <q-item
-            :active="labelFilter === 'favorite'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('favorite')"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/favorited.svg" />
-            </q-item-section>
-
-            <q-item-section> Favorites</q-item-section>
-          </q-item>
-
-          <q-item
-            :active="labelFilter === 'archive'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('archive')"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/archive.svg" />
-            </q-item-section>
-
-            <q-item-section> Archive</q-item-section>
-          </q-item>
-          <q-item
-            :active="labelFilter === tag"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            v-for="tag in tags"
-            :key="`drawer-tag-${tag}`"
-            @click="handleSetCurrentLabelFilter(tag)"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/label.svg" />
-            </q-item-section>
-            <q-item-section>
-              {{ tag }}
-            </q-item-section>
-          </q-item>
-          <q-separator dark />
-          <template v-for="color in colors">
-            <q-item
-              :active="labelFilter.substring(7) === color"
-              active-class="activeFilter"
-              clickable
-              v-ripple
-              :key="`drawer-tag-${color}`"
-              @click="handleSetCurrentColorFilter(color)"
-              v-if="color"
-            >
-              <q-item-section avatar>
-                <q-icon
-                  :color="color"
-                  :name="color === 'none' ? 'block' : 'circle'"
-                />
-              </q-item-section>
-              <q-item-section>
-                {{ color.replace("-2", "") }}
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer> -->
-
     <q-page-container>
       <router-view />
       <q-dialog v-model="showDialog">
@@ -230,6 +136,7 @@ export default {
     BackupManager,
     ImportTool,
     Search: () => import("components/Search.vue"),
+    FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {
