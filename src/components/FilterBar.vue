@@ -29,8 +29,8 @@
       color="accent"
       icon="img:/images/label.svg"
       :label="labelChipLabel"
-      :icon-right="labelClick ? 'expand_less' : 'expand_more'"
-      @click="labelClick = !labelClick"
+      :icon-right="colorClick ? 'expand_less' : 'expand_more'"
+      @click="colorClick = !colorClick"
     >
       <q-menu>
         <q-list>
@@ -53,7 +53,7 @@
       outline
       icon="img:/images/color-wheel.jpg"
       label="Colors"
-      :icon-right="labelClick ? 'expand_less' : 'expand_more'"
+      :icon-right="colorClick ? 'expand_less' : 'expand_more'"
       color="accent"
     >
       <q-menu>
@@ -158,6 +158,7 @@ export default {
   data() {
     return {
       labelClick: false,
+      colorClick: false,
     };
   },
   computed: {
