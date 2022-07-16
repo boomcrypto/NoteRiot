@@ -71,7 +71,14 @@
       </div>
     </q-card-section>
     <q-card-actions align="right">
-      <q-btn flat label="Done" v-close-popup />
+      <q-btn
+        color="accent"
+        no-caps
+        outline
+        label="Done"
+        class="q-mr-sm q-ml-lg"
+        v-close-popup
+      />
     </q-card-actions>
   </q-card>
 </template>

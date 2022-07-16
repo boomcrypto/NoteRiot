@@ -3,7 +3,6 @@
     <q-toolbar class="bg-transparent">
       <q-icon round dense name="img:/images/color-wheel.jpg" />
       <q-toolbar-title>Select a color</q-toolbar-title>
-      <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar>
     <q-card-section class="q-pa-none">
       <div class="tag-colors">
@@ -86,6 +85,16 @@
         </div>
       </div>
     </q-card-section>
+    <q-card-actions align="right">
+      <q-btn
+        color="accent"
+        no-caps
+        outline
+        label="Done"
+        class="q-mr-sm q-ml-lg"
+        v-close-popup
+      />
+    </q-card-actions>
   </q-card>
 </template>
 
