@@ -39,17 +39,7 @@
         :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
       >
       </q-card-section> -->
-      <!-- <q-card-section
-        class="attachment-previews q-px-none"
-        v-if="data.attachments"
-      >
-        <div
-          class="media-thumb-unique"
-          v-for="(attachment, index) in data.attachments"
-          :key="`${data.id}-${index}`"
-          :style="`backgroundImage: url('${attachment.url}')`"
-        ></div>
-      </q-card-section> -->
+
       <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
           <q-btn dense round flat @click.stop="handleFave()">

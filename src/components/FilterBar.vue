@@ -4,7 +4,7 @@
       round
       unelevated
       @click="handleClearFilter"
-      icon="img:/images/bx-x-circle.svg"
+      icon="img:/images/clear.svg"
       v-if="labelFilter !== 'all'"
     />
     <q-btn

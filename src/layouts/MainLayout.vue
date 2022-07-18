@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHr lpR fFr">
     <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
       <q-toolbar>
         <img
