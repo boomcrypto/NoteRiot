@@ -11,8 +11,9 @@
         />
         <q-space />
         <Search />
-        <q-btn flat rounded color="accent" icon="sort">
+        <q-btn flat round color="accent" icon="sort">
           <q-menu>
+            <q-card flat class="boom-card-filter">
             <!--            <q-card flat class="boom-card">-->
             <!--              <q-card-section class="q-pa-none">-->
             <q-list>
@@ -84,12 +85,12 @@
               </q-item>
             </q-list>
             <!--              </q-card-section>-->
-            <!--            </q-card>-->
+                        </q-card>
           </q-menu>
         </q-btn>
         <q-btn flat round color="accent" icon="img:/images/filter.svg">
           <q-menu fit>
-            <q-card flat class="boom-card">
+            <q-card flat class="boom-card-filter">
               <q-list style="min-width: 250px">
                 <q-item-label header class="text-weight-bold">
                   <span>Add Filters</span>
