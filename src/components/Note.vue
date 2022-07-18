@@ -39,17 +39,7 @@
         :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
       >
       </q-card-section> -->
-      <!-- <q-card-section
-        class="attachment-previews q-px-none"
-        v-if="data.attachments"
-      >
-        <div
-          class="media-thumb-unique"
-          v-for="(attachment, index) in data.attachments"
-          :key="`${data.id}-${index}`"
-          :style="`backgroundImage: url('${attachment.url}')`"
-        ></div>
-      </q-card-section> -->
+
       <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
           <q-btn dense round flat @click.stop="handleFave()">
@@ -130,7 +120,7 @@
               </q-tooltip>
             </q-btn>
             <q-btn dense round flat @click.stop="permanentlyDeleteNote">
-              <q-icon color="accent" name="img:/images/restore.svg" />
+              <q-icon color="accent" name="img:/images/delete_forever.svg" />
               <q-tooltip
                 anchor="bottom middle"
                 self="bottom middle"
@@ -140,7 +130,7 @@
               </q-tooltip>
             </q-btn>
           </div>
-          <q-btn dense round flat @click.stop="deleteNote" v-else>
+          <q-btn dense round flat @click.stop="archiveNote" v-else>
             <q-icon color="accent" name="img:/images/trash.svg" />
             <q-tooltip
               anchor="bottom middle"
@@ -286,7 +276,7 @@ export default {
       };
       this.handleUpdates(payload);
     },
-    deleteNote() {
+    archiveNote() {
       const payload = {
         id: this.data.id,
         updates: {
@@ -296,8 +286,8 @@ export default {
       };
       this.handleUpdates(payload);
     },
-    permanentlyDeleteNote() {
-      this.deleteNote(this.note.id);
+    async permanentlyDeleteNote() {
+      await this.deleteNote(this.note.id);
     },
     handleMouseOver() {
       this.buttonBarVisibility = true;

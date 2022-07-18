@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHr lpR fFr">
     <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
       <q-toolbar>
         <img
@@ -11,164 +11,17 @@
         />
         <q-space />
         <Search />
-        <q-btn flat round color="accent" icon="sort">
-          <q-menu>
-            <q-card flat class="boom-card-filter">
-            <!--            <q-card flat class="boom-card">-->
-            <!--              <q-card-section class="q-pa-none">-->
-            <q-list>
-              <q-item
-                :active="sortBy === 'title'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                @click="handleSetCurrentSortBy('title')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="sort_by_alpha" class="col" />
-                </q-item-section>
-                <q-item-section> Title</q-item-section>
-                <q-item-section side>
-                  <q-icon
-                    v-if="sortBy === 'title'"
-                    :name="
-                      sortDirection === 'asc' ? 'north_east' : 'south_east'
-                    "
-                    size="14px"
-                    class="col"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item
-                :active="sortBy === 'createdAt'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                @click="handleSetCurrentSortBy('createdAt')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="access_time" />
-                </q-item-section>
-                <q-item-section> Date</q-item-section>
-                <q-item-section side>
-                  <q-icon
-                    v-if="sortBy === 'createdAt'"
-                    :name="
-                      sortDirection === 'asc' ? 'north_east' : 'south_east'
-                    "
-                    size="14px"
-                    class="col"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item
-                :active="sortBy === 'updatedAt'"
-                active-class="activeSort"
-                clickable
-                v-ripple
-                @click="handleSetCurrentSortBy('updatedAt')"
-              >
-                <q-item-section avatar>
-                  <q-icon name="update" />
-                </q-item-section>
-                <q-item-section> Updated</q-item-section>
-                <q-item-section side>
-                  <q-icon
-                    v-if="sortBy === 'updatedAt'"
-                    :name="
-                      sortDirection === 'asc' ? 'north_east' : 'south_east'
-                    "
-                    size="14px"
-                    class="col"
-                  />
-                </q-item-section>
-              </q-item>
-            </q-list>
-            <!--              </q-card-section>-->
-                        </q-card>
-          </q-menu>
-        </q-btn>
-        <q-btn flat round color="accent" icon="img:/images/filter.svg">
-          <q-menu fit>
-            <q-card flat class="boom-card-filter">
-              <q-list style="min-width: 250px">
-                <q-item-label header class="text-weight-bold">
-                  <span>Add Filters</span>
-                  <q-btn
-                    flat
-                    dense
-                    @click="handleClearFilters"
-                    class="float-right text-caption"
-                    style="margin-top: -1px"
-                    >Clear All</q-btn
-                  >
-                </q-item-label>
-                <q-item
-                  clickable
-                  class="q-pa-none"
-                  @click.stop="setLabelFilter('favorite')"
-                >
-                  <q-item-section side>
-                    <div>
-                      <q-icon name="sell" class="q-mr-sm" size="14px" />
-                      Favorites
-                    </div>
-                  </q-item-section>
-                </q-item>
-                <q-item
-                  clickable
-                  class="q-pa-none"
-                  @click.stop="setLabelFilter('archive')"
-                >
-                  <q-item-section side>
-                    <div>
-                      <q-icon name="sell" class="q-mr-sm" size="14px" />
-                      Archived
-                    </div>
-                  </q-item-section>
-                </q-item>
-                <q-item clickable class="q-pa-none">
-                  <q-item-section side>
-                    <div>
-                      <q-icon name="sell" class="q-mr-sm" size="14px" />
-                      Tag(s)
-                    </div>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-select
-                      dense
-                      use-chips
-                      v-model="tagFilter"
-                      :options="tags"
-                      class="full-width"
-                      style="width: 120px"
-                      @input="handleSetTagFilter"
-                    />
-                  </q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable class="q-pa-none">
-                  <q-item-section side>
-                    <div>
-                      <q-icon name="palette" class="q-mr-sm" size="14px" />
-                      Color
-                    </div>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-select
-                      dense
-                      use-chips
-                      v-model="colorFilter"
-                      class="full-width"
-                      :options="colors"
-                      @input="handleSetColorFilter"
-                    />
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-card>
-          </q-menu>
-        </q-btn>
+        <q-btn
+          flat
+          round
+          color="accent"
+          :icon="
+            showFilterBar
+              ? 'img:/images/filter-active.svg'
+              : 'img:/images/filter.svg'
+          "
+          @click="setShowFilterBar(!showFilterBar)"
+        />
         <q-btn
           class="q-mr-xs"
           flat
@@ -225,6 +78,9 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
+      <q-toolbar inset v-if="showFilterBar">
+        <FilterBar class="q-mr-auto q-ml-auto" />
+      </q-toolbar>
     </q-header>
 
     <q-footer
@@ -255,103 +111,6 @@
       </q-tabs>
     </q-footer>
 
-    <!-- <q-drawer
-      v-if="$q.screen.gt.xs"
-      v-model="leftDrawerOpen"
-      show-if-above
-      :width="250"
-      class="text-nr bg-primary"
-      :breakpoint="400"
-    >
-      <q-toolbar>
-        <img height="40px" src="/images/noteriot-round-wordmark.svg" />
-      </q-toolbar>
-
-      <q-scroll-area style="height: 100%; margin-top: 10px">
-        <q-list>
-          <q-item-label header>Filters</q-item-label>
-          <q-item
-            :active="labelFilter === 'all'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('all')"
-          >
-            <q-item-section avatar>
-              <q-icon name="select_all" />
-            </q-item-section>
-
-            <q-item-section> All</q-item-section>
-          </q-item>
-          <q-item
-            :active="labelFilter === 'favorite'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('favorite')"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/favorited.svg" />
-            </q-item-section>
-
-            <q-item-section> Favorites</q-item-section>
-          </q-item>
-
-          <q-item
-            :active="labelFilter === 'archive'"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            @click="handleSetCurrentLabelFilter('archive')"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/archive.svg" />
-            </q-item-section>
-
-            <q-item-section> Archive</q-item-section>
-          </q-item>
-          <q-item
-            :active="labelFilter === tag"
-            active-class="activeFilter"
-            clickable
-            v-ripple
-            v-for="tag in tags"
-            :key="`drawer-tag-${tag}`"
-            @click="handleSetCurrentLabelFilter(tag)"
-          >
-            <q-item-section avatar>
-              <q-icon name="img:/images/label.svg" />
-            </q-item-section>
-            <q-item-section>
-              {{ tag }}
-            </q-item-section>
-          </q-item>
-          <q-separator dark />
-          <template v-for="color in colors">
-            <q-item
-              :active="labelFilter.substring(7) === color"
-              active-class="activeFilter"
-              clickable
-              v-ripple
-              :key="`drawer-tag-${color}`"
-              @click="handleSetCurrentColorFilter(color)"
-              v-if="color"
-            >
-              <q-item-section avatar>
-                <q-icon
-                  :color="color"
-                  :name="color === 'none' ? 'block' : 'circle'"
-                />
-              </q-item-section>
-              <q-item-section>
-                {{ color.replace("-2", "") }}
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer> -->
-
     <q-page-container>
       <router-view />
       <q-dialog v-model="showDialog">
@@ -377,6 +136,7 @@ export default {
     BackupManager,
     ImportTool,
     Search: () => import("components/Search.vue"),
+    FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {
@@ -396,11 +156,17 @@ export default {
       "username",
       "sortBy",
       "sortDirection",
+      "showFilterBar",
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
   methods: {
-    ...mapActions("app", ["signOut", "setLabelFilter", "setSortBy"]),
+    ...mapActions("app", [
+      "signOut",
+      "setLabelFilter",
+      "setSortBy",
+      "setShowFilterBar",
+    ]),
     handleClearFilters() {
       this.setLabelFilter("all");
       this.tagFilter = null;

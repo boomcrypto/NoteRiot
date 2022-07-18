@@ -9,6 +9,7 @@ export default () => {
     tagFilter: "",
     sortBy: "createdAt",
     sortDirection: "asc",
+    showFilterBar: false,
     searchTerm: "",
     noteColors: [
       "none",
