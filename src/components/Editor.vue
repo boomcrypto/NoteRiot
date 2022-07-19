@@ -13,30 +13,25 @@
               maxlength="80"
               placeholder="Untitled note"
               :input-style="
-            $q.dark.isActive
-              ? { color: 'white', 'font-weight': 'bold' }
-              : { color: 'grey', 'font-weight': 'bold' }
-          "
+                $q.dark.isActive
+                  ? { color: 'white', 'font-weight': 'bold' }
+                  : { color: 'grey', 'font-weight': 'bold' }
+              "
             />
           </q-toolbar-title>
-          <q-space/>
+          <q-space />
           <div class="text-caption text-grey q-mr-sm">
             {{ savingMessage }}
           </div>
-          <q-btn
-            round
-            outline
-            icon="img:/images/settings-inactive.svg"
-            @click="showSidebar = true"
-          />
           <q-btn
             color="accent"
             no-caps
             outline
             label="Done"
-            class="q-mr-sm q-ml-lg"
+            class="q-mr-md"
             @click="handleClose"
           />
+          <q-btn flat round icon="menu" @click="showSidebar = !showSidebar" />
         </q-toolbar>
 
         <q-card-section :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
@@ -54,19 +49,9 @@
       </q-card>
     </q-page-container>
     <q-drawer side="right" v-model="showSidebar" bordered :width="300">
-      <q-toolbar class="bg-transparent">
-        <q-space/>
-        <q-btn
-          outline
-          no-caps
-          color="accent"
-          dense
-          label="Hide"
-          icon-right="img:/images/chevron-right.svg"
-          @click="showSidebar = false"
-        />
+      <q-toolbar class="bg-transparent row q-pt-lg q-mb-md">
+        <q-toolbar-title> Actions </q-toolbar-title>
       </q-toolbar>
-
       <q-scroll-area class="fit q-pa-sm">
         <q-card-actions align="center">
           <q-btn
@@ -78,8 +63,8 @@
                 : 'img:/images/favorite-available.svg'
             "
           />
-          <q-btn outline label="Delete"/>
-          <q-btn outline class="q-mt-sm" label="Download"/>
+          <q-btn outline label="Delete" />
+          <q-btn outline class="q-mt-sm" label="Download" />
           <q-btn
             color="accent"
             no-caps
@@ -99,7 +84,7 @@
         </q-card-actions>
         Note Color
         <q-card-section>
-          <SelectColor :data="data"/>
+          <SelectColor :data="data" />
         </q-card-section>
         Attachments
         <q-card-section
@@ -122,11 +107,11 @@
         </q-card-section>
         Share with ...
         <q-card-section>
-          <q-input v-model="text" type="text" label="Share with ..."/>
+          <q-input v-model="text" type="text" label="Share with ..." />
         </q-card-section>
         Select Tags ...
         <q-card-section>
-          <TagEditor :note="data"/>
+          <TagEditor :note="data" />
         </q-card-section>
       </q-scroll-area>
     </q-drawer>
@@ -136,9 +121,9 @@
 <script>
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
-import {Editor} from "@toast-ui/vue-editor";
-import {mapActions, mapState} from "vuex";
-import {debounce} from "quasar";
+import { Editor } from "@toast-ui/vue-editor";
+import { mapActions, mapState } from "vuex";
+import { debounce } from "quasar";
 import Note from "src/models/Note";
 
 export default {
