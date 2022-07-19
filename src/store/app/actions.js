@@ -104,3 +104,7 @@ export async function deleteNote(context, id) {
 export function setShowFilterBar(context, status) {
   context.commit("setShowFilterBar", status);
 }
+
+export function setMode(context, payload) {
+  context.commit("setMode", payload);
+}

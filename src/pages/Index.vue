@@ -8,7 +8,7 @@
               <Note
                 :data="note"
                 v-for="note in filterNotes"
-                class="col-xs-12 col-sm-4 col-md-3 col-lg-2"
+                :class="mode==='list'?'col-xs-12 col-sm-12 col-md-12 col-lg-12':'col-xs-12 col-sm-4 col-md-3 col-lg-2'"
                 :key="note.id"
               />
             </div>
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["filterNotes", "tags", "colors"]),
-    ...mapState("app", ["notes", "showFilterBar"]),
+    ...mapState("app", ["notes", "showFilterBar","mode"]),
   },
   methods: {
     ...mapActions("app", [

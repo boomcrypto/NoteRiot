@@ -30,6 +30,13 @@
           @click="$q.dark.toggle()"
           :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
         />
+        <q-btn
+          class="q-mr-xs"
+          flat color="accent"
+          round
+          @click="setMode(mode === 'grid' ? 'list' : 'grid')"
+          :icon="mode === 'grid' ? 'list' : 'grid_on'"
+        />
         <q-btn flat round color="dark" aria-label="Menu">
           <q-avatar size="36px">
             <img :src="avatar" />
@@ -157,6 +164,7 @@ export default {
       "sortBy",
       "sortDirection",
       "showFilterBar",
+      "mode"
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
@@ -166,6 +174,7 @@ export default {
       "setLabelFilter",
       "setSortBy",
       "setShowFilterBar",
+      "setMode"
     ]),
     handleClearFilters() {
       this.setLabelFilter("all");
