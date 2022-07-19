@@ -1,5 +1,3 @@
-import orderby from "lodash-es";
-
 export function tags(state) {
   let active = state.notes.filter((note) => !note.trash);
   let tags = [];
