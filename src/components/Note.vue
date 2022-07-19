@@ -204,7 +204,7 @@
           </q-item-section>
 
 
-          <q-item-section v-if="data.attachments.length" :class="$q.screen.gt.sm?'col-2':'col-4'">
+          <q-item-section v-if="data.attachments.length" :class="$q.screen.gt.sm?'col-2':'col-4'" style="margin-right: -20px;">
             <q-img
               :src="data.attachments[0].url"
               spinner-color="accent"
