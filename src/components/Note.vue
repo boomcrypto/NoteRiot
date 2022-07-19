@@ -213,109 +213,110 @@
             />
           </q-item-section>
         </q-item>
-      </q-card-section>
-        <q-card-actions v-if="buttonBarVisibility" class="q-pt-none" vertical align="center">
-          <div class="row text-center q-mt-md">
-            <q-btn dense round flat @click.stop="handleFave()">
-              <q-icon>
-                <img
-                  :src="
-                      fave
-                        ? '/images/favorited.svg'
-                        : '/images/favorite-available.svg'
-                    "
-                />
-              </q-icon>
+
+      <q-card-actions v-if="buttonBarVisibility" style="opacity: 0.8" class="q-pt-none bg-white absolute-bottom" vertical align="center">
+        <div class="row text-center q-mt-md">
+          <q-btn dense round flat @click.stop="handleFave()">
+            <q-icon>
+              <img
+                :src="
+                    fave
+                      ? '/images/favorited.svg'
+                      : '/images/favorite-available.svg'
+                  "
+              />
+            </q-icon>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Toggle Favorite
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense round flat @click.stop="showTagManager = true">
+            <q-icon>
+              <img src="/images/label.svg"/>
+            </q-icon>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Manage tags
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense round flat @click.stop="downloadNote()">
+            <q-icon>
+              <img src="/images/download.svg"/>
+            </q-icon>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Download note
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense round flat @click.stop="showColorManager = true">
+            <q-icon>
+              <img src="/images/palette.svg"/>
+            </q-icon>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Change color
+            </q-tooltip>
+          </q-btn>
+          <!-- <q-btn dense round flat @click.stop="handleShareNote()">
+            <q-icon>
+              <img src="/images/share.svg" />
+            </q-icon>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Share ...
+            </q-tooltip>
+          </q-btn> -->
+          <div v-if="note.trash">
+            <q-btn dense round flat @click.stop="restoreNote">
+              <q-icon color="accent" name="img:/images/restore.svg"/>
               <q-tooltip
                 anchor="bottom middle"
                 self="bottom middle"
                 :offset="[10, 30]"
               >
-                Toggle Favorite
+                Restore from archive
               </q-tooltip>
             </q-btn>
-            <q-btn dense round flat @click.stop="showTagManager = true">
-              <q-icon>
-                <img src="/images/label.svg"/>
-              </q-icon>
+            <q-btn dense round flat @click.stop="permanentlyDeleteNote">
+              <q-icon color="accent" name="img:/images/delete_forever.svg"/>
               <q-tooltip
                 anchor="bottom middle"
                 self="bottom middle"
                 :offset="[10, 30]"
               >
-                Manage tags
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="downloadNote()">
-              <q-icon>
-                <img src="/images/download.svg"/>
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Download note
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="showColorManager = true">
-              <q-icon>
-                <img src="/images/palette.svg"/>
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Change color
-              </q-tooltip>
-            </q-btn>
-            <!-- <q-btn dense round flat @click.stop="handleShareNote()">
-              <q-icon>
-                <img src="/images/share.svg" />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Share ...
-              </q-tooltip>
-            </q-btn> -->
-            <div v-if="note.trash">
-              <q-btn dense round flat @click.stop="restoreNote">
-                <q-icon color="accent" name="img:/images/restore.svg"/>
-                <q-tooltip
-                  anchor="bottom middle"
-                  self="bottom middle"
-                  :offset="[10, 30]"
-                >
-                  Restore from archive
-                </q-tooltip>
-              </q-btn>
-              <q-btn dense round flat @click.stop="permanentlyDeleteNote">
-                <q-icon color="accent" name="img:/images/delete_forever.svg"/>
-                <q-tooltip
-                  anchor="bottom middle"
-                  self="bottom middle"
-                  :offset="[10, 30]"
-                >
-                  Permanently delete ...
-                </q-tooltip>
-              </q-btn>
-            </div>
-            <q-btn dense round flat @click.stop="archiveNote" v-else>
-              <q-icon color="accent" name="img:/images/trash.svg"/>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Archive note
+                Permanently delete ...
               </q-tooltip>
             </q-btn>
           </div>
-        </q-card-actions>
+          <q-btn dense round flat @click.stop="archiveNote" v-else>
+            <q-icon color="accent" name="img:/images/trash.svg"/>
+            <q-tooltip
+              anchor="bottom middle"
+              self="bottom middle"
+              :offset="[10, 30]"
+            >
+              Archive note
+            </q-tooltip>
+          </q-btn>
+        </div>
+      </q-card-actions>
+      </q-card-section>
     </q-card>
     <q-dialog v-model="showTagManager">
       <q-card flat class="boom-card">
