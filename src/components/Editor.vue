@@ -1,44 +1,61 @@
 <template>
-  <q-card flat class="my-card">
-    <q-toolbar class="bg-transparent row q-pt-md">
-      <q-toolbar-title class="col-10">
-        <q-input
-          autogrow
-          borderless
-          v-model="currentTitle"
-          type="text"
-          :input-class="currentTitle.length < 50 ? 'text-h3' : 'text-h5'"
-          maxlength="80"
-          placeholder="Untitled note"
-          :input-style="
+  <q-layout view="Lhh lpR fff" container class="bg-white">
+    <q-page-container>
+      <q-card flat class="my-card">
+        <q-toolbar class="bg-transparent row q-pt-md">
+          <q-toolbar-title class="col-10">
+            <q-input
+              autogrow
+              borderless
+              v-model="currentTitle"
+              type="text"
+              :input-class="currentTitle.length < 50 ? 'text-h3' : 'text-h5'"
+              maxlength="80"
+              placeholder="Untitled note"
+              :input-style="
             $q.dark.isActive
               ? { color: 'white', 'font-weight': 'bold' }
               : { color: 'grey', 'font-weight': 'bold' }
           "
-        />
-      </q-toolbar-title>
-      <q-space />
-      <div class="text-caption text-grey q-mr-sm">
-        {{ savingMessage }}
-      </div>
-      <q-btn
-        round
-        outline
-        icon="img:/images/settings-inactive.svg"
-        @click="showSidebar = true"
-      />
-      <q-btn
-        color="accent"
-        no-caps
-        outline
-        label="Done"
-        class="q-mr-sm q-ml-lg"
-        @click="handleClose"
-      />
-    </q-toolbar>
+            />
+          </q-toolbar-title>
+          <q-space/>
+          <div class="text-caption text-grey q-mr-sm">
+            {{ savingMessage }}
+          </div>
+          <q-btn
+            round
+            outline
+            icon="img:/images/settings-inactive.svg"
+            @click="showSidebar = true"
+          />
+          <q-btn
+            color="accent"
+            no-caps
+            outline
+            label="Done"
+            class="q-mr-sm q-ml-lg"
+            @click="handleClose"
+          />
+        </q-toolbar>
+
+        <q-card-section :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
+          <editor
+            ref="noteEditor"
+            :initialValue="data.text"
+            :options="editorOptions"
+            :previewStyle="previewStyle"
+            :initialEditType="initialEditType"
+            style="width: 100%; border: 1px solid #9c27b0 !important"
+            :style="{ height: editorHeight }"
+            @change="onContentChange"
+          />
+        </q-card-section>
+      </q-card>
+    </q-page-container>
     <q-drawer side="right" v-model="showSidebar" bordered :width="300">
       <q-toolbar class="bg-transparent">
-        <q-space />
+        <q-space/>
         <q-btn
           outline
           no-caps
@@ -61,14 +78,14 @@
                 : 'img:/images/favorite-available.svg'
             "
           />
-          <q-btn outline label="Delete" />
-          <q-btn outline label="Download" />
+          <q-btn outline label="Delete"/>
+          <q-btn outline class="q-mt-sm" label="Download"/>
           <q-btn
             color="accent"
             no-caps
             outline
             label="Mint as NFT"
-            class="q-mr-sm q-ml-lg"
+            class="q-mr-sm q-mt-sm q-ml-lg"
             @click="handleMintNote"
           />
           <q-btn
@@ -76,13 +93,13 @@
             no-caps
             outline
             label="Sign & Publish"
-            class="q-mr-sm q-ml-lg"
+            class="q-mr-sm q-mt-sm q-ml-lg"
             @click="handleSignNote"
           />
         </q-card-actions>
         Note Color
         <q-card-section>
-          <SelectColor :data="data" />
+          <SelectColor :data="data"/>
         </q-card-section>
         Attachments
         <q-card-section
@@ -105,35 +122,23 @@
         </q-card-section>
         Share with ...
         <q-card-section>
-          <q-input v-model="text" type="text" label="Share with ..." />
+          <q-input v-model="text" type="text" label="Share with ..."/>
         </q-card-section>
         Select Tags ...
         <q-card-section>
-          <TagEditor :note="data" />
+          <TagEditor :note="data"/>
         </q-card-section>
       </q-scroll-area>
     </q-drawer>
-    <q-card-section :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
-      <editor
-        ref="noteEditor"
-        :initialValue="data.text"
-        :options="editorOptions"
-        :previewStyle="previewStyle"
-        :initialEditType="initialEditType"
-        style="width: 100%; border: 1px solid #9c27b0 !important"
-        :style="{ height: editorHeight }"
-        @change="onContentChange"
-      />
-    </q-card-section>
-  </q-card>
+  </q-layout>
 </template>
 
 <script>
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
-import { Editor } from "@toast-ui/vue-editor";
-import { mapActions, mapState } from "vuex";
-import { debounce } from "quasar";
+import {Editor} from "@toast-ui/vue-editor";
+import {mapActions, mapState} from "vuex";
+import {debounce} from "quasar";
 import Note from "src/models/Note";
 
 export default {
