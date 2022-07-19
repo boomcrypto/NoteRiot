@@ -8,6 +8,7 @@ export default () => {
     colorFilter: "",
     tagFilter: "",
     sortBy: "createdAt",
+    mode: "grid",
     sortDirection: "asc",
     showFilterBar: false,
     searchTerm: "",

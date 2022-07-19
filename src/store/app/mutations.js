@@ -32,6 +32,10 @@ export function setColorFilter(state, payload) {
   state.colorFilter = payload;
 }
 
+export function setMode(state, payload) {
+  state.mode = payload;
+}
+
 export function updateNote(state, payload) {
   console.log("updateNote: ", payload);
   let idx = state.notes.findIndex((note) => note.id === payload.id);
