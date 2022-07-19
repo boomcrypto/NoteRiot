@@ -32,7 +32,8 @@
         />
         <q-btn
           class="q-mr-xs"
-          flat color="accent"
+          flat
+          color="accent"
           round
           @click="setMode(mode === 'grid' ? 'list' : 'grid')"
           :icon="mode === 'grid' ? 'list' : 'grid_on'"
@@ -85,9 +86,7 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
-      <q-toolbar inset v-if="showFilterBar">
-        <FilterBar class="q-mr-auto q-ml-auto" />
-      </q-toolbar>
+      <FilterBar class="q-mr-auto q-ml-auto" v-if="showFilterBar" />
     </q-header>
 
     <q-footer
@@ -164,7 +163,7 @@ export default {
       "sortBy",
       "sortDirection",
       "showFilterBar",
-      "mode"
+      "mode",
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
   },
@@ -174,7 +173,7 @@ export default {
       "setLabelFilter",
       "setSortBy",
       "setShowFilterBar",
-      "setMode"
+      "setMode",
     ]),
     handleClearFilters() {
       this.setLabelFilter("all");

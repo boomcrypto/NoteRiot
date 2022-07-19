@@ -1,39 +1,52 @@
 <template>
-  <div class="row q-gutter-md">
+  <div class="text-center text-dark">
+    Filter By:&nbsp;
     <q-btn
-      round
-      unelevated
+      rounded
+      outline
+      no-caps
+      :color="labelFilter === 'all' ? 'grey' : 'accent'"
       @click="handleClearFilter"
       :disabled="labelFilter === 'all'"
+      label="Clear"
       :icon="
         labelFilter === 'all'
           ? 'img:/images/clear-inactive.svg'
           : 'img:/images/clear-active.svg'
       "
+      class="q-mr-xs"
     />
     <q-btn
       rounded
+      no-caps
       outline
       color="accent"
       icon="img:/images/favorite-available.svg"
       label="Favorites"
+      class="q-mr-sm"
       @click="handleFilter('favorite')"
-    />
+    >
+    </q-btn>
     <q-btn
       rounded
+      no-caps
       outline
+      dense
       color="accent"
       icon="img:/images/archive.svg"
       label="Archives"
+      class="q-mr-sm"
       @click="handleFilter('archive')"
     />
     <q-btn
       rounded
+      no-caps
       outline
       color="accent"
       icon="img:/images/label.svg"
       :label="labelChipLabel"
       :icon-right="colorClick ? 'expand_less' : 'expand_more'"
+      class="q-mr-sm"
       @click="colorClick = !colorClick"
     >
       <q-menu>
@@ -54,10 +67,12 @@
     </q-btn>
     <q-btn
       rounded
+      no-caps
       outline
       icon="img:/images/color-wheel.jpg"
       label="Colors"
       :icon-right="colorClick ? 'expand_less' : 'expand_more'"
+      class="q-mr-sm"
       color="accent"
     >
       <q-menu>
@@ -77,7 +92,7 @@
       </q-menu>
     </q-btn>
     <q-btn
-      dense
+      no-caps
       outline
       rounded
       color="accent"
