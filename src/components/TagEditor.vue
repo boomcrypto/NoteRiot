@@ -1,8 +1,5 @@
 <template>
-  <q-card
-    style="width: 400px; max-width: 80%; height: auto; padding: 0px"
-    class="boom-card"
-  >
+  <q-card flat>
     <div class="bottom-border-99">
       <q-card-actions style="padding: 0px">
         <q-input
@@ -70,16 +67,6 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-actions align="right">
-      <q-btn
-        color="accent"
-        no-caps
-        outline
-        label="Done"
-        class="q-mr-sm q-ml-lg"
-        v-close-popup
-      />
-    </q-card-actions>
   </q-card>
 </template>
 <script>

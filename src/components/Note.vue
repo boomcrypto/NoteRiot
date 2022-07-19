@@ -3,7 +3,7 @@
     <q-card
       class="boom-card"
       :class="
-        `bg-${data.color}-4` + ($q.dark.isActive ? ' boom-card-dark' : '')
+        `bg-${data.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
@@ -163,10 +163,38 @@
       </q-inner-loading>
     </q-card>
     <q-dialog v-model="showTagManager">
-      <TagEditor :note="this.data" @update-note="handleUpdates" />
+      <q-card flat class="boom-card">
+        <TagEditor :note="this.data" @update-note="handleUpdates" />
+        <q-card-actions align="right">
+          <q-btn
+            color="accent"
+            no-caps
+            outline
+            label="Done"
+            class="q-mr-sm q-ml-lg"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
     <q-dialog v-model="showColorManager">
-      <SelectColor :note="this.data" @update-note="handleUpdates" />
+      <q-card flat class="boom-card">
+        <q-toolbar class="bg-transparent">
+          <q-icon round dense name="img:/images/color-wheel.jpg" />
+          <q-toolbar-title>Select a color</q-toolbar-title>
+        </q-toolbar>
+        <SelectColor :note="this.data" @update-note="handleUpdates" />
+        <q-card-actions align="right">
+          <q-btn
+            color="accent"
+            no-caps
+            outline
+            label="Done"
+            class="q-mr-sm q-ml-lg"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
     <q-dialog
       v-model="showEditor"

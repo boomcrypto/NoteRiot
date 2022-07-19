@@ -1467,6 +1467,11 @@ body.body--dark {
   background-color: #ff3728;
 }
 
+.tag-color.purple {
+  border-style: none;
+  background-color: #9c27b0;
+}
+
 .tag-color.orange {
   border-style: none;
   background-color: #f79d1a;

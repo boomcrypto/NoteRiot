@@ -17,13 +17,10 @@ export default () => {
       "orange",
       "yellow",
       "green",
-      "light-green",
       "blue",
-      "indigo",
       "purple",
-      "brown",
-      "grey",
-      "blue-grey",
+      "gray",
+      "teal",
     ],
     notes: [
       {

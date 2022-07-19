@@ -36,106 +36,54 @@
         @click="handleClose"
       />
     </q-toolbar>
-    <q-drawer
-      side="right"
-      v-model="showSidebar"
-      bordered
-      show-if-above
-      :width="300"
-    >
+    <q-drawer side="right" v-model="showSidebar" bordered :width="300">
       <q-toolbar class="bg-transparent">
         <q-space />
-        <q-btn flat round dense icon="close" @click="showSidebar = false" />
+        <q-btn
+          outline
+          no-caps
+          color="accent"
+          dense
+          label="Hide"
+          icon-right="img:/images/chevron-right.svg"
+          @click="showSidebar = false"
+        />
       </q-toolbar>
 
       <q-scroll-area class="fit q-pa-sm">
         <q-card-actions align="center">
-          <q-btn outline label="Add as Favorite" />
+          <q-btn
+            outline
+            label="Toggle Favorite"
+            :icon="
+              data.fave
+                ? 'img:/images/favorited.svg'
+                : 'img:/images/favorite-available.svg'
+            "
+          />
           <q-btn outline label="Delete" />
           <q-btn outline label="Download" />
+          <q-btn
+            color="accent"
+            no-caps
+            outline
+            label="Mint as NFT"
+            class="q-mr-sm q-ml-lg"
+            @click="handleMintNote"
+          />
+          <q-btn
+            color="accent"
+            no-caps
+            outline
+            label="Sign & Publish"
+            class="q-mr-sm q-ml-lg"
+            @click="handleSignNote"
+          />
         </q-card-actions>
         Note Color
-        <q-toolbar class="bg-transparent">
-          <div class="tag-colors">
-            <div class="tag-color-row">
-              <div
-                class="tag-color white"
-                @click="handleSelectColor('white')"
-                :class="color === 'white' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color orchid"
-                @click="handleSelectColor('orchid')"
-                :class="color === 'orchid' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color fuschia"
-                @click="handleSelectColor('fuschia')"
-                :class="color === 'fuschia' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color red"
-                @click="handleSelectColor('red')"
-                :class="color === 'red' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color orange"
-                @click="handleSelectColor('orange')"
-                :class="color === 'orange' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color yellow"
-                @click="handleSelectColor('yellow')"
-                :class="color === 'yellow' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color lime"
-                @click="handleSelectColor('lime')"
-                :class="color === 'lime' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color green"
-                @click="handleSelectColor('green')"
-                :class="color === 'green' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color teal"
-                @click="handleSelectColor('teal')"
-                :class="color === 'teal' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color cyan"
-                @click="handleSelectColor('cyan')"
-                :class="color === 'cyan' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color blue"
-                @click="handleSelectColor('blue')"
-                :class="color === 'blue' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color steel"
-                @click="handleSelectColor('steel')"
-                :class="color === 'steel' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color gray"
-                @click="handleSelectColor('gray')"
-                :class="color === 'gray' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color brown"
-                @click="handleSelectColor('brown')"
-                :class="color === 'brown' ? 'checked' : ''"
-              ></div>
-              <div
-                class="tag-color black"
-                @click="handleSelectColor('black')"
-                :class="color === 'black' ? 'checked' : ''"
-              ></div>
-            </div>
-          </div>
-        </q-toolbar>
+        <q-card-section>
+          <SelectColor :data="data" />
+        </q-card-section>
         Attachments
         <q-card-section
           class="attachment-previews q-px-none"
@@ -155,30 +103,13 @@
             @click="handleAddAttachment"
           />
         </q-card-section>
-        Crypto functions
-        <q-card-section>
-          <div class="row">
-            <q-btn
-              color="accent"
-              no-caps
-              outline
-              label="Mint"
-              class="q-mr-sm q-ml-lg"
-              @click="handleMintNote"
-            />
-            <q-btn
-              color="accent"
-              no-caps
-              outline
-              label="Croptographically Sign"
-              class="q-mr-sm q-ml-lg"
-              @click="handleSignNote"
-            />
-          </div>
-        </q-card-section>
         Share with ...
         <q-card-section>
           <q-input v-model="text" type="text" label="Share with ..." />
+        </q-card-section>
+        Select Tags ...
+        <q-card-section>
+          <TagEditor :note="data" />
         </q-card-section>
       </q-scroll-area>
     </q-drawer>
@@ -209,6 +140,8 @@ export default {
   name: "EditorComponent",
   components: {
     editor: Editor,
+    TagEditor: () => import("components/TagEditor.vue"),
+    SelectColor: () => import("components/SelectColor.vue"),
   },
   props: {
     data: {
@@ -221,7 +154,7 @@ export default {
       initialEditType: "markdown",
       currentTitle: this.data.title,
       currentContent: this.data.text,
-      showSidebar: false,
+      showSidebar: true,
       previewStyle: "tab",
       editorOptions: {
         language: "en-US",
