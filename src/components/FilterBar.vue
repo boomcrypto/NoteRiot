@@ -4,8 +4,12 @@
       round
       unelevated
       @click="handleClearFilter"
-      icon="img:/images/clear.svg"
-      v-if="labelFilter !== 'all'"
+      :disabled="labelFilter === 'all'"
+      :icon="
+        labelFilter === 'all'
+          ? 'img:/images/clear-inactive.svg'
+          : 'img:/images/clear-active.svg'
+      "
     />
     <q-btn
       rounded
