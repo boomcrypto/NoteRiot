@@ -115,8 +115,8 @@ module.exports = function (/* ctx */) {
       }, // only for GenerateSW
       manifest: {
         name: `noteriot3`,
-        short_name: `noteriot3`,
-        description: `A Boom Project`,
+        short_name: `NoteRiot`,
+        description: `NoteRiot is the easy to use note keeping app. Organize your notes and lists on any device.  Always private, always secure.A Boom Project`,
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",
