@@ -89,32 +89,12 @@
       <FilterBar class="q-mr-auto q-ml-auto" v-if="showFilterBar" />
     </q-header>
 
-    <q-footer
-      v-if="$q.screen.xs"
-      class="bg-white"
-      style="
-        max-width: 480px;
-        margin: auto;
-        box-shadow: inset 0px 1px 0px #e9d1f2;
-      "
-    >
-      <q-tabs indicator-color="transparent">
-        <q-tab
-          no-caps
-          class="webbyTab"
-          active-class="text-accent activeTab"
-          icon="menu"
-          name="menu"
-        />
-        <q-space />
-        <q-tab
-          no-caps
-          class="webbyTab"
-          active-class="activeTab text-accent"
-          icon="search"
-          name="search"
-        />
-      </q-tabs>
+    <q-footer bordered class="bg-white text-dark">
+      <q-toolbar class="bg-transparent text-dark">
+        <q-btn flat round dense icon="menu" />
+
+        <q-btn flat round dense icon="search" />
+      </q-toolbar>
     </q-footer>
 
     <q-page-container>
@@ -122,10 +102,27 @@
       <q-dialog v-model="showDialog">
         <component :is="component" :data="data" />
       </q-dialog>
-      <q-page-sticky position="bottom-right" style="z-index: -10">
-        <img src="/images/bottom-right.svg" />
-      </q-page-sticky>
     </q-page-container>
+    <q-page-sticky class="override-bottom-space" position="bottom-right">
+      <img src="/images/bottom-right.svg" />
+    </q-page-sticky>
+    <q-page-sticky
+      position="bottom"
+      :offset="[10, -35]"
+      v-if="$q.screen.xs"
+      style="z-index: 2010"
+    >
+      <q-btn
+        round
+        size="24px"
+        fab
+        icon="add"
+        color="accent"
+        @click="handleAddNote"
+        padding="30px"
+        style="box-shadow: 0 0 8px gray"
+      />
+    </q-page-sticky>
   </q-layout>
 </template>
 
