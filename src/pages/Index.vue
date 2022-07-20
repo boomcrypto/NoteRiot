@@ -26,21 +26,7 @@
         </div>
       </div>
     </Container>
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[50, 50]"
-      v-if="$q.screen.gt.xs"
-    >
-      <q-btn
-        round
-        size="48px"
-        fab
-        icon="add"
-        color="accent"
-        @click="handleAddNote"
-        padding="30px"
-      />
-    </q-page-sticky>
+
     <q-dialog
       v-model="showEditor"
       maximized

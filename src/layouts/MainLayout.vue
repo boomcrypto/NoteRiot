@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHr lpR fFr">
-    <q-header class="bg-transparent" v-if="$q.screen.gt.xs">
+    <q-header class="bg-white" v-if="$q.screen.gt.xs">
       <q-toolbar>
         <img
           src="/images/noteriot-round-wordmark.svg"
@@ -103,13 +103,32 @@
         <component :is="component" :data="data" />
       </q-dialog>
     </q-page-container>
-    <q-page-sticky class="override-bottom-space" position="bottom-right">
+    <q-page-sticky
+      class="override-bottom-space"
+      position="bottom-right"
+      style="z-index: -10"
+    >
       <img src="/images/bottom-right.svg" />
     </q-page-sticky>
     <q-page-sticky
-      position="bottom"
+      position="bottom-right"
+      :offset="[50, 60]"
+      v-if="$q.screen.gt.xs"
+    >
+      <q-btn
+        round
+        size="48px"
+        fab
+        icon="add"
+        color="accent"
+        @click="handleAddNote"
+        padding="30px"
+      />
+    </q-page-sticky>
+    <q-page-sticky
+      position="bottom-right"
       :offset="[10, -35]"
-      v-if="$q.screen.xs"
+      v-else
       style="z-index: 2010"
     >
       <q-btn
@@ -119,7 +138,7 @@
         icon="add"
         color="accent"
         @click="handleAddNote"
-        padding="30px"
+        padding="25px"
         style="box-shadow: 0 0 8px gray"
       />
     </q-page-sticky>
