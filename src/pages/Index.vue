@@ -8,7 +8,11 @@
               <Note
                 :data="note"
                 v-for="note in filterNotes"
-                :class="mode==='list'?'col-xs-12 col-sm-12 col-md-12 col-lg-12':'col-xs-12 col-sm-4 col-md-3 col-lg-2'"
+                :class="
+                  mode === 'list'
+                    ? 'col-xs-12 col-sm-12 col-md-12 col-lg-12'
+                    : 'col-xs-12 col-sm-4 col-md-3 col-lg-2'
+                "
                 :key="note.id"
               />
             </div>
@@ -22,32 +26,7 @@
         </div>
       </div>
     </Container>
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[50, 50]"
-      v-if="$q.screen.gt.xs"
-    >
-      <q-btn
-        round
-        size="48px"
-        fab
-        icon="add"
-        color="accent"
-        @click="handleAddNote"
-        padding="30px"
-      />
-    </q-page-sticky>
-    <q-page-sticky position="bottom" :offset="[10, -10]" v-else>
-      <q-btn
-        round
-        size="24px"
-        fab
-        icon="add"
-        color="accent"
-        @click="handleAddNote"
-        padding="30px"
-      />
-    </q-page-sticky>
+
     <q-dialog
       v-model="showEditor"
       maximized
@@ -88,7 +67,7 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["filterNotes", "tags", "colors"]),
-    ...mapState("app", ["notes", "showFilterBar","mode"]),
+    ...mapState("app", ["notes", "showFilterBar", "mode"]),
   },
   methods: {
     ...mapActions("app", [
