@@ -110,7 +110,9 @@ module.exports = function (/* ctx */) {
     // https://v1.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
+      workboxOptions: {
+        workboxOptions: { skipWaiting: true },
+      }, // only for GenerateSW
       manifest: {
         name: `noteriot3`,
         short_name: `noteriot3`,
