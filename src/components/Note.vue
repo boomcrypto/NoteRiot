@@ -20,11 +20,23 @@
       <q-img
         v-if="data.attachments.length"
         :src="data.attachments[0].url"
-        :ratio="16 / 9"
+        cover
         spinner-color="accent"
         spinner-size="48px"
-      />
-      <q-card-section>
+      >
+        <div class="column">
+          <div class="note-title dark">
+            {{ displayTitle }}
+          </div>
+          <div class="timestamp dark">
+            {{ lastModified }}
+          </div>
+          <div class="toastui-editor-contents-dark">
+            <viewer :initialValue="data.text" :key="data.modified" />
+          </div>
+        </div>
+      </q-img>
+      <q-card-section v-else>
         <div class="note-title">
           {{ displayTitle }}
         </div>
@@ -32,14 +44,13 @@
           {{ lastModified }}
         </div>
         <div :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''">
-          <viewer :initialValue="data.text" :key="data.modified" />
+          <viewer
+            :initialValue="data.text"
+            :key="data.modified"
+            class="full-width"
+          />
         </div>
       </q-card-section>
-      <!-- <q-card-section
-        style="overflow: hidden"
-        :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
-      >
-      </q-card-section> -->
 
       <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
@@ -457,7 +468,8 @@ export default {
       }
     },
     lastModified() {
-      return timeago.format(this.data.modified);
+      // return timeago.format(this.data.modified);
+      return new Date(this.data.modified).toLocaleString();
     },
   },
   methods: {

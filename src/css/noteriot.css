@@ -547,6 +547,11 @@ body.body--dark {
   line-height: 18px;
   font-weight: 700;
 }
+.note-title.dark {
+  color: #fafafa;
+  line-height: 18px;
+  font-weight: 700;
+}
 
 .timestamp {
   display: -webkit-box;
