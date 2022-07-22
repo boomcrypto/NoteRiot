@@ -84,7 +84,7 @@
         </q-card-actions>
         Note Color
         <q-card-section>
-          <SelectColor :data="data" />
+          <SelectColor :color="data.color" @update-note="handleUpdates" />
         </q-card-section>
         Attachments
         <q-card-section
@@ -107,10 +107,11 @@
         </q-card-section>
         Share with ...
         <q-card-section>
-          <q-input v-model="text" type="text" label="Share with ..." />
+          <q-input v-model="shareWith" type="text" label="Share with ..." />
         </q-card-section>
         Select Tags ...
         <q-card-section>
+          <!-- TODO: tag editor prop should just be tags -->
           <TagEditor :note="data" />
         </q-card-section>
       </q-scroll-area>
@@ -146,6 +147,7 @@ export default {
       currentContent: this.data.text,
       showSidebar: true,
       previewStyle: "tab",
+      shareWith: "",
       editorOptions: {
         language: "en-US",
         useCommandShortcut: true,
@@ -186,6 +188,18 @@ export default {
   },
   methods: {
     ...mapActions("app", ["updateNote"]),
+    handleUpdates(updates) {
+      this.updateNote({
+        id: this.data.id,
+        updates: updates,
+      });
+    },
+    handleMintNote() {
+      alert("mint note");
+    },
+    handleSignNote() {
+      alert("sign note");
+    },
     handleAddAttachment() {
       alert("add attachment here");
     },

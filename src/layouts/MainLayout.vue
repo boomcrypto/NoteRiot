@@ -89,7 +89,7 @@
       <FilterBar class="q-mr-auto q-ml-auto" v-if="showFilterBar" />
     </q-header>
 
-    <q-footer bordered class="bg-white text-dark">
+    <q-footer bordered class="bg-white text-dark" v-if="$q.screen.xs">
       <q-toolbar class="bg-transparent text-dark">
         <q-btn flat round dense icon="menu" />
 
@@ -142,6 +142,19 @@
         style="box-shadow: 0 0 8px gray"
       />
     </q-page-sticky>
+    <q-dialog
+      v-model="showEditor"
+      maximized
+      :class="$q.dark.isActive ? 'toastui-editor-dark' : ''"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <editor
+        :data="newNote"
+        @closeEditor="handleCloseEditor"
+        @update-note="handleUpdates"
+      />
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -159,6 +172,7 @@ export default {
     ImportTool,
     Search: () => import("components/Search.vue"),
     FilterBar: () => import("components/FilterBar.vue"),
+    Editor: () => import("components/Editor.vue"),
   },
   data() {
     return {
@@ -169,6 +183,7 @@ export default {
       showDialog: false,
       tagFilter: null,
       colorFilter: null,
+      showEditor: false,
     };
   },
   computed: {
@@ -190,7 +205,21 @@ export default {
       "setSortBy",
       "setShowFilterBar",
       "setMode",
+      "addNote",
     ]),
+    async handleAddNote() {
+      this.setLabelFilter("all");
+      this.newNote = await this.addNote();
+      this.showEditor = true;
+    },
+    handleCloseEditor() {
+      this.showEditor = false;
+      this.newNote = null;
+    },
+    async handleUpdates(updates) {
+      const notestatus = await this.updateNote(updates);
+      console.log("note status after update", notestatus);
+    },
     handleClearFilters() {
       this.setLabelFilter("all");
       this.tagFilter = null;

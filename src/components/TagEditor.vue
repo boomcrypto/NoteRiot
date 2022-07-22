@@ -104,14 +104,12 @@ export default {
       let noteTags = this.note.tags.slice();
       noteTags.splice(noteTags.indexOf(del), 1);
       const payload = {
-        id: this.note.id,
         updates: { tags: noteTags },
       };
       this.$emit("update-note", payload);
     },
     async addTag(tag) {
       const payload = {
-        id: this.note.id,
         updates: {
           tags: [...this.note.tags, tag],
         },
@@ -126,7 +124,6 @@ export default {
       } else {
         const taglist = this.note.tags.concat(this.newTagName);
         const payload = {
-          id: this.note.id,
           updates: {
             tags: taglist,
           },

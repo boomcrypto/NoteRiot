@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "SelectColor",
   props: {
-    note: {
-      type: Object,
+    color: {
+      type: String,
       required: true,
     },
   },
@@ -36,7 +36,7 @@ export default {
     };
   },
   created() {
-    this.selectedColor = this.note.color;
+    this.selectedColor = this.color;
   },
   computed: {
     ...mapState("app", ["noteColors"]),
@@ -45,7 +45,6 @@ export default {
     handleSelectColor(color) {
       this.selectedColor = color;
       this.$emit("update-note", {
-        id: this.note.id,
         updates: {
           color: this.color,
         },

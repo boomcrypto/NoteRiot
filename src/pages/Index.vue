@@ -26,20 +26,6 @@
         </div>
       </div>
     </Container>
-
-    <q-dialog
-      v-model="showEditor"
-      maximized
-      :class="$q.dark.isActive ? 'toastui-editor-dark' : ''"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <editor
-        :data="newNote"
-        @closeEditor="handleCloseEditor"
-        @update-note="handleUpdates"
-      />
-    </q-dialog>
   </q-page>
 </template>
 
@@ -56,7 +42,6 @@ export default {
     Container: () => import("components/Container.vue"),
     EmptyFilter,
     NoNotes,
-    Editor: () => import("components/Editor.vue"),
     // FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
@@ -85,14 +70,6 @@ export default {
       //   name: "Edit",
       //   params: { id: "new" },
       // });
-    },
-    handleCloseEditor() {
-      this.showEditor = false;
-      this.newNote = null;
-    },
-    async handleUpdates(updates) {
-      const notestatus = await this.updateNote(updates);
-      console.log("note status after update", notestatus);
     },
   },
 };

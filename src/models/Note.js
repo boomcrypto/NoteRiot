@@ -5,7 +5,7 @@ export default class Note {
     this.id = uuidv4();
     this.text = options.text || "";
     this.title = options.title || "";
-    this.color = options.color || null;
+    this.color = options.color || "";
     this.notebook = options.notebook || 0; // by convention 0 is the "default" notebook
     this.created = options.created || Date.now();
     this.modified = options.modified || Date.now();
