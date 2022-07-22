@@ -111,7 +111,7 @@ module.exports = function (/* ctx */) {
     pwa: {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {
-        workboxOptions: { skipWaiting: true },
+        skipWaiting: true,
       }, // only for GenerateSW
       manifest: {
         name: `noteriot3`,
