@@ -2,7 +2,7 @@
   <div>
     <q-card
       v-if="mode === 'grid'"
-      class="boom-card"
+      class="q-pa-none"
       :class="
         `bg-${data.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
@@ -25,8 +25,17 @@
         spinner-size="48px"
       >
         <div class="column">
-          <div class="note-title dark">
-            {{ displayTitle }}
+          <div class="row">
+            <div class="note-title dark col">
+              {{ displayTitle }}
+            </div>
+            <note-actions
+              class="grid-icons absolute-top-right"
+              :note="data"
+              style="z-index: 99"
+              :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+              :id="data.id"
+            ></note-actions>
           </div>
           <div class="timestamp dark">
             {{ lastModified }}
@@ -37,6 +46,15 @@
         </div>
       </q-img>
       <q-card-section v-else>
+        <div>
+          <note-actions
+            class="grid-icons absolute-top-right"
+            :note="data"
+            style="z-index: 99"
+            :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+            :id="data.id"
+          ></note-actions>
+        </div>
         <div class="note-title">
           {{ displayTitle }}
         </div>
@@ -52,7 +70,7 @@
         </div>
       </q-card-section>
 
-      <q-inner-loading :showing="buttonBarVisibility">
+      <!-- <q-inner-loading :showing="buttonBarVisibility">
         <div class="row text-center q-mt-md">
           <q-btn dense round flat @click.stop="handleFave()">
             <q-icon>
@@ -108,7 +126,7 @@
               Change color
             </q-tooltip>
           </q-btn>
-          <!-- <q-btn dense round flat @click.stop="handleShareNote()">
+          <q-btn dense round flat @click.stop="handleShareNote()">
             <q-icon>
               <img src="/images/share.svg" />
             </q-icon>
@@ -119,7 +137,7 @@
             >
               Share ...
             </q-tooltip>
-          </q-btn> -->
+          </q-btn>
           <div v-if="note.trash">
             <q-btn dense round flat @click.stop="restoreNote">
               <q-icon color="accent" name="img:/images/restore.svg" />
@@ -172,7 +190,7 @@
             </template>
           </q-chip>
         </q-card-section>
-      </q-inner-loading>
+      </q-inner-loading> -->
     </q-card>
     <q-card
       v-else
@@ -298,18 +316,18 @@
                 Change color
               </q-tooltip>
             </q-btn>
-            <!-- <q-btn dense round flat @click.stop="handleShareNote()">
-            <q-icon>
-              <img src="/images/share.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Share ...
-            </q-tooltip>
-          </q-btn> -->
+            <q-btn dense round flat @click.stop="handleShareNote()">
+              <q-icon>
+                <img src="/images/share.svg" />
+              </q-icon>
+              <q-tooltip
+                anchor="bottom middle"
+                self="bottom middle"
+                :offset="[10, 30]"
+              >
+                Share ...
+              </q-tooltip>
+            </q-btn>
             <div v-if="note.trash">
               <q-btn dense round flat @click.stop="restoreNote">
                 <q-icon color="accent" name="img:/images/restore.svg" />
@@ -416,7 +434,7 @@ export default {
     SelectColor: () => import("components/SelectColor"),
     TagEditor: () => import("components/TagEditor.vue"),
     Editor: () => import("components/Editor.vue"),
-    // NoteActions: () => import("components/NoteActions.vue"),
+    NoteActions: () => import("components/NoteActions.vue"),
     Viewer,
   },
   props: {

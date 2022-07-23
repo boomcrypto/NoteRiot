@@ -9,13 +9,7 @@
     </q-btn>
     <q-btn unelevated round @click.stop="handleMenuButton">
       <img src="/images/more.svg" />
-      <q-menu
-        v-model="showMenu"
-        @before-show="showState"
-        @input="showState"
-        @before-hide="showState"
-        @hide="showState"
-      >
+      <q-menu>
         <div class="effin-border">
           <q-list style="min-width: 100px">
             <q-item clickable v-close-popup @click.stop="downloadNote(note)">
@@ -89,6 +83,13 @@ export default {
       const payload = {
         id: this.note.id,
         updates: { fave: !this.note.fave },
+      };
+      this.$emit("update-note", payload);
+    },
+    handleDelete() {
+      const payload = {
+        id: this.note.id,
+        updates: { trash: true },
       };
       this.$emit("update-note", payload);
     },

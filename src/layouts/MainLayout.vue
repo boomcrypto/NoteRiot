@@ -184,6 +184,7 @@ export default {
       tagFilter: null,
       colorFilter: null,
       showEditor: false,
+      newNote: null,
     };
   },
   computed: {
