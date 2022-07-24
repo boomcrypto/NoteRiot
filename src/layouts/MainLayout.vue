@@ -88,6 +88,22 @@
       </q-toolbar>
       <FilterBar class="q-mr-auto q-ml-auto" v-if="showFilterBar" />
     </q-header>
+    <q-header reveal bordered height-hint="80" v-else>
+      <q-toolbar style="height: 80px">
+        <img
+          src="/images/noteriot-round-wordmark.svg"
+          :ration="16 / 9"
+          spinner-color="accent"
+          spinner-size="28px"
+          style="height: 36px"
+        />
+        <q-space />
+
+        <q-avatar size="36px">
+          <img :src="avatar" />
+        </q-avatar>
+      </q-toolbar>
+    </q-header>
 
     <q-footer bordered class="bg-white text-dark" v-if="$q.screen.xs">
       <q-toolbar class="bg-transparent text-dark">
