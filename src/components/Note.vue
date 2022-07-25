@@ -2,7 +2,7 @@
   <div>
     <q-card
       v-if="mode === 'grid'"
-      class="q-pa-none"
+      class="q-pa-none boom-card"
       :class="
         `bg-${data.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
@@ -17,50 +17,24 @@
       "
       :key="data.id"
     >
+      <NoteActions
+        class="grid-icons absolute-top-right"
+        :note="data"
+        style="z-index: 99"
+        :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+      />
       <q-img
-        v-if="data.attachments.length"
+        v-if="hasImage"
         :src="data.attachments[0].url"
-        cover
+        :ratio="16 / 9"
         spinner-color="accent"
         spinner-size="48px"
-      >
-        <div class="column">
-          <div class="row">
-            <div class="note-title dark col">
-              {{ displayTitle }}
-            </div>
-            <note-actions
-              class="grid-icons absolute-top-right"
-              :note="data"
-              style="z-index: 99"
-              :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
-              :id="data.id"
-            ></note-actions>
-          </div>
-          <div class="timestamp dark">
-            {{ lastModified }}
-          </div>
-          <div class="toastui-editor-contents-dark">
-            <viewer :initialValue="data.text" :key="data.modified" />
-          </div>
-        </div>
-      </q-img>
-      <q-card-section v-else>
-        <div>
-          <note-actions
-            class="grid-icons absolute-top-right"
-            :note="data"
-            style="z-index: 99"
-            :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
-            :id="data.id"
-          ></note-actions>
-        </div>
-        <div class="note-title">
-          {{ displayTitle }}
-        </div>
-        <div class="timestamp">
-          {{ lastModified }}
-        </div>
+      />
+      <q-card-section>
+        <q-item-label class="note-title text-no-wrap">{{
+          displayTitle
+        }}</q-item-label>
+        <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
         <div :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''">
           <viewer
             :initialValue="data.text"
@@ -69,128 +43,6 @@
           />
         </div>
       </q-card-section>
-
-      <!-- <q-inner-loading :showing="buttonBarVisibility">
-        <div class="row text-center q-mt-md">
-          <q-btn dense round flat @click.stop="handleFave()">
-            <q-icon>
-              <img
-                :src="
-                  fave
-                    ? '/images/favorited.svg'
-                    : '/images/favorite-available.svg'
-                "
-              />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Toggle Favorite
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="showTagManager = true">
-            <q-icon>
-              <img src="/images/label.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Manage tags
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="downloadNote()">
-            <q-icon>
-              <img src="/images/download.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Download note
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="showColorManager = true">
-            <q-icon>
-              <img src="/images/palette.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Change color
-            </q-tooltip>
-          </q-btn>
-          <q-btn dense round flat @click.stop="handleShareNote()">
-            <q-icon>
-              <img src="/images/share.svg" />
-            </q-icon>
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Share ...
-            </q-tooltip>
-          </q-btn>
-          <div v-if="note.trash">
-            <q-btn dense round flat @click.stop="restoreNote">
-              <q-icon color="accent" name="img:/images/restore.svg" />
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Restore from archive
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="permanentlyDeleteNote">
-              <q-icon color="accent" name="img:/images/delete_forever.svg" />
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Permanently delete ...
-              </q-tooltip>
-            </q-btn>
-          </div>
-          <q-btn dense round flat @click.stop="archiveNote" v-else>
-            <q-icon color="accent" name="img:/images/trash.svg" />
-            <q-tooltip
-              anchor="bottom middle"
-              self="bottom middle"
-              :offset="[10, 30]"
-            >
-              Archive note
-            </q-tooltip>
-          </q-btn>
-        </div>
-        <q-card-section class="absolute-bottom row q-gutter-sm">
-          <q-chip
-            clickable
-            dense
-            square
-            text-color="white"
-            class="solo-tag"
-            color="primary"
-            @click="$emit('selected', tag)"
-            v-for="(tag, index) in currentTags"
-            :key="`${tag}-${index}`"
-          >
-            <template #default>
-              <div class="solo-tag-text">
-                {{ tag }}
-              </div>
-            </template>
-          </q-chip>
-        </q-card-section>
-      </q-inner-loading> -->
     </q-card>
     <q-card
       v-else
@@ -468,6 +320,9 @@ export default {
   computed: {
     ...mapGetters("app", ["tags"]),
     ...mapState("app", ["noteColors", "mode"]),
+    hasImage() {
+      return this.data.attachments.length > 0;
+    },
     displayTitle() {
       const titleLength = this.data.title.length;
       if (titleLength > 18) {
@@ -493,7 +348,7 @@ export default {
   methods: {
     ...mapActions("app", ["updateNote", "deleteNote"]),
     async handleUpdates(updates) {
-      this.contentKey = `${updates.id}-${updates.updates.modified}`;
+      this.contentKey = `${updates.id}-${Date.now()}`;
       const notestatus = await this.updateNote({
         id: this.data.id,
         updates: updates,

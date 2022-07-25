@@ -26,7 +26,7 @@
               clickable
               v-close-popup
               @click.stop="handleDelete"
-              v-if="!note.isArchived"
+              v-if="!note.trash"
             >
               <q-item-section>Archive</q-item-section>
             </q-item>
@@ -65,9 +65,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-      updateNote: "notes/updateNote",
-    }),
+    ...mapActions("app", ["updateNote"]),
     handleMenuButton() {
       this.showMenu = !this.showMenu;
     },
@@ -87,10 +85,8 @@ export default {
       this.$emit("update-note", payload);
     },
     handleDelete() {
-      const payload = {
-        id: this.note.id,
-        updates: { trash: true },
-      };
+      console.log("trying to delete note: ", this.note);
+      const payload = { trash: true };
       this.$emit("update-note", payload);
     },
     handleUnDelete() {

@@ -17,7 +17,7 @@
             clickable
             v-close-popup
             @click.stop="handleDelete"
-            v-if="!note.isArchived"
+            v-if="!note.trash"
           >
             <q-item-section>Archive</q-item-section>
           </q-item>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import exportData from "src/helpers/exportData";
 import UserSearch from "components/UserSearch";
 import TagEditor from "components/TagEditor";
@@ -56,12 +56,10 @@ export default {
       showTagEditor: false,
     };
   },
-  computed: {
-    ...mapState(["user"]),
-  },
+  computed: {},
   methods: {
     ...mapActions({
-      updateNote: "notes/updateNote",
+      updateNote: "app/updateNote",
     }),
     handleOpenTagEditor() {
       this.showTagEditor = true;
@@ -72,14 +70,14 @@ export default {
     handleDelete() {
       this.payload = {
         id: this.id,
-        updates: { isArchived: true },
+        updates: { trash: true },
       };
       this.updateNote(this.payload);
     },
     handleUnDelete() {
       this.payload = {
         id: this.id,
-        updates: { isArchived: false },
+        updates: { trash: false },
       };
       this.updateNote(this.payload);
     },
