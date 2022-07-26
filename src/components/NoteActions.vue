@@ -12,7 +12,7 @@
       <q-menu>
         <div class="effin-border">
           <q-list style="min-width: 100px">
-            <q-item clickable v-close-popup @click.stop="downloadNote(note)">
+            <q-item clickable v-close-popup @click.stop="handleDownloadNote">
               <q-item-section>Download</q-item-section>
             </q-item>
             <q-item clickable v-close-popup @click="handleOpenTagEditor">
@@ -53,7 +53,7 @@
 
 <script>
 import { mapActions } from "vuex";
-
+import { downloadNote } from "src/helpers/notes";
 export default {
   components: {
     UserSearch: () => import("components/UserSearch.vue"),
@@ -71,9 +71,13 @@ export default {
   },
   methods: {
     ...mapActions("app", ["updateNote"]),
+    handleDownloadNote() {
+      downloadNote(this.note);
+    },
     handleMenuButton() {
       this.showMenu = !this.showMenu;
     },
+
     handleUpdates(val) {
       if (typeof val === "object") {
         this.payload = val;
