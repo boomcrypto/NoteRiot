@@ -4,7 +4,7 @@
       v-if="mode === 'grid'"
       class="q-pa-none boom-card"
       :class="
-        data.hasOwnProperty('updates') && data.updates.color!='none'?`bg-${data.updates.color}-2`:'' + ($q.dark.isActive ? ' boom-card-dark' : '')
+        data.hasOwnProperty('color') && data.color!='none'?`bg-${data.color}-2`:'' + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
