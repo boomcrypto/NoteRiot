@@ -30,8 +30,8 @@ export function colors(state) {
   let active = state.notes.filter((note) => !note.trash);
   let colors = [];
   active.forEach((note) => {
-    if (note.color) {
-      colors.push(note.color);
+    if (note.hasOwnProperty('updates') && note.updates.hasOwnProperty('color')) {
+      colors.push(note.updates.color);
     }
   });
 
@@ -72,7 +72,7 @@ export function filterNotes(state) {
     let colorFilter = state.labelFilter.split(":")[1];
     const filteredNotes = state.notes.filter(
       (note) =>
-        note.color === colorFilter &&
+        (note.hasOwnProperty('updates') && note.updates.hasOwnProperty('color') && note.updates.color === colorFilter) &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );
