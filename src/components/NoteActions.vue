@@ -41,7 +41,12 @@
       <user-search :note="note"></user-search>
     </q-dialog>
     <q-dialog v-model="showTagEditor">
-      <tag-editor :note="note" :id="note.id"></tag-editor>
+      <TagEditor
+        :note="note"
+        :id="note.id"
+        @update="handleUpdates"
+        @close="showTagEditor = false"
+      />
     </q-dialog>
   </div>
 </template>
@@ -69,6 +74,18 @@ export default {
     handleMenuButton() {
       this.showMenu = !this.showMenu;
     },
+    handleUpdates(val) {
+      if (typeof val === "object") {
+        this.payload = val;
+      } else {
+        this.payload = {};
+        console.log("error return type to NoteActions update function: ", val);
+      }
+      this.showTagEditor = false;
+      this.showUserSearch = false;
+      this.showMenu = false;
+      this.$emit("update-note", val);
+    },
     showState(evt) {
       console.log("event: ", evt);
       console.log("buttonBarVisibility", this.buttonBarVisibility);
@@ -78,23 +95,15 @@ export default {
       console.log("payload", this.payload);
     },
     handleFave() {
-      const payload = {
-        id: this.note.id,
-        updates: { fave: !this.note.fave },
-      };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", {
+        fave: !this.note.fave,
+      });
     },
     handleDelete() {
-      console.log("trying to delete note: ", this.note);
-      const payload = { trash: true };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", { trash: true });
     },
     handleUnDelete() {
-      const payload = {
-        id: this.note.id,
-        updates: { trash: false },
-      };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", { trash: false });
     },
     handleOpenTagEditor() {
       this.showTagEditor = true;

@@ -22,6 +22,7 @@
         :note="data"
         style="z-index: 99"
         :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+        @update-note="handleUpdates"
       />
       <q-img
         v-if="hasImage"
@@ -353,6 +354,7 @@ export default {
         id: this.data.id,
         updates: updates,
       });
+      console.log("notestatus", notestatus);
       this.note = Object.assign({}, this.note, updates);
     },
     restoreNote() {
