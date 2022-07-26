@@ -15,7 +15,7 @@
           ? 'cursor: pointer'
           : '' + ($q.dark.isActive ? 'color: white' : '')
       "
-      :key="data.id"
+      :key="`${data.id}-${data.modified}`"
     >
       <NoteActions
         class="grid-icons absolute-top-right"
@@ -53,7 +53,7 @@
       "
       class="boom-card-list"
       @click="handleEditNote"
-      :key="data.id"
+      :key="`${data.modified}-${data.id}`"
     >
       <q-card-section class="q-pa-none">
         <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">
