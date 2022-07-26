@@ -46,7 +46,7 @@ export default {
       this.selectedColor = color;
       this.$emit("update-note", {
         updates: {
-          color: this.color,
+          color: this.selectedColor,
         },
       });
     },

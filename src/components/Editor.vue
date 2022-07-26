@@ -84,7 +84,7 @@
         </q-card-actions>
         Note Color
         <q-card-section>
-          <SelectColor :color="data.color" @update-note="handleUpdates" />
+          <SelectColor :color="data.hasOwnProperty('updates')?data.updates.color:'none'" @update-note="handleUpdates" />
         </q-card-section>
         Attachments
         <q-card-section
