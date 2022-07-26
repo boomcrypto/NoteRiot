@@ -44,11 +44,9 @@ export default {
   methods: {
     handleSelectColor(color) {
       this.selectedColor = color;
-      this.$emit("update-note", {
-        updates: {
-          color: this.color,
-        },
-      });
+      this.$emit("update-note",
+        {color: this.selectedColor}
+      );
     },
   },
 };

@@ -20,7 +20,7 @@ export default () => {
       "green",
       "blue",
       "purple",
-      "gray",
+      "grey",
       "teal",
     ],
     notes: [

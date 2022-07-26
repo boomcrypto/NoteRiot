@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHr lpR fFr">
-    <q-header class="bg-white" v-if="$q.screen.gt.xs">
+    <q-header :class="$q.dark.isActive?'bg-transparent':'bg-white'" v-if="$q.screen.gt.xs">
       <q-toolbar>
         <img
           src="/images/noteriot-round-wordmark.svg"
