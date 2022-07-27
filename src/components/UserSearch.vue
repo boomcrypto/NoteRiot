@@ -164,7 +164,7 @@ export default {
         });
         const profileData = await profileRes.json();
         this.recipientPublicKey =
-          profileData.decodedTaken.payload.subject.publicKey;
+          profileData.decodedTaken.payload["https://noteriot.app"].publicKey;
       } catch (err) {
         console.error(err);
       } finally {
