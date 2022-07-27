@@ -4,59 +4,15 @@
     class="effin-border"
   >
     <q-card-section>
-      <q-select
+      <q-input
         v-model="model"
-        clearable
-        :use-input="showInput"
-        hide-selection
-        fill-input
-        input-debounce="0"
-        :options="options"
-        @filter="filterFn"
-        :behavior="$q.platform.is.ios === true ? 'dialog' : 'menu'"
+        type="search"
+        placeholder="Search for STX user"
         hint="ex: user.id or user.id.blockstack"
-        placeholder="Search Blockstack names"
-        @input="selectUser"
-        @clear="resetSearch"
-      >
-        <template v-slot:before>
-          <q-icon name="search" />
-        </template>
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey"
-              >No results. Ask your contact to log in to NoteRiot so that you
-              can share!</q-item-section
-            >
-          </q-item>
-        </template>
-        <template v-slot:selected-item="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="scope.opt.icon" />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-              <q-item-label>{{ scope.opt.blockstackid }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
-            <q-item-section avatar>
-              <q-avatar size="lg">
-                <img :src="scope.opt.icon" />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-              <q-item-label caption>{{ scope.opt.blockstackid }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
+        clearable
+        @keyup.enter="handleSearchUser"
+      />
+      <q-btn color="primary" label="Search" @click="handleSearchUser" />
     </q-card-section>
     <q-card-section v-if="shareURL">
       <div
@@ -183,52 +139,39 @@ export default {
       this.recipientPublicKey = "";
       this.model = null;
     },
-    // filterFn(val, update, abort) {
-    filterFn(val, update) {
-      const re = new RegExp(val, "i");
-      const test = (element) => re.test(element);
-
-      if (val.length < 3 || this.recentNames.some(test)) {
-        update(() => {
-          this.options = this.recents;
+    async handleSearchUser() {
+      try {
+        this.loading = true;
+        const res = await fetch(
+          `https://stacks-node-api.mainnet.stacks.co/v1/names/${this.model}`,
+          {
+            method: "GET",
+            // headers: {
+            //   "Content-Type": "application/json",
+            //   // Authorization: `Bearer ${this.userSession.loadUserData().accessToken}`,
+            // },
+          }
+        );
+        const data = await res.json();
+        const zonefile = data.zonefile;
+        const profileUrl = zonefile.split("https")[1];
+        const profileRes = await fetch(`https${profileUrl}`, {
+          method: "GET",
+          // headers: {
+          //   "Content-Type": "application/json",
+          //   // Authorization: `Bearer ${this.userSession.loadUserData().accessToken}`,
+          // },
         });
+        const profileData = await profileRes.json();
+        this.recipientPublicKey =
+          profileData.decodedTaken.payload.subject.publicKey;
+      } catch (err) {
+        console.error(err);
+      } finally {
+        this.loading = false;
       }
-
-      update(() => {
-        this.$axios
-          .get(`${this.coreAPIURL}/search?query=${val}`)
-          .then((response) => {
-            if (
-              response.data &&
-              response.data.results &&
-              response.data.results.length
-            ) {
-              this.searchResults = response.data.results;
-              let opts = this.searchResults.map((result) => {
-                // console.log("opts: ", result)
-                let pk = "";
-                try {
-                  pk =
-                    result.profile.appsMeta["http://localhost:8080"].publicKey;
-                  console.log(`public key: ${result.profile}`);
-                } catch {
-                  // empty
-                }
-                return {
-                  label: result.profile.name || result.fullyQualifiedName,
-                  value: result.fullyQualifiedName,
-                  icon: this.getProfilePic(result),
-                  publicKey: pk,
-                };
-              });
-              this.options = opts;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
     },
+
     selectUser(user) {
       this.showInput = false;
       this.userSelected = user;
