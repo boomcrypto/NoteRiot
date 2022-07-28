@@ -38,7 +38,9 @@
       </q-menu>
     </q-btn>
     <q-dialog v-model="showUserSearch">
-      <user-search :note="note"></user-search>
+      <q-card flat class="boom-card">
+        <user-search :note="note"></user-search>
+      </q-card>
     </q-dialog>
     <q-dialog v-model="showTagEditor">
       <TagEditor

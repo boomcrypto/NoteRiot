@@ -12,7 +12,17 @@
         clearable
         @keyup.enter="handleSearchUser"
       />
-      <q-btn color="primary" label="Search" @click="handleSearchUser" />
+      <q-btn
+        outlined
+        no-caps
+        unelevated
+        color="accent"
+        label="Search"
+        @click="handleSearchUser"
+      />
+    </q-card-section>
+    <q-card-section>
+      {{ recipientPublicKey }}
     </q-card-section>
     <q-card-section v-if="shareURL">
       <div
@@ -52,7 +62,7 @@
 
 import { debounce } from "quasar";
 import { mapActions, mapState } from "vuex";
-// import Contact from "../../models/Contact"
+import Contact from "src/models/Contact";
 import { v4 as uuidv4 } from "uuid";
 // import { userSession } from "boot/stacks"
 
@@ -67,7 +77,6 @@ export default {
       recentNames: [],
       options: [],
       loading: false,
-      coreAPIURL: "https://core.blockstack.org/v1",
       defaultProfilePic: "/img/avataaars.svg",
       searchResults: [],
       shareURL: "",
@@ -76,24 +85,9 @@ export default {
     };
   },
   mounted() {},
-  created() {
-    // this.searchProfile = debounce(this.searchProfile, 500);
-    this.filterFn = debounce(this.filterFn, 300);
-    let contacts = Object.values(this.contacts);
-    this.recents = contacts.map((contact) => {
-      return {
-        label: contact.label,
-        value: contact.blockstackid,
-        icon: contact.icon,
-        publicKey: contact.publicKey,
-      };
-    });
-    this.recentNames = this.recents.map((contact) => {
-      return contact.label;
-    });
-  },
+  created() {},
   computed: {
-    ...mapState(["contacts"]),
+    ...mapState(["app", "contacts"]),
     showShare() {
       return navigator.share;
     },
@@ -102,10 +96,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      setShowLoadSharedNote: "app/setShowLoadSharedNote",
-      addContact: "contacts/addContact",
-    }),
+    ...mapActions("app", ["setShowLoadSharedNote", "addContact"]),
     async copyToClipboard() {
       try {
         await navigator.clipboard.writeText(this.shareURL);
@@ -131,15 +122,21 @@ export default {
         return false;
       }
     },
-    resetSearch() {
-      this.showInput = true;
-      this.shareURL = "";
-      this.options = [];
-      this.searchResults = [];
-      this.recipientPublicKey = "";
-      this.model = null;
-    },
+
     async handleSearchUser() {
+      let user = this.contacts.find((contact) => contact.name === this.model);
+      if (user) {
+        this.addContact(
+          new Contact({
+            name: this.model,
+            publicKey: user.publicKey,
+            zonefile: user.zonefile,
+            nickname: "",
+            shares: [],
+          })
+        );
+      }
+
       try {
         this.loading = true;
         const res = await fetch(
@@ -153,7 +150,28 @@ export default {
           }
         );
         const data = await res.json();
+        if (data.hasOwnProperty("error")) {
+          this.recipientPublicKey = "Public key not found";
+
+          this.$q.notify({
+            message: data.error,
+            icon: "announcement",
+            timeout: 600,
+          });
+          this.loading = false;
+          return;
+        }
         const zonefile = data.zonefile;
+        if (data.zonefile === "") {
+          this.recipientPublicKey = "Public key not found";
+          this.$q.notify({
+            message: "No zonefile found",
+            icon: "announcement",
+            timeout: 600,
+          });
+          this.loading = false;
+          return;
+        }
         const profileUrl = zonefile.split("https")[1];
         const profileRes = await fetch(`https${profileUrl}`, {
           method: "GET",
@@ -167,6 +185,7 @@ export default {
           profileData.decodedTaken.payload["https://noteriot.app"].publicKey;
       } catch (err) {
         console.error(err);
+        this.recipientPublicKey = "Public key not found";
       } finally {
         this.loading = false;
       }
