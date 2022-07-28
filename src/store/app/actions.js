@@ -45,6 +45,19 @@ export async function fetchData(context) {
   });
 }
 
+export async function fetchContacts(context) {
+  await storage.getFile("contacts.json").then((data) => {
+    let contacts = null;
+    try {
+      contacts = JSON.parse(data);
+    } catch {
+      contacts = [];
+    }
+    console.log("contacts: ", contacts);
+    context.commit("setContacts", contacts);
+  });
+}
+
 export function signOut(context) {
   context.commit("setUser", null);
   context.commit("setNotes", []);

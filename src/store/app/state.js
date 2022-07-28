@@ -12,6 +12,7 @@ export default () => {
     sortDirection: "asc",
     showFilterBar: false,
     searchTerm: "",
+    contacts: [],
     noteColors: [
       "none",
       "red",

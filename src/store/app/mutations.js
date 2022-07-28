@@ -24,6 +24,10 @@ export function setNotes(state, payload) {
   });
 }
 
+export function setContacts(state, payload) {
+  state.contacts = payload;
+}
+
 export function setLabelFilter(state, payload) {
   state.labelFilter = payload;
 }
@@ -49,6 +53,10 @@ export function updateNote(state, payload) {
 
 export function addNote(state, note) {
   state.notes.push(note);
+}
+
+export function addContact(state, contact) {
+  state.contacts.push(contact);
 }
 
 export function setSearchTerm(state, st) {
