@@ -1,8 +1,5 @@
 <template>
-  <q-card
-    style="width: 400px; max-width: 80%; height: auto; padding: 0px"
-    class="effin-border"
-  >
+  <q-card style="width: 400px; height: auto; padding: 0px" class="effin-border">
     <q-card-section>
       <q-input
         v-model="model"
@@ -11,18 +8,32 @@
         hint="ex: user.id or user.id.blockstack"
         clearable
         @keyup.enter="handleSearchUser"
-      />
+      >
+        <template #after>
+          <q-btn
+            outlined
+            no-caps
+            unelevated
+            color="accent"
+            label="Search"
+            @click="handleSearchUser"
+          />
+        </template>
+      </q-input>
+    </q-card-section>
+    <q-card-section>
+      {{ recipientPublicKey }}
+    </q-card-section>
+    <q-card-section v-if="showSharingExt" class="row">
+      Press 'Share' to share this note with the {{ model }}.
       <q-btn
         outlined
         no-caps
         unelevated
         color="accent"
-        label="Search"
-        @click="handleSearchUser"
+        label="Share"
+        @click="handleShare"
       />
-    </q-card-section>
-    <q-card-section>
-      {{ recipientPublicKey }}
     </q-card-section>
     <q-card-section v-if="shareURL">
       <div
@@ -32,7 +43,7 @@
         {{ shareURL }}
       </div>
     </q-card-section>
-    <q-card-actions v-if="shareURL" right>
+    <q-card-actions v-if="shareURL">
       <q-btn
         flat
         color="white"
@@ -64,7 +75,7 @@ import { debounce } from "quasar";
 import { mapActions, mapState } from "vuex";
 import Contact from "src/models/Contact";
 import { v4 as uuidv4 } from "uuid";
-// import { userSession } from "boot/stacks"
+import { storage } from "boot/stacks";
 
 export default {
   name: "UserSearch",
@@ -82,12 +93,13 @@ export default {
       shareURL: "",
       recipientPublicKey: "",
       userSelected: {},
+      showSharingExt: false,
     };
   },
   mounted() {},
   created() {},
   computed: {
-    ...mapState(["app", "contacts"]),
+    ...mapState("app", ["contacts"]),
     showShare() {
       return navigator.share;
     },
@@ -125,44 +137,27 @@ export default {
 
     async handleSearchUser() {
       let user = this.contacts.find((contact) => contact.name === this.model);
-      if (user) {
-        this.addContact(
-          new Contact({
-            name: this.model,
-            publicKey: user.publicKey,
-            zonefile: user.zonefile,
-            nickname: "",
-            shares: [],
-          })
-        );
-      }
 
       try {
         this.loading = true;
-        const res = await fetch(
-          `https://stacks-node-api.mainnet.stacks.co/v1/names/${this.model}`,
-          {
-            method: "GET",
-            // headers: {
-            //   "Content-Type": "application/json",
-            //   // Authorization: `Bearer ${this.userSession.loadUserData().accessToken}`,
-            // },
-          }
+        const res = await this.$axios.get(
+          `https://stacks-node-api.mainnet.stacks.co/v1/names/${this.model}`
         );
-        const data = await res.json();
-        if (data.hasOwnProperty("error")) {
+        const nameDetails = res.data;
+        console.log("nameDetails: ", nameDetails);
+        if (nameDetails.hasOwnProperty("error")) {
           this.recipientPublicKey = "Public key not found";
 
           this.$q.notify({
-            message: data.error,
+            message: nameDetails.error,
             icon: "announcement",
             timeout: 600,
           });
           this.loading = false;
           return;
         }
-        const zonefile = data.zonefile;
-        if (data.zonefile === "") {
+        const zonefile = nameDetails.zonefile;
+        if (nameDetails.zonefile === "") {
           this.recipientPublicKey = "Public key not found";
           this.$q.notify({
             message: "No zonefile found",
@@ -172,17 +167,36 @@ export default {
           this.loading = false;
           return;
         }
-        const profileUrl = zonefile.split("https")[1];
-        const profileRes = await fetch(`https${profileUrl}`, {
-          method: "GET",
-          // headers: {
-          //   "Content-Type": "application/json",
-          //   // Authorization: `Bearer ${this.userSession.loadUserData().accessToken}`,
-          // },
-        });
-        const profileData = await profileRes.json();
+        const profileUrlStart = zonefile.indexOf('"');
+        const profileUrlEnd = zonefile.lastIndexOf('"');
+        const profileUrl = zonefile.substring(
+          profileUrlStart + 1,
+          profileUrlEnd
+        );
+        console.log("profileUrl: ", profileUrl);
+        const profileRes = await this.$axios.get(`${profileUrl}`);
+        console.log(
+          "data: ",
+          profileRes.data[0].decodedToken.payload.claim.appsMeta
+        );
         this.recipientPublicKey =
-          profileData.decodedTaken.payload["https://noteriot.app"].publicKey;
+          profileRes.data[0].decodedToken.payload.claim.appsMeta[
+            "https://noteriot.app"
+          ].publicKey;
+
+        if (!user) {
+          this.addContact(
+            new Contact({
+              name: this.model,
+              publicKey: this.recipientPublicKey,
+              zonefile: zonefile,
+              nickname: "",
+              shares: [],
+            })
+          );
+        }
+
+        this.showSharingExt = true;
       } catch (err) {
         console.error(err);
         this.recipientPublicKey = "Public key not found";
@@ -191,25 +205,16 @@ export default {
       }
     },
 
-    selectUser(user) {
-      this.showInput = false;
-      this.userSelected = user;
-      console.log("user selected: ", user);
-      if (user.publicKey === "") {
-        alert(
-          `Cannot share with ${user.label} :(. Please ask this user to log into NoteRiot`
-        );
-        return;
-      }
-
-      if (!Object.keys(this.contacts).includes(user.value)) {
-        // We're sharing with a new user, add this user to our
-        // contact list
-        this.addContact(user);
-      }
-
-      this.encryptAndShare();
+    async handleShare() {
+      this.shareURL = await storage.putFile(
+        `shared/${this.note.id}`,
+        JSON.stringify(this.note),
+        {
+          encrypt: this.recipientPublicKey,
+        }
+      );
     },
+
     getProfilePic(result) {
       let profilePic = this.defaultProfilePic;
       if (result.profile.image && result.profile.image.length) {
@@ -221,38 +226,6 @@ export default {
         }
       }
       return profilePic;
-    },
-    encryptAndShare() {
-      const sharedFilename = `shared/${uuidv4()}`;
-      const pk = this.userSelected.publicKey;
-      this.$userSession
-        .encryptContent(JSON.stringify(this.note), { pk })
-        .then((cipherText) => {
-          this.$userSession
-            .putFile(sharedFilename, cipherText, {
-              encrypt: false,
-            })
-            .then((filenameToShare) => {
-              this.shareURL = filenameToShare;
-            })
-            .catch((err) => {
-              alert("Error sharing file: ", err);
-            });
-        });
-      // this.$userSession
-      //   .putFile(
-      //     sharedFilename,
-      //     this.$userSession.encryptContent(JSON.stringify(this.note), {
-      //       pk,
-      //     }),
-      //     { encrypt: false }
-      //   )
-      //   .then((filenameToShare) => {
-      //     this.shareURL = filenameToShare
-      //   })
-      //   .catch((err) => {
-      //     alert("Error sharing file: ", err)
-      //   })
     },
   },
 };
