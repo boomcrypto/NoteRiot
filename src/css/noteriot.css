@@ -1414,8 +1414,8 @@ body.body--dark {
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
+  /* padding-left: 16px;
+  padding-right: 16px; */
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -1439,8 +1439,8 @@ body.body--dark {
 }
 
 .tag-color {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   margin: 4px;
   padding-right: 2px;
   padding-left: 2px;
@@ -1452,7 +1452,13 @@ body.body--dark {
 }
 
 .tag-color.checked {
-  background-image: url("/images/checked-color.svg");
+  background-image: url("/images/color-checked.svg");
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+.tag-color.remove {
+  background-image: url("/images/color-remove.svg");
   background-position: 50% 50%;
   background-size: contain;
 }
