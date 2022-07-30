@@ -9,7 +9,11 @@
               borderless
               v-model="currentTitle"
               type="text"
-              :input-class="currentTitle.length < 50 ? 'text-h3' : 'text-h5'"
+              :input-class="
+                currentTitle.length < 50
+                  ? 'text-h3 ellipsis'
+                  : 'text-h5 ellipsis'
+              "
               maxlength="80"
               placeholder="Untitled note"
               :input-style="
@@ -167,14 +171,14 @@
             @click="handleAddAttachment"
           />
         </q-card-section>
-        Share with ...
-        <q-card-section>
-          <q-input v-model="shareWith" type="text" label="Share with ..." />
-        </q-card-section>
         Select Tags ...
         <q-card-section>
           <!-- TODO: tag editor prop should just be tags -->
           <TagEditor :note="data" />
+        </q-card-section>
+        Share with ...
+        <q-card-section>
+          <q-input v-model="shareWith" type="text" label="Share with ..." />
         </q-card-section>
       </q-scroll-area>
     </q-drawer>
