@@ -1,22 +1,19 @@
 <template>
-  <q-card flat>
-    <q-card-section class="q-pa-none">
-      <div class="tag-colors">
-        <div class="tag-color-row">
-          <div
-            v-for="color in noteColors"
-            :key="`select-modal-${color}`"
-            @click="handleSelectColor(color)"
-            :class="
-              selectedColor === color
-                ? `tag-color ${color} checked`
-                : `tag-color ${color}`
-            "
-          ></div>
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+  <div class="tag-colors">
+    <div class="tag-color-row">
+      <div class="tag-color remove" @click="handleRemoveColor" />
+      <div
+        v-for="color in noteColors"
+        :key="`select-modal-${color}`"
+        @click="handleSelectColor(color)"
+        :class="
+          selectedColor === color
+            ? `tag-color ${color} checked`
+            : `tag-color ${color}`
+        "
+      ></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -44,11 +41,11 @@ export default {
   methods: {
     handleSelectColor(color) {
       this.selectedColor = color;
-      this.$emit("update-note", {
-        updates: {
-          color: this.color,
-        },
-      });
+      this.$emit("update-note", { color: this.selectedColor });
+    },
+    handleRemoveColor() {
+      this.selectedColor = "";
+      this.$emit("update-note", { color: this.selectedColor });
     },
   },
 };

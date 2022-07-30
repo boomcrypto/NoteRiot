@@ -14,7 +14,6 @@ export default () => {
     searchTerm: "",
     contacts: [],
     noteColors: [
-      "none",
       "red",
       "orange",
       "yellow",

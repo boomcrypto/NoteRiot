@@ -48,42 +48,104 @@
         </q-card-section>
       </q-card>
     </q-page-container>
+
+    <!-- sidebar actions -->
     <q-drawer side="right" v-model="showSidebar" bordered :width="300">
       <q-toolbar class="bg-transparent row q-pt-lg q-mb-md">
         <q-toolbar-title> Actions </q-toolbar-title>
       </q-toolbar>
-      <q-scroll-area class="fit q-pa-sm">
-        <q-card-actions align="center">
+      <q-scroll-area class="fit q-px-sm">
+        <q-card-section class="row q-px-none">
           <q-btn
-            outline
-            label="Toggle Favorite"
+            flat
+            round
+            color="accent"
             :icon="
               data.fave
                 ? 'img:/images/favorited.svg'
                 : 'img:/images/favorite-available.svg'
             "
-          />
-          <q-btn outline label="Delete" />
-          <q-btn outline class="q-mt-sm" label="Download" />
+            @click="handleToggleFave"
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+            >
+              <strong>Toggle Favorite</strong>
+            </q-tooltip>
+          </q-btn>
+          <q-btn
+            round
+            color="accent"
+            flat
+            :icon="
+              data.trash ? 'img:/images/restore.svg' : 'img:/images/trash.svg'
+            "
+            @click="handleArchiveRestore"
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+            >
+              <strong>Archive</strong>
+            </q-tooltip>
+          </q-btn>
+          <q-btn round color="accent" flat icon="img:/images/download.svg">
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+              @click="handleDownload"
+            >
+              <strong>Download</strong>
+            </q-tooltip>
+          </q-btn>
           <q-btn
             color="accent"
             no-caps
-            outline
-            label="Mint as NFT"
-            class="q-mr-sm q-mt-sm q-ml-lg"
+            round
+            flat
+            icon="auto_fix_normal"
             @click="handleMintNote"
-          />
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+            >
+              <strong>Mint as NFT</strong>
+            </q-tooltip>
+          </q-btn>
+
+          <q-btn color="accent" round flat icon="draw" @click="handleSignNote">
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+            >
+              <strong>Sign</strong>
+            </q-tooltip>
+          </q-btn>
           <q-btn
             color="accent"
-            no-caps
-            outline
-            label="Sign & Publish"
-            class="q-mr-sm q-mt-sm q-ml-lg"
-            @click="handleSignNote"
-          />
-        </q-card-actions>
-        Note Color
-        <q-card-section>
+            round
+            flat
+            icon="img:/images/share.svg"
+            @click="handleShare"
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[10, 10]"
+            >
+              <strong>Share</strong>
+            </q-tooltip>
+          </q-btn>
+        </q-card-section>
+        <q-toolbar-title>Colors</q-toolbar-title>
+        <q-card-section class="q-px-none">
           <SelectColor :color="data.color" @update-note="handleUpdates" />
         </q-card-section>
         Attachments
@@ -194,14 +256,53 @@ export default {
         updates: updates,
       });
     },
+    handleToggleFave() {
+      this.updateNote({
+        id: this.data.id,
+        updates: {
+          fave: !this.data.fave,
+        },
+      });
+    },
+    handleArchiveRestore() {
+      this.updateNote({
+        id: this.data.id,
+        updates: {
+          trash: !this.data.trash,
+        },
+      });
+    },
+    handleDownload() {
+      this.$q.notify({
+        color: "positive",
+        textColor: "white",
+        message: "Downloading...",
+      });
+      this.$q.download({
+        url: this.data.url,
+        filename: this.data.title,
+      });
+    },
     handleMintNote() {
-      alert("mint note");
+      this.$q.notify({
+        color: "positive",
+        textColor: "white",
+        message: "Coming Soon...",
+      });
     },
     handleSignNote() {
-      alert("sign note");
+      this.$q.notify({
+        color: "positive",
+        textColor: "white",
+        message: "Coming Soon...",
+      });
     },
     handleAddAttachment() {
-      alert("add attachment here");
+      this.$q.notify({
+        color: "positive",
+        textColor: "white",
+        message: "Coming Soon...",
+      });
     },
     async saveNote() {
       this.saving = true;
