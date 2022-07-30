@@ -1,20 +1,17 @@
 <template>
-  <div class="text-center text-dark">
+  <div class="row q-gutter-md justify-center">
     Filter By:&nbsp;
     <q-btn
-      rounded
-      outline
-      no-caps
+      round
+      flat
       :color="labelFilter === 'all' ? 'grey' : 'accent'"
       @click="handleClearFilter"
       :disabled="labelFilter === 'all'"
-      label="Clear"
       :icon="
         labelFilter === 'all'
           ? 'img:/images/clear-inactive.svg'
           : 'img:/images/clear-active.svg'
       "
-      class="q-mr-xs"
     />
     <q-btn
       rounded
@@ -23,7 +20,6 @@
       color="accent"
       icon="img:/images/favorite-available.svg"
       label="Favorites"
-      class="q-mr-sm"
       @click="handleFilter('favorite')"
     >
     </q-btn>
@@ -35,7 +31,6 @@
       color="accent"
       icon="img:/images/archive.svg"
       label="Archives"
-      class="q-mr-sm"
       @click="handleFilter('archive')"
     />
     <q-btn
@@ -46,7 +41,6 @@
       icon="img:/images/label.svg"
       :label="labelChipLabel"
       :icon-right="colorClick ? 'expand_less' : 'expand_more'"
-      class="q-mr-sm"
       @click="colorClick = !colorClick"
     >
       <q-menu>
