@@ -12,16 +12,9 @@ export default () => {
     sortDirection: "asc",
     searchTerm: "",
     contacts: [],
-    noteColors: [
-      "red",
-      "orange",
-      "yellow",
-      "green",
-      "blue",
-      "purple",
-      "gray",
-      "teal",
-    ],
+    themes: {
+      default: ["red", "orange", "yellow", "green", "blue", "purple", "teal"],
+    },
     notes: [
       {
         id: "eWRhpRV",

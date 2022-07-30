@@ -28,14 +28,19 @@ export function avatar(state) {
 
 export function colors(state) {
   let active = state.notes.filter((note) => !note.trash);
+
   let colors = [];
   active.forEach((note) => {
     if (note.color) {
-      colors.push(note.color);
+      colors.push(state.themes.default[note.color]);
     }
   });
 
   return [...new Set(colors)];
+}
+
+export function noteColors(state) {
+  return state.themes.default;
 }
 
 export function filterNotes(state) {

@@ -84,7 +84,7 @@
 </template>
 <script>
 import M from "minimatch";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 var isEqual = require("lodash.isequal");
 
 export default {
@@ -108,8 +108,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["tags"]),
-    ...mapState("app", ["noteColors"]),
+    ...mapGetters("app", ["tags", "noteColors"]),
     showCurrentTags() {
       if (note.tags.length) return true;
       else return false;

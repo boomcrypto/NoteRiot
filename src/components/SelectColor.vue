@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SelectColor",
@@ -36,7 +36,7 @@ export default {
     this.selectedColor = this.color;
   },
   computed: {
-    ...mapState("app", ["noteColors"]),
+    ...mapGetters("app", ["noteColors"]),
   },
   methods: {
     handleSelectColor(color) {

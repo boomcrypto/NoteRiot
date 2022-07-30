@@ -319,8 +319,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["tags"]),
-    ...mapState("app", ["noteColors", "mode"]),
+    ...mapGetters("app", ["tags", "noteColors"]),
+    ...mapState("app", ["mode"]),
     hasImage() {
       return this.data.attachments.length > 0;
     },
