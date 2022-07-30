@@ -11,17 +11,7 @@
         />
         <q-space />
         <Search />
-        <q-btn
-          flat
-          round
-          color="accent"
-          :icon="
-            showFilterBar
-              ? 'img:/images/filter-active.svg'
-              : 'img:/images/filter.svg'
-          "
-          @click="setShowFilterBar(!showFilterBar)"
-        />
+
         <q-btn
           class="q-mr-xs"
           flat
@@ -86,7 +76,7 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
-      <FilterBar class="q-mr-auto q-ml-auto" v-if="showFilterBar" />
+      <FilterBar class="q-mr-auto q-ml-auto q-mt-md" />
     </q-header>
     <q-header reveal bordered height-hint="80" v-else>
       <q-toolbar style="height: 80px">
@@ -210,7 +200,6 @@ export default {
       "username",
       "sortBy",
       "sortDirection",
-      "showFilterBar",
       "mode",
     ]),
     ...mapGetters("app", ["tags", "name", "avatar", "colors"]),
@@ -220,7 +209,6 @@ export default {
       "signOut",
       "setLabelFilter",
       "setSortBy",
-      "setShowFilterBar",
       "setMode",
       "addNote",
     ]),
