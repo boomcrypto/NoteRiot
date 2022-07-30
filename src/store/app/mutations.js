@@ -63,10 +63,6 @@ export function setSearchTerm(state, st) {
   state.searchTerm = st;
 }
 
-export function setShowFilterBar(state, status) {
-  state.showFilterBar = status;
-}
-
 export function setSortBy(state, payload) {
   if (state.sortBy === payload) {
     state.sortDirection = state.sortDirection === "desc" ? "asc" : "desc";
