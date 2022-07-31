@@ -4,7 +4,7 @@
       v-if="mode === 'grid'"
       class="q-pa-none boom-card"
       :class="
-        `bg-${data.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
+        `bg-${displayColor}` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
@@ -321,6 +321,9 @@ export default {
   computed: {
     ...mapGetters("app", ["tags", "noteColors"]),
     ...mapState("app", ["mode"]),
+    displayColor() {
+      return this.noteColors[this.data.color];
+    },
     hasImage() {
       return this.data.attachments.length > 0;
     },

@@ -1463,6 +1463,63 @@ body.body--dark {
   background-size: contain;
 }
 
+.tag-color.red-2 {
+  border-style: none;
+  background-color: #ffcdd2;
+}
+.tag-color.orange-2 {
+  border-style: none;
+  background-color: #ffe0b2;
+}
+.tag-color.yellow-2 {
+  border-style: none;
+  background-color: #fff9c4;
+}
+.tag-color.green-2 {
+  border-style: none;
+  background-color: #c8e6c9;
+}
+.tag-color.blue-2 {
+  border-style: none;
+  background-color: #bbdefb;
+}
+.tag-color.purple-2 {
+  border-style: none;
+  background-color: #e1bee7;
+}
+.tag-color.teal-2 {
+  border-style: none;
+  background-color: #b2dfdb;
+}
+.tag-color.pink-1 {
+  border-style: none;
+  background-color: #fce4ec;
+}
+.tag-color.orange-1 {
+  border-style: none;
+  background-color: #fff3e0;
+}
+.tag-color.yellow-1 {
+  border-style: none;
+  background-color: #fffde7;
+}
+.tag-color.green-1 {
+  border-style: none;
+  background-color: #e8f5e9;
+}
+.tag-color.blue-1 {
+  border-style: none;
+  background-color: #e3f2fd;
+}
+.tag-color.purple-1 {
+  border-style: none;
+  background-color: #f3e5f5;
+}
+.tag-color.teal-1 {
+  border-style: none;
+  background-color: #e0f2f1;
+}
+
 .tag-color.orchid {
   border-style: none;
   background-color: #c079ba;

@@ -42,7 +42,6 @@ export default {
     Container: () => import("components/Container.vue"),
     EmptyFilter,
     NoNotes,
-    // FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {
@@ -52,7 +51,7 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["filterNotes", "tags", "colors"]),
-    ...mapState("app", ["notes", "showFilterBar", "mode"]),
+    ...mapState("app", ["notes", "mode"]),
   },
   methods: {
     ...mapActions("app", [
