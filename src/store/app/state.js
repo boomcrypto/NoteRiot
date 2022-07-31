@@ -37,7 +37,7 @@ export default () => {
     notes: [
       {
         id: "eWRhpRV",
-        color: "",
+        color: 6,
         notebook: 0,
         groupId: "",
         created: 1558474200003,
