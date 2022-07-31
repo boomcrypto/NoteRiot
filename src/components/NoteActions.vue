@@ -18,6 +18,13 @@
             <q-item clickable v-close-popup @click="handleOpenTagEditor">
               <q-item-section>Tags</q-item-section>
             </q-item>
+
+            <q-item clickable>
+              <q-item-section>Colors ></q-item-section>
+              <q-menu anchor="top end" self="top start">
+                <SelectColor :color="note.color" />
+              </q-menu>
+            </q-item>
             <q-item clickable v-close-popup @click="handleShareNote">
               <q-item-section>Share</q-item-section>
             </q-item>
