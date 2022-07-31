@@ -4,7 +4,7 @@
       v-if="mode === 'grid'"
       class="q-pa-none boom-card"
       :class="
-        data.hasOwnProperty('color') && data.color!='none'?`bg-${data.color}-2`:'' + ($q.dark.isActive ? ' boom-card-dark' : '')
+        `bg-${displayColor}` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
@@ -15,13 +15,14 @@
           ? 'cursor: pointer'
           : '' + ($q.dark.isActive ? 'color: white' : '')
       "
-      :key="data.id"
+      :key="`${data.id}-${data.modified}`"
     >
       <NoteActions
         class="grid-icons absolute-top-right"
         :note="data"
         style="z-index: 99"
         :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+        @update-note="handleUpdates"
       />
       <q-img
         v-if="hasImage"
@@ -53,7 +54,7 @@
       "
       class="boom-card-list"
       @click="handleEditNote"
-      :key="data.id"
+      :key="`${data.modified}-${data.id}`"
     >
       <q-card-section class="q-pa-none">
         <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">
@@ -318,8 +319,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["tags"]),
-    ...mapState("app", ["noteColors", "mode"]),
+    ...mapGetters("app", ["tags", "noteColors"]),
+    ...mapState("app", ["mode"]),
+    displayColor() {
+      return this.noteColors[this.data.color];
+    },
     hasImage() {
       return this.data.attachments.length > 0;
     },
@@ -353,6 +357,7 @@ export default {
         id: this.data.id,
         updates: updates,
       });
+      console.log("notestatus", notestatus);
       this.note = Object.assign({}, this.note, updates);
     },
     restoreNote() {

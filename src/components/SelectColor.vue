@@ -1,32 +1,29 @@
 <template>
-  <q-card flat>
-    <q-card-section class="q-pa-none">
-      <div class="tag-colors">
-        <div class="tag-color-row">
-          <div
-            v-for="color in noteColors"
-            :key="`select-modal-${color}`"
-            @click="handleSelectColor(color)"
-            :class="
-              selectedColor === color
-                ? `tag-color ${color} checked`
-                : `tag-color ${color}`
-            "
-          ></div>
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+  <div class="tag-colors">
+    <div class="tag-color-row">
+      <div class="tag-color remove" @click="handleRemoveColor" />
+      <div
+        v-for="(color, index) in noteColors"
+        :key="`select-modal-${color}`"
+        @click="handleSelectColor(index)"
+        :class="
+          selectedColor === index
+            ? `tag-color ${color} checked`
+            : `tag-color ${color}`
+        "
+      ></div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SelectColor",
   props: {
     color: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -39,14 +36,17 @@ export default {
     this.selectedColor = this.color;
   },
   computed: {
-    ...mapState("app", ["noteColors"]),
+    ...mapGetters("app", ["noteColors"]),
   },
   methods: {
-    handleSelectColor(color) {
-      this.selectedColor = color;
-      this.$emit("update-note",
-        {color: this.selectedColor}
-      );
+    handleSelectColor(idx) {
+      this.selectedColor = idx;
+      this.$emit("update-note", { color: this.selectedColor });
+    },
+    handleRemoveColor() {
+      this.selectedColor = 0;
+      this.$emit("update-note", { color: this.selectedColor });
+
     },
   },
 };

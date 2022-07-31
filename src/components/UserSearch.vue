@@ -1,62 +1,39 @@
 <template>
-  <q-card
-    style="width: 400px; max-width: 80%; height: auto; padding: 0px"
-    class="effin-border"
-  >
+  <q-card style="width: 400px; height: auto; padding: 0px" class="effin-border">
     <q-card-section>
-      <q-select
+      <q-input
         v-model="model"
-        clearable
-        :use-input="showInput"
-        hide-selection
-        fill-input
-        input-debounce="0"
-        :options="options"
-        @filter="filterFn"
-        :behavior="$q.platform.is.ios === true ? 'dialog' : 'menu'"
+        type="search"
+        placeholder="Search for STX user"
         hint="ex: user.id or user.id.blockstack"
-        placeholder="Search Blockstack names"
-        @input="selectUser"
-        @clear="resetSearch"
+        clearable
+        @keyup.enter="handleSearchUser"
       >
-        <template v-slot:before>
-          <q-icon name="search" />
+        <template #after>
+          <q-btn
+            outlined
+            no-caps
+            unelevated
+            color="accent"
+            label="Search"
+            @click="handleSearchUser"
+          />
         </template>
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey"
-              >No results. Ask your contact to log in to NoteRiot so that you
-              can share!</q-item-section
-            >
-          </q-item>
-        </template>
-        <template v-slot:selected-item="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="scope.opt.icon" />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-              <q-item-label>{{ scope.opt.blockstackid }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
-            <q-item-section avatar>
-              <q-avatar size="lg">
-                <img :src="scope.opt.icon" />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-              <q-item-label caption>{{ scope.opt.blockstackid }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
+      </q-input>
+    </q-card-section>
+    <q-card-section>
+      {{ recipientPublicKey }}
+    </q-card-section>
+    <q-card-section v-if="showSharingExt" class="row">
+      Press 'Share' to share this note with the {{ model }}.
+      <q-btn
+        outlined
+        no-caps
+        unelevated
+        color="accent"
+        label="Share"
+        @click="handleShare"
+      />
     </q-card-section>
     <q-card-section v-if="shareURL">
       <div
@@ -66,7 +43,7 @@
         {{ shareURL }}
       </div>
     </q-card-section>
-    <q-card-actions v-if="shareURL" right>
+    <q-card-actions v-if="shareURL">
       <q-btn
         flat
         color="white"
@@ -96,9 +73,9 @@
 
 import { debounce } from "quasar";
 import { mapActions, mapState } from "vuex";
-// import Contact from "../../models/Contact"
+import Contact from "src/models/Contact";
 import { v4 as uuidv4 } from "uuid";
-// import { userSession } from "boot/stacks"
+import { storage } from "boot/stacks";
 
 export default {
   name: "UserSearch",
@@ -111,33 +88,18 @@ export default {
       recentNames: [],
       options: [],
       loading: false,
-      coreAPIURL: "https://core.blockstack.org/v1",
       defaultProfilePic: "/img/avataaars.svg",
       searchResults: [],
       shareURL: "",
       recipientPublicKey: "",
       userSelected: {},
+      showSharingExt: false,
     };
   },
   mounted() {},
-  created() {
-    // this.searchProfile = debounce(this.searchProfile, 500);
-    this.filterFn = debounce(this.filterFn, 300);
-    let contacts = Object.values(this.contacts);
-    this.recents = contacts.map((contact) => {
-      return {
-        label: contact.label,
-        value: contact.blockstackid,
-        icon: contact.icon,
-        publicKey: contact.publicKey,
-      };
-    });
-    this.recentNames = this.recents.map((contact) => {
-      return contact.label;
-    });
-  },
+  created() {},
   computed: {
-    ...mapState(["contacts"]),
+    ...mapState("app", ["contacts"]),
     showShare() {
       return navigator.share;
     },
@@ -146,10 +108,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      setShowLoadSharedNote: "app/setShowLoadSharedNote",
-      addContact: "contacts/addContact",
-    }),
+    ...mapActions("app", ["setShowLoadSharedNote", "addContact"]),
     async copyToClipboard() {
       try {
         await navigator.clipboard.writeText(this.shareURL);
@@ -175,79 +134,87 @@ export default {
         return false;
       }
     },
-    resetSearch() {
-      this.showInput = true;
-      this.shareURL = "";
-      this.options = [];
-      this.searchResults = [];
-      this.recipientPublicKey = "";
-      this.model = null;
-    },
-    // filterFn(val, update, abort) {
-    filterFn(val, update) {
-      const re = new RegExp(val, "i");
-      const test = (element) => re.test(element);
 
-      if (val.length < 3 || this.recentNames.some(test)) {
-        update(() => {
-          this.options = this.recents;
-        });
-      }
+    async handleSearchUser() {
+      let user = this.contacts.find((contact) => contact.name === this.model);
 
-      update(() => {
-        this.$axios
-          .get(`${this.coreAPIURL}/search?query=${val}`)
-          .then((response) => {
-            if (
-              response.data &&
-              response.data.results &&
-              response.data.results.length
-            ) {
-              this.searchResults = response.data.results;
-              let opts = this.searchResults.map((result) => {
-                // console.log("opts: ", result)
-                let pk = "";
-                try {
-                  pk =
-                    result.profile.appsMeta["http://localhost:8080"].publicKey;
-                  console.log(`public key: ${result.profile}`);
-                } catch {
-                  // empty
-                }
-                return {
-                  label: result.profile.name || result.fullyQualifiedName,
-                  value: result.fullyQualifiedName,
-                  icon: this.getProfilePic(result),
-                  publicKey: pk,
-                };
-              });
-              this.options = opts;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
-    selectUser(user) {
-      this.showInput = false;
-      this.userSelected = user;
-      console.log("user selected: ", user);
-      if (user.publicKey === "") {
-        alert(
-          `Cannot share with ${user.label} :(. Please ask this user to log into NoteRiot`
+      try {
+        this.loading = true;
+        const res = await this.$axios.get(
+          `https://stacks-node-api.mainnet.stacks.co/v1/names/${this.model}`
         );
-        return;
-      }
+        const nameDetails = res.data;
+        console.log("nameDetails: ", nameDetails);
+        if (nameDetails.hasOwnProperty("error")) {
+          this.recipientPublicKey = "Public key not found";
 
-      if (!Object.keys(this.contacts).includes(user.value)) {
-        // We're sharing with a new user, add this user to our
-        // contact list
-        this.addContact(user);
-      }
+          this.$q.notify({
+            message: nameDetails.error,
+            icon: "announcement",
+            timeout: 600,
+          });
+          this.loading = false;
+          return;
+        }
+        const zonefile = nameDetails.zonefile;
+        if (nameDetails.zonefile === "") {
+          this.recipientPublicKey = "Public key not found";
+          this.$q.notify({
+            message: "No zonefile found",
+            icon: "announcement",
+            timeout: 600,
+          });
+          this.loading = false;
+          return;
+        }
+        const profileUrlStart = zonefile.indexOf('"');
+        const profileUrlEnd = zonefile.lastIndexOf('"');
+        const profileUrl = zonefile.substring(
+          profileUrlStart + 1,
+          profileUrlEnd
+        );
+        console.log("profileUrl: ", profileUrl);
+        const profileRes = await this.$axios.get(`${profileUrl}`);
+        console.log(
+          "data: ",
+          profileRes.data[0].decodedToken.payload.claim.appsMeta
+        );
+        this.recipientPublicKey =
+          profileRes.data[0].decodedToken.payload.claim.appsMeta[
+            "https://noteriot.app"
+          ].publicKey;
 
-      this.encryptAndShare();
+        if (!user) {
+          this.addContact(
+            new Contact({
+              name: this.model,
+              publicKey: this.recipientPublicKey,
+              zonefile: zonefile,
+              nickname: "",
+              shares: [],
+            })
+          );
+        }
+
+        this.showSharingExt = true;
+      } catch (err) {
+        console.error(err);
+        this.recipientPublicKey = "Public key not found";
+      } finally {
+        this.loading = false;
+      }
     },
+
+    async handleShare() {
+      this.shareURL = await storage.putFile(
+        `shared/${this.note.id}`,
+        JSON.stringify(this.note),
+        {
+          encrypt: this.recipientPublicKey,
+        }
+      );
+    },
+
     getProfilePic(result) {
       let profilePic = this.defaultProfilePic;
       if (result.profile.image && result.profile.image.length) {
@@ -259,38 +226,6 @@ export default {
         }
       }
       return profilePic;
-    },
-    encryptAndShare() {
-      const sharedFilename = `shared/${uuidv4()}`;
-      const pk = this.userSelected.publicKey;
-      this.$userSession
-        .encryptContent(JSON.stringify(this.note), { pk })
-        .then((cipherText) => {
-          this.$userSession
-            .putFile(sharedFilename, cipherText, {
-              encrypt: false,
-            })
-            .then((filenameToShare) => {
-              this.shareURL = filenameToShare;
-            })
-            .catch((err) => {
-              alert("Error sharing file: ", err);
-            });
-        });
-      // this.$userSession
-      //   .putFile(
-      //     sharedFilename,
-      //     this.$userSession.encryptContent(JSON.stringify(this.note), {
-      //       pk,
-      //     }),
-      //     { encrypt: false }
-      //   )
-      //   .then((filenameToShare) => {
-      //     this.shareURL = filenameToShare
-      //   })
-      //   .catch((err) => {
-      //     alert("Error sharing file: ", err)
-      //   })
     },
   },
 };

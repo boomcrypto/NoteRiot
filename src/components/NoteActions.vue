@@ -12,11 +12,18 @@
       <q-menu>
         <div class="effin-border">
           <q-list style="min-width: 100px">
-            <q-item clickable v-close-popup @click.stop="downloadNote(note)">
+            <q-item clickable v-close-popup @click.stop="handleDownloadNote">
               <q-item-section>Download</q-item-section>
             </q-item>
             <q-item clickable v-close-popup @click="handleOpenTagEditor">
               <q-item-section>Tags</q-item-section>
+            </q-item>
+
+            <q-item clickable>
+              <q-item-section>Colors ></q-item-section>
+              <q-menu anchor="top end" self="top start">
+                <SelectColor :color="note.color" />
+              </q-menu>
             </q-item>
             <q-item clickable v-close-popup @click="handleShareNote">
               <q-item-section>Share</q-item-section>
@@ -38,17 +45,24 @@
       </q-menu>
     </q-btn>
     <q-dialog v-model="showUserSearch">
-      <user-search :note="note"></user-search>
+      <q-card flat class="boom-card">
+        <user-search :note="note"></user-search>
+      </q-card>
     </q-dialog>
     <q-dialog v-model="showTagEditor">
-      <tag-editor :note="note" :id="note.id"></tag-editor>
+      <TagEditor
+        :note="note"
+        :id="note.id"
+        @update="handleUpdates"
+        @close="showTagEditor = false"
+      />
     </q-dialog>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-
+import { downloadNote } from "src/helpers/notes";
 export default {
   components: {
     UserSearch: () => import("components/UserSearch.vue"),
@@ -66,8 +80,24 @@ export default {
   },
   methods: {
     ...mapActions("app", ["updateNote"]),
+    handleDownloadNote() {
+      downloadNote(this.note);
+    },
     handleMenuButton() {
       this.showMenu = !this.showMenu;
+    },
+
+    handleUpdates(val) {
+      if (typeof val === "object") {
+        this.payload = val;
+      } else {
+        this.payload = {};
+        console.log("error return type to NoteActions update function: ", val);
+      }
+      this.showTagEditor = false;
+      this.showUserSearch = false;
+      this.showMenu = false;
+      this.$emit("update-note", val);
     },
     showState(evt) {
       console.log("event: ", evt);
@@ -78,23 +108,15 @@ export default {
       console.log("payload", this.payload);
     },
     handleFave() {
-      const payload = {
-        id: this.note.id,
-        updates: { fave: !this.note.fave },
-      };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", {
+        fave: !this.note.fave,
+      });
     },
     handleDelete() {
-      console.log("trying to delete note: ", this.note);
-      const payload = { trash: true };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", { trash: true });
     },
     handleUnDelete() {
-      const payload = {
-        id: this.note.id,
-        updates: { trash: false },
-      };
-      this.$emit("update-note", payload);
+      this.$emit("update-note", { trash: false });
     },
     handleOpenTagEditor() {
       this.showTagEditor = true;

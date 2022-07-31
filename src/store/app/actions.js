@@ -28,20 +28,38 @@ export async function fetchData(context) {
     let notes = null;
     try {
       notes = JSON.parse(data);
-      // console.log("notes: ", notes);
-      // notes = notes.map((note) => {
-      //   let color = note.color;
-      //   color = color.split(" ")[0];
-      //   color = color.split("-")[0];
-      //   if (color === "" || color === "white") color = null;
-      //   return Object.assign({}, note, { color: color });
-      // });
+      notes.forEach((note) => {
+        let color = note.color;
+        let colorVal = 0;
+        if (color.includes("red")) colorVal = 1;
+        else if (color.includes("orange")) colorVal = 2;
+        else if (color.includes("yellow")) colorVal = 3;
+        else if (color.includes("green")) colorVal = 4;
+        else if (color.includes("blue")) colorVal = 5;
+        else if (color.includes("purple")) colorVal = 6;
+        else if (color.includes("pink")) colorVal = 7;
+
+        note.color = colorVal;
+      });
     } catch {
       notes = [];
     }
     console.log("notes: ", notes);
 
     context.commit("setNotes", notes);
+  });
+}
+
+export async function fetchContacts(context) {
+  await storage.getFile("contacts.json").then((data) => {
+    let contacts = null;
+    try {
+      contacts = JSON.parse(data);
+    } catch {
+      contacts = [];
+    }
+    console.log("contacts: ", contacts);
+    context.commit("setContacts", contacts);
   });
 }
 
@@ -99,10 +117,6 @@ export function setSortBy(context, payload) {
 export async function deleteNote(context, id) {
   context.commit("deleteNote", id);
   await saveFile(JSON.stringify(context.state.notes));
-}
-
-export function setShowFilterBar(context, status) {
-  context.commit("setShowFilterBar", status);
 }
 
 export function setMode(context, payload) {

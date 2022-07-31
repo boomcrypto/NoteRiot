@@ -24,6 +24,10 @@ export function setNotes(state, payload) {
   });
 }
 
+export function setContacts(state, payload) {
+  state.contacts = payload;
+}
+
 export function setLabelFilter(state, payload) {
   state.labelFilter = payload;
 }
@@ -51,12 +55,12 @@ export function addNote(state, note) {
   state.notes.push(note);
 }
 
-export function setSearchTerm(state, st) {
-  state.searchTerm = st;
+export function addContact(state, contact) {
+  state.contacts.push(contact);
 }
 
-export function setShowFilterBar(state, status) {
-  state.showFilterBar = status;
+export function setSearchTerm(state, st) {
+  state.searchTerm = st;
 }
 
 export function setSortBy(state, payload) {
