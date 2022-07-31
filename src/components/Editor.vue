@@ -111,7 +111,7 @@
             no-caps
             round
             flat
-            icon="auto_fix_normal"
+            icon="img:/images/mint.svg"
             @click="handleMintNote"
           >
             <q-tooltip
@@ -123,7 +123,13 @@
             </q-tooltip>
           </q-btn>
 
-          <q-btn color="accent" round flat icon="draw" @click="handleSignNote">
+          <q-btn
+            color="accent"
+            round
+            flat
+            icon="img:/images/sign.svg"
+            @click="handleSignNote"
+          >
             <q-tooltip
               anchor="bottom middle"
               self="top middle"
