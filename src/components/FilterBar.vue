@@ -79,7 +79,7 @@
             :key="`colorfilter-${color}`"
           >
             <q-item-section>
-              <q-item-label>{{ color }}</q-item-label>
+              <q-item-label class="text-capitalize">{{ color }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>

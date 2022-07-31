@@ -33,6 +33,7 @@ export function colors(state) {
   active.forEach((note) => {
     if (note.color) {
       colors.push(state.themes.default[note.color]);
+
     }
   });
 
@@ -77,7 +78,7 @@ export function filterNotes(state) {
     let colorFilter = state.labelFilter.split(":")[1];
     const filteredNotes = state.notes.filter(
       (note) =>
-        note.color === colorFilter &&
+        (note.hasOwnProperty('color') && note.color === colorFilter) &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash
     );

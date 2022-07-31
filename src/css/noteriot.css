@@ -112,7 +112,7 @@ bg-blue {
 bg-steel {
   background: #607d8b;
 }
-bg-gray {
+bg-grey {
   background: #757575;
 }
 bg-brown {
@@ -1580,7 +1580,7 @@ body.body--dark {
   background-color: #607d8b;
 }
 
-.tag-color.gray {
+.tag-color.grey {
   border-style: none;
   background-color: #757575;
 }

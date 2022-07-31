@@ -66,7 +66,7 @@
             </q-item-label>
             <div
               :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
-              style="max-height: 140px; overflow: hidden"
+              :style="{'max-height': $q.screen.gt.sm?'140px':'70px','overflow': 'hidden'}"
             >
               <viewer :initialValue="data.text" :key="data.modified" />
             </div>
@@ -101,7 +101,7 @@
             <q-img
               :src="data.attachments[0].url"
               spinner-color="accent"
-              style="height: 140px; border-radius: 8px"
+              :style="{'height': $q.screen.gt.sm?'140px':'70px','border-radius': '8px'}"
               spinner-size="48px"
             />
           </q-item-section>

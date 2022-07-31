@@ -46,6 +46,7 @@ export default {
     handleRemoveColor() {
       this.selectedColor = 0;
       this.$emit("update-note", { color: this.selectedColor });
+
     },
   },
 };

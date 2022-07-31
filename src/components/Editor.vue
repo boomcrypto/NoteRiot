@@ -129,7 +129,7 @@
             flat
             icon="img:/images/sign.svg"
             @click="handleSignNote"
-          >
+sssssssssssssssssssssssssssssssssssssssssss          >
             <q-tooltip
               anchor="bottom middle"
               self="top middle"
@@ -156,7 +156,7 @@
         </q-card-section>
         <q-toolbar-title>Colors</q-toolbar-title>
         <q-card-section class="q-px-none">
-          <SelectColor :color="data.color" @update-note="handleUpdates" />
+          <SelectColor color="data.hasOwnProperty('color') && data.color!=null?data.color:'none'" @update-note="handleUpdates" />
         </q-card-section>
         Attachments
         <q-card-section
