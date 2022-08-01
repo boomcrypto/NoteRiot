@@ -1,6 +1,9 @@
 <template>
   <q-layout view="hHr lpR fFr">
-    <q-header :class="$q.dark.isActive?'bg-transparent':'bg-white'" v-if="$q.screen.gt.xs">
+    <q-header
+      :class="$q.dark.isActive ? 'bg-transparent' : 'bg-white'"
+      v-if="$q.screen.gt.xs"
+    >
       <q-toolbar>
         <img
           src="/images/noteriot-round-wordmark.svg"
@@ -33,45 +36,42 @@
             <img :src="avatar" />
           </q-avatar>
           <q-menu v-close-popup>
-            <div class="row no-wrap q-pa-md">
-              <div class="column col">
-                <div>{{ name }}</div>
-                <q-list dense class="q-pt-md">
-                  <q-item
-                    v-ripple
-                    dense
-                    clickable
-                    @click="handleGoToBackupManager"
-                  >
-                    <q-item-section class="text-no-wrap"
-                      >Backup Manager
-                    </q-item-section>
-                  </q-item>
-                  <q-item v-ripple dense clickable @click="handleImport">
-                    <q-item-section>Import</q-item-section>
-                  </q-item>
-                  <q-item v-ripple dense clickable @click="handleGoToTwitter">
-                    <q-item-section>Twitter</q-item-section>
-                  </q-item>
-                  <q-item v-ripple dense clickable @click="handleGoToDiscord">
-                    <q-item-section>Help</q-item-section>
-                  </q-item>
-                </q-list>
-                <div class="text-caption q-pl-md text-grey-7">
-                  NoteRiot v0.3.0
-                </div>
-                <q-btn
-                  v-close-popup
-                  no-caps
-                  unelevated
-                  outlined
-                  class="boom-border q-mt-lg"
-                  color="accent"
-                  label="Sign out"
-                  text-color="white"
-                  @click="logout"
-                />
+            <div class="q-pa-sm effin-border">
+              <q-list dense class="q-px-none">
+                <q-item
+                  v-ripple
+                  dense
+                  clickable
+                  @click="handleGoToBackupManager"
+                >
+                  <q-item-section class="text-no-wrap"
+                    >Backup Manager
+                  </q-item-section>
+                </q-item>
+                <q-item v-ripple dense clickable @click="handleImport">
+                  <q-item-section>Import</q-item-section>
+                </q-item>
+                <q-item v-ripple dense clickable @click="handleGoToTwitter">
+                  <q-item-section>Twitter</q-item-section>
+                </q-item>
+                <q-item v-ripple dense clickable @click="handleGoToDiscord">
+                  <q-item-section>Help</q-item-section>
+                </q-item>
+              </q-list>
+              <div class="text-caption q-pl-md text-grey-7">
+                NoteRiot v0.0.6
               </div>
+              <q-btn
+                v-close-popup
+                no-caps
+                unelevated
+                outlined
+                class="boom-border q-mt-lg full-width"
+                color="accent"
+                label="Sign out"
+                text-color="white"
+                @click="logout"
+              />
             </div>
           </q-menu>
         </q-btn>
