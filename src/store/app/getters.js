@@ -32,7 +32,7 @@ export function colors(state) {
   let colors = [];
   active.forEach((note) => {
     if (note.color) {
-      colors.push(state.themes.default[note.color]);
+      colors.push({ idx: note.color, val: state.themes.default[note.color] });
     }
   });
 

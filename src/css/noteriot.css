@@ -1,3 +1,12 @@
+:root {
+  --greyish-brown: #4a4a4a;
+  --brown-grey: #838383;
+  --very-light-pink: #cfcfcf;
+  --orchid: #c079ba;
+  --black: #1b1b1b;
+  --pale-grey: #f9f4fa;
+}
+
 text-orchid {
   color: #c079ba;
 }
@@ -117,6 +126,14 @@ bg-gray {
 }
 bg-brown {
   background: #795548;
+}
+
+.filter-bar {
+  height: 36px;
+  margin: 0 0 0 8px;
+  padding: 6px 0 6px 16px;
+  border: solid 1px var(--very-light-pink);
+  color: ;
 }
 
 .w-layout-grid {
