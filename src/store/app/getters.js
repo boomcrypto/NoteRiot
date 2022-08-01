@@ -77,6 +77,7 @@ export function filterNotes(state) {
     let colorFilter = state.labelFilter.split(":")[1];
     const filteredNotes = state.notes.filter(
       (note) =>
+        note.hasOwnProperty("color") &&
         note.color === colorFilter &&
         (re.test(note.text) || re.test(note.title)) &&
         !note.trash

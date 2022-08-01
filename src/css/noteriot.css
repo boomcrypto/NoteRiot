@@ -121,7 +121,7 @@ bg-blue {
 bg-steel {
   background: #607d8b;
 }
-bg-gray {
+bg-grey {
   background: #757575;
 }
 bg-brown {
@@ -1597,7 +1597,7 @@ body.body--dark {
   background-color: #607d8b;
 }
 
-.tag-color.gray {
+.tag-color.grey {
   border-style: none;
   background-color: #757575;
 }
@@ -3106,21 +3106,6 @@ body.body--dark {
 .image-2 {
   margin-right: 4px;
   margin-left: 8px;
-}
-
-.column {
-  padding-right: 12px;
-  padding-left: 12px;
-}
-
-.column-2 {
-  padding-right: 12px;
-  padding-left: 12px;
-}
-
-.column-3 {
-  padding-right: 12px;
-  padding-left: 12px;
 }
 
 .image-3 {

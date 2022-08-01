@@ -34,6 +34,7 @@ export default () => {
         "teal-1",
       ],
     },
+
     notes: [
       {
         id: "eWRhpRV",
