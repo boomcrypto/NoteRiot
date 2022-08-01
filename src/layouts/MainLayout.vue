@@ -6,7 +6,11 @@
     >
       <q-toolbar>
         <img
-          src="/images/noteriot-round-wordmark.svg"
+          :src="
+            $q.dark.isActive
+              ? '/images/noteriot-round-watermark-light.svg'
+              : '/images/noteriot-round-wordmark.svg'
+          "
           :ration="16 / 9"
           spinner-color="accent"
           spinner-size="28px"
