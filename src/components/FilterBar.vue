@@ -3,45 +3,42 @@
     Filter By:&nbsp;
     <q-btn
       round
+      unelevated
+      outlined
       no-caps
-      flat
-      :color="labelFilter === 'all' ? 'grey' : 'accent'"
-      @click="handleClearFilter"
-      :disabled="labelFilter === 'all'"
       :icon="
         labelFilter === 'all'
           ? 'img:/images/clear-inactive.svg'
           : 'img:/images/clear-active.svg'
       "
-    />
+      @click="handleClearFilter"
+    >
+    </q-btn>
     <q-btn
-      outline
+      :outline="labelFilter !== 'favorite'"
       no-caps
       square
       color="accent"
-      icon="img:/images/favorite-available.svg"
       label="Favorites"
       @click="handleFilter('favorite')"
     >
     </q-btn>
     <q-btn
-      outline
+      :outline="labelFilter !== 'archive'"
       no-caps
       square
       color="accent"
-      icon="img:/images/archive.svg"
       label="Archives"
       @click="handleFilter('archive')"
     />
     <q-btn
-      outline
+      :outline="!tags.includes(labelFilter)"
       no-caps
       square
       color="accent"
-      icon="img:/images/label.svg"
       :label="labelChipLabel"
-      :icon-right="colorClick ? 'expand_less' : 'expand_more'"
-      @click="colorClick = !colorClick"
+      :icon-right="labelClick ? 'expand_less' : 'expand_more'"
+      @click="labelClick = !labelClick"
     >
       <q-menu>
         <q-list class="effin-border">
@@ -61,25 +58,25 @@
     </q-btn>
     <q-btn
       no-caps
-      outline
+      :outline="!labelFilter.startsWith('color:')"
       square
-      icon="img:/images/color-wheel.jpg"
       label="Colors"
       :icon-right="colorClick ? 'expand_less' : 'expand_more'"
       class="q-mr-sm"
       color="accent"
+      @click="colorClick = !colorClick"
     >
       <q-menu>
         <q-list class="effin-border">
           <q-item
             clickable
             v-close-popup
-            @click="handleFilter(`color:${color}`)"
-            v-for="color in colors"
-            :key="`colorfilter-${color}`"
+            @click="handleFilter(`color:${color.idx}`)"
+            v-for="color in displayColor"
+            :key="`colorfilter-${color.val}`"
           >
             <q-item-section>
-              <q-item-label class="text-capitalize">{{ color }}</q-item-label>
+              <q-item-label>{{ color.val }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -99,6 +96,7 @@
             :active="sortBy === 'createdAt'"
             active-class="activeSort"
             clickable
+            v-close-popup
             v-ripple
             @click="handleSetCurrentSortBy('createdAt')"
           >
@@ -120,6 +118,7 @@
             active-class="activeSort"
             clickable
             v-ripple
+            v-close-popup
             @click="handleSetCurrentSortBy('title')"
           >
             <q-item-section avatar>
@@ -141,6 +140,7 @@
             active-class="activeSort"
             clickable
             v-ripple
+            v-close-popup
             @click="handleSetCurrentSortBy('updatedAt')"
           >
             <q-item-section avatar>
@@ -175,7 +175,14 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["colors", "tags"]),
-    ...mapState("app", ["labelFilter", "sortBy", "sortDirection"]),
+    ...mapState("app", ["labelFilter", "sortBy", "sortDirection", "themes"]),
+    displayColor() {
+      filterColors = [];
+      this.colors.forEach((color) => {
+        filterColors.push(color.val);
+      });
+      return filterColors;
+    },
     labelChipLabel() {
       if (
         this.labelFilter === "all" ||
@@ -193,6 +200,9 @@ export default {
   methods: {
     ...mapActions("app", ["setLabelFilter", "setSortBy"]),
     handleFilter(filter) {
+      this.colorClick = false;
+      this.labelClick = false;
+      this.sortClick = false;
       this.setLabelFilter(filter);
     },
     handleClearFilter() {
