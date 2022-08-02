@@ -22,7 +22,7 @@
             <q-item clickable>
               <q-item-section>Colors ></q-item-section>
               <q-menu anchor="top end" self="top start">
-                <SelectColor :color="note.color" />
+                <SelectColor :color="note.color" @update-note="handleUpdates"/>
               </q-menu>
             </q-item>
             <q-item clickable v-close-popup @click="handleShareNote">
@@ -67,6 +67,7 @@ export default {
   components: {
     UserSearch: () => import("components/UserSearch.vue"),
     TagEditor: () => import("components/TagEditor.vue"),
+    SelectColor: () => import("components/SelectColor"),
   },
   props: ["note"],
   data() {
