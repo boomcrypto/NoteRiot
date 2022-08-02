@@ -177,7 +177,7 @@ export default {
     ...mapGetters("app", ["colors", "tags"]),
     ...mapState("app", ["labelFilter", "sortBy", "sortDirection", "themes"]),
     displayColor() {
-      filterColors = [];
+      let filterColors = [];
       this.colors.forEach((color) => {
         filterColors.push(color.val);
       });
