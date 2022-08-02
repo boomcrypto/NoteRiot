@@ -26,7 +26,7 @@
         </template>
       </q-input>
     </q-card-section>
-    <q-card-section style="max-height: 150px; padding: 0px" class="scroll">
+    <q-card-section>
       <div class="available-tags" v-if="note.tags.length > 0">
         <div class="all-caps-action">CURRENT TAGS</div>
         <div class="available-tag-list">
@@ -46,8 +46,7 @@
         </div>
       </div>
     </q-card-section>
-
-    <q-card-section style="max-height: 150px; padding: 0px" class="scroll">
+    <q-card-section>
       <div class="available-tags">
         <div class="all-caps-action">AVAILABLE TAGS</div>
         <div class="available-tag-list">

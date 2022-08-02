@@ -15,15 +15,31 @@
             <q-item clickable v-close-popup @click.stop="handleDownloadNote">
               <q-item-section>Download</q-item-section>
             </q-item>
-            <q-item clickable v-close-popup @click="handleOpenTagEditor">
+            <q-item clickable>
               <q-item-section>Tags</q-item-section>
+              <q-menu anchor="top end" self="top start">
+                <div class="boom-card">
+                  <TagEditor :note="note" @update-note="handleUpdates" />
+                </div>
+              </q-menu>
+              <q-item-section side>
+                <q-icon name="img:/images/chevron-right.svg" />
+              </q-item-section>
             </q-item>
 
             <q-item clickable>
-              <q-item-section>Colors ></q-item-section>
+              <q-item-section>Colors</q-item-section>
               <q-menu anchor="top end" self="top start">
-                <SelectColor :color="note.color" @update-note="handleUpdates"/>
+                <div class="boom-card">
+                  <SelectColor
+                    :color="note.color"
+                    @update-note="handleUpdates"
+                  />
+                </div>
               </q-menu>
+              <q-item-section side>
+                <q-icon name="img:/images/chevron-right.svg" />
+              </q-item-section>
             </q-item>
             <q-item clickable v-close-popup @click="handleShareNote">
               <q-item-section>Share</q-item-section>
