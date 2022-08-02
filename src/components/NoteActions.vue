@@ -22,7 +22,7 @@
             <q-item clickable>
               <q-item-section>Colors ></q-item-section>
               <q-menu anchor="top end" self="top start">
-                <SelectColor :color="note.hasOwnProperty('color') && note.color!=null?note.color:'none'" @update-note="handleUpdates"/>
+                <SelectColor :color="note.color" @update-note="handleUpdates"/>
               </q-menu>
             </q-item>
             <q-item clickable v-close-popup @click="handleShareNote">
