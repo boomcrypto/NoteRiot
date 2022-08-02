@@ -1,7 +1,6 @@
 <template>
   <div class="tag-colors">
     <div class="tag-color-row">
-      <div class="tag-color remove" @click="handleRemoveColor" />
       <div
         v-for="(color, index) in noteColors"
         :key="`select-modal-${color}`"
@@ -46,7 +45,6 @@ export default {
     handleRemoveColor() {
       this.selectedColor = 0;
       this.$emit("update-note", { color: this.selectedColor });
-
     },
   },
 };
