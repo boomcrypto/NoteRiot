@@ -215,7 +215,7 @@
             </q-btn>
           </div>
         </q-card-actions>
-      </q-card-section>
+
 <!--      <condensed-list-item @handle_fave="handleFave" @download_note="downloadNote" @handle_share_note="handleShareNote"-->
 <!--                           @archive_note="archiveNote" @permanently_delete_note="permanentlyDeleteNote"-->
 <!--                           @restore_note="restoreNote" @show_tag_manager="showTagManager = true"-->
@@ -225,6 +225,7 @@
 <!--                           :note="note"></condensed-list-item>-->
 
 <!--      Added Condensed List Item-->
+      </q-card-section>
     </q-card>
     <q-dialog v-model="showTagManager">
       <q-card flat class="boom-card">
@@ -290,7 +291,7 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 export default {
   name: "Note",
   components: {
-    CondensedListItem: () => import("components/CondensedListItem"),
+    // CondensedListItem: () => import("components/CondensedListItem"),
     // ListTags: () => import("components/ListTags"),
     // TagManager: () => import("components/TagManager"),
     // ButtonBar: () => import("components/ButtonBar.vue"),
