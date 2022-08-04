@@ -57,172 +57,172 @@
       :key="`${data.modified}-${data.id}`"
     >
       <q-card-section class="q-pa-none">
-        <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">
-          <q-item-section top>
-            <q-item-label lines="1">
-              <span class="text-weight-medium text-body1">{{
-                displayTitle
-              }}</span>
-            </q-item-label>
-            <div
-              :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
-              :style="{'max-height': $q.screen.gt.sm?'140px':'70px','overflow': 'hidden'}"
-            >
-              <viewer :initialValue="data.text" :key="data.modified" />
-            </div>
-            <q-item-label caption lines="1">
-              <div class="timestamp">
-                <span class="q-mt-xs">{{ lastModified }}</span>
-                <q-chip
-                  clickable
-                  dense
-                  square
-                  text-color="white"
-                  class="solo-tag"
-                  @click="$emit('selected', tag)"
-                  v-for="(tag, index) in data.tags"
-                  :key="`${tag}-${index}`"
-                >
-                  <template #default>
-                    <div class="solo-tag-text">
-                      {{ tag }}
-                    </div>
-                  </template>
-                </q-chip>
-              </div>
-            </q-item-label>
-          </q-item-section>
+<!--        <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">-->
+<!--          <q-item-section top>-->
+<!--            <q-item-label lines="1">-->
+<!--              <span class="text-weight-medium text-body1">{{-->
+<!--                displayTitle-->
+<!--              }}</span>-->
+<!--            </q-item-label>-->
+<!--            <div-->
+<!--              :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"-->
+<!--              :style="{'max-height': $q.screen.gt.sm?'140px':'70px','overflow': 'hidden'}"-->
+<!--            >-->
+<!--              <viewer :initialValue="data.text" :key="data.modified" />-->
+<!--            </div>-->
+<!--            <q-item-label caption lines="1">-->
+<!--              <div class="timestamp">-->
+<!--                <span class="q-mt-xs">{{ lastModified }}</span>-->
+<!--                <q-chip-->
+<!--                  clickable-->
+<!--                  dense-->
+<!--                  square-->
+<!--                  text-color="white"-->
+<!--                  class="solo-tag"-->
+<!--                  @click="$emit('selected', tag)"-->
+<!--                  v-for="(tag, index) in data.tags"-->
+<!--                  :key="`${tag}-${index}`"-->
+<!--                >-->
+<!--                  <template #default>-->
+<!--                    <div class="solo-tag-text">-->
+<!--                      {{ tag }}-->
+<!--                    </div>-->
+<!--                  </template>-->
+<!--                </q-chip>-->
+<!--              </div>-->
+<!--            </q-item-label>-->
+<!--          </q-item-section>-->
 
-          <q-item-section
-            v-if="data.attachments.length"
-            :class="$q.screen.gt.sm ? 'col-2' : 'col-4'"
-            style="margin-right: -20px"
-          >
-            <q-img
-              :src="data.attachments[0].url"
-              spinner-color="accent"
-              :style="{'height': $q.screen.gt.sm?'140px':'70px','border-radius': '8px'}"
-              spinner-size="48px"
-            />
-          </q-item-section>
-        </q-item>
+<!--          <q-item-section-->
+<!--            v-if="data.attachments.length"-->
+<!--            :class="$q.screen.gt.sm ? 'col-2' : 'col-4'"-->
+<!--            style="margin-right: -20px"-->
+<!--          >-->
+<!--            <q-img-->
+<!--              :src="data.attachments[0].url"-->
+<!--              spinner-color="accent"-->
+<!--              :style="{'height': $q.screen.gt.sm?'140px':'70px','border-radius': '8px'}"-->
+<!--              spinner-size="48px"-->
+<!--            />-->
+<!--          </q-item-section>-->
+<!--        </q-item>-->
 
-        <q-card-actions
-          v-if="buttonBarVisibility"
-          style="opacity: 0.8"
-          class="q-pt-none bg-white absolute-bottom"
-          vertical
-          align="center"
-        >
-          <div class="row text-center q-mt-md">
-            <q-btn dense round flat @click.stop="handleFave()">
-              <q-icon>
-                <img
-                  :src="
-                    fave
-                      ? '/images/favorited.svg'
-                      : '/images/favorite-available.svg'
-                  "
-                />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Toggle Favorite
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="showTagManager = true">
-              <q-icon>
-                <img src="/images/label.svg" />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Manage tags
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="downloadNote()">
-              <q-icon>
-                <img src="/images/download.svg" />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Download note
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="showColorManager = true">
-              <q-icon>
-                <img src="/images/palette.svg" />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Change color
-              </q-tooltip>
-            </q-btn>
-            <q-btn dense round flat @click.stop="handleShareNote()">
-              <q-icon>
-                <img src="/images/share.svg" />
-              </q-icon>
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Share ...
-              </q-tooltip>
-            </q-btn>
-            <div v-if="note.trash">
-              <q-btn dense round flat @click.stop="restoreNote">
-                <q-icon color="accent" name="img:/images/restore.svg" />
-                <q-tooltip
-                  anchor="bottom middle"
-                  self="bottom middle"
-                  :offset="[10, 30]"
-                >
-                  Restore from archive
-                </q-tooltip>
-              </q-btn>
-              <q-btn dense round flat @click.stop="permanentlyDeleteNote">
-                <q-icon color="accent" name="img:/images/delete_forever.svg" />
-                <q-tooltip
-                  anchor="bottom middle"
-                  self="bottom middle"
-                  :offset="[10, 30]"
-                >
-                  Permanently delete ...
-                </q-tooltip>
-              </q-btn>
-            </div>
-            <q-btn dense round flat @click.stop="archiveNote" v-else>
-              <q-icon color="accent" name="img:/images/trash.svg" />
-              <q-tooltip
-                anchor="bottom middle"
-                self="bottom middle"
-                :offset="[10, 30]"
-              >
-                Archive note
-              </q-tooltip>
-            </q-btn>
-          </div>
-        </q-card-actions>
+<!--        <q-card-actions-->
+<!--          v-if="buttonBarVisibility"-->
+<!--          style="opacity: 0.8"-->
+<!--          class="q-pt-none bg-white absolute-bottom"-->
+<!--          vertical-->
+<!--          align="center"-->
+<!--        >-->
+<!--          <div class="row text-center q-mt-md">-->
+<!--            <q-btn dense round flat @click.stop="handleFave()">-->
+<!--              <q-icon>-->
+<!--                <img-->
+<!--                  :src="-->
+<!--                    fave-->
+<!--                      ? '/images/favorited.svg'-->
+<!--                      : '/images/favorite-available.svg'-->
+<!--                  "-->
+<!--                />-->
+<!--              </q-icon>-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Toggle Favorite-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--            <q-btn dense round flat @click.stop="showTagManager = true">-->
+<!--              <q-icon>-->
+<!--                <img src="/images/label.svg" />-->
+<!--              </q-icon>-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Manage tags-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--            <q-btn dense round flat @click.stop="downloadNote()">-->
+<!--              <q-icon>-->
+<!--                <img src="/images/download.svg" />-->
+<!--              </q-icon>-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Download note-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--            <q-btn dense round flat @click.stop="showColorManager = true">-->
+<!--              <q-icon>-->
+<!--                <img src="/images/palette.svg" />-->
+<!--              </q-icon>-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Change color-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--            <q-btn dense round flat @click.stop="handleShareNote()">-->
+<!--              <q-icon>-->
+<!--                <img src="/images/share.svg" />-->
+<!--              </q-icon>-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Share ...-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--            <div v-if="note.trash">-->
+<!--              <q-btn dense round flat @click.stop="restoreNote">-->
+<!--                <q-icon color="accent" name="img:/images/restore.svg" />-->
+<!--                <q-tooltip-->
+<!--                  anchor="bottom middle"-->
+<!--                  self="bottom middle"-->
+<!--                  :offset="[10, 30]"-->
+<!--                >-->
+<!--                  Restore from archive-->
+<!--                </q-tooltip>-->
+<!--              </q-btn>-->
+<!--              <q-btn dense round flat @click.stop="permanentlyDeleteNote">-->
+<!--                <q-icon color="accent" name="img:/images/delete_forever.svg" />-->
+<!--                <q-tooltip-->
+<!--                  anchor="bottom middle"-->
+<!--                  self="bottom middle"-->
+<!--                  :offset="[10, 30]"-->
+<!--                >-->
+<!--                  Permanently delete ...-->
+<!--                </q-tooltip>-->
+<!--              </q-btn>-->
+<!--            </div>-->
+<!--            <q-btn dense round flat @click.stop="archiveNote" v-else>-->
+<!--              <q-icon color="accent" name="img:/images/trash.svg" />-->
+<!--              <q-tooltip-->
+<!--                anchor="bottom middle"-->
+<!--                self="bottom middle"-->
+<!--                :offset="[10, 30]"-->
+<!--              >-->
+<!--                Archive note-->
+<!--              </q-tooltip>-->
+<!--            </q-btn>-->
+<!--          </div>-->
+<!--        </q-card-actions>-->
 
-<!--      <condensed-list-item @handle_fave="handleFave" @download_note="downloadNote" @handle_share_note="handleShareNote"-->
-<!--                           @archive_note="archiveNote" @permanently_delete_note="permanentlyDeleteNote"-->
-<!--                           @restore_note="restoreNote" @show_tag_manager="showTagManager = true"-->
-<!--                           @show_color_manager="showColorManager = true"-->
-<!--                           :displayTitle="displayTitle" :lastModified="lastModified"-->
-<!--                           :button_bar_visibility="buttonBarVisibility" :data="data" :fave="fave"-->
-<!--                           :note="note"></condensed-list-item>-->
+      <condensed-list-item @handle_fave="handleFave" @download_note="downloadNote" @handle_share_note="handleShareNote"
+                           @archive_note="archiveNote" @permanently_delete_note="permanentlyDeleteNote"
+                           @restore_note="restoreNote" @show_tag_manager="showTagManager = true"
+                           @show_color_manager="showColorManager = true"
+                           :displayTitle="displayTitle" :lastModified="lastModified"
+                           :button_bar_visibility="buttonBarVisibility" :data="data" :fave="fave"
+                           :note="note"></condensed-list-item>
 
 <!--      Added Condensed List Item-->
       </q-card-section>
@@ -291,7 +291,7 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 export default {
   name: "Note",
   components: {
-    // CondensedListItem: () => import("components/CondensedListItem"),
+    CondensedListItem: () => import("components/CondensedListItem"),
     // ListTags: () => import("components/ListTags"),
     // TagManager: () => import("components/TagManager"),
     // ButtonBar: () => import("components/ButtonBar.vue"),
