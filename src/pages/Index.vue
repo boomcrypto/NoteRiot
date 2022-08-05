@@ -9,7 +9,7 @@
                 :data="note"
                 v-for="note in filterNotes"
                 :class="
-                  mode === 'list'
+                  mode === 'list' || mode === 'condensed_list'
                     ? 'col-xs-12 col-sm-12 col-md-12 col-lg-12'
                     : 'col-xs-12 col-sm-4 col-md-3 col-lg-2'
                 "

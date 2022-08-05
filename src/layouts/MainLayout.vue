@@ -32,8 +32,8 @@
           flat
           color="accent"
           round
-          @click="setMode(mode === 'grid' ? 'list' : 'grid')"
-          :icon="mode === 'grid' ? 'list' : 'grid_on'"
+          @click="setModeAction()"
+          :icon="mode === 'grid' ? 'list' : mode === 'list'?'view_list':'grid_on'"
         />
         <q-btn flat round color="dark" aria-label="Menu">
           <q-avatar size="36px">
@@ -294,6 +294,15 @@ export default {
     },
     handleSetCurrentSortBy(val) {
       this.setSortBy(val);
+    },
+    setModeAction(mode_val) {
+      if (this.mode == 'list') {
+        this.setMode('condensed_list')
+      } else if (this.mode == 'grid') {
+        this.setMode('list')
+      } else {
+        this.setMode('grid')
+      }
     },
     handleOpenBackupManager() {
       this.$router.push({ name: "BackupManager" });
