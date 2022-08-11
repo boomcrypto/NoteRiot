@@ -1,8 +1,7 @@
 <template>
   <q-card flat>
-    <q-card-section class="bottom-border-99">
+    <div class="bottom-border-99">
       <q-input
-        borderless
         clearable
         type="text"
         placeholder="Type a new tag name here"
@@ -25,7 +24,7 @@
           />
         </template>
       </q-input>
-    </q-card-section>
+    </div>
     <q-card-section>
       <div class="available-tags" v-if="note.tags.length > 0">
         <div class="all-caps-action">CURRENT TAGS</div>

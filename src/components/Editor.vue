@@ -55,58 +55,36 @@
 
     <!-- sidebar actions -->
     <q-drawer side="right" v-model="showSidebar" bordered :width="300">
-      <q-toolbar class="bg-transparent row q-pt-lg q-mb-md">
-        <q-toolbar-title> Actions </q-toolbar-title>
-      </q-toolbar>
-      <q-scroll-area class="fit q-px-sm">
-        <q-card-section class="row q-px-none">
-          <q-btn
-            flat
-            round
-            color="accent"
-            :icon="
-              data.fave
-                ? 'img:/images/favorited.svg'
-                : 'img:/images/favorite-available.svg'
-            "
-            @click="handleToggleFave"
-          >
-            <q-tooltip
-              anchor="bottom middle"
-              self="top middle"
-              :offset="[10, 10]"
-            >
-              <strong>Toggle Favorite</strong>
-            </q-tooltip>
-          </q-btn>
-          <q-btn
-            round
-            color="accent"
-            flat
-            :icon="
-              data.trash ? 'img:/images/restore.svg' : 'img:/images/trash.svg'
-            "
-            @click="handleArchiveRestore"
-          >
-            <q-tooltip
-              anchor="bottom middle"
-              self="top middle"
-              :offset="[10, 10]"
-            >
-              <strong>Archive</strong>
-            </q-tooltip>
-          </q-btn>
-          <q-btn round color="accent" flat icon="img:/images/download.svg">
-            <q-tooltip
-              anchor="bottom middle"
-              self="top middle"
-              :offset="[10, 10]"
-              @click="handleDownload"
-            >
-              <strong>Download</strong>
-            </q-tooltip>
-          </q-btn>
-          <q-btn
+      <q-scroll-area class="fit q-px-sm" style="margin-top: 93px">
+        <q-toolbar-title>Actions</q-toolbar-title>
+        <q-card-section class="row justify-around q-px-none">
+          <div class="column items-center">
+            <q-avatar size="32px" @click="handleToggleFave">
+              <img
+                :src="
+                  data.fave
+                    ? '/images/favorited.svg'
+                    : '/images/favorite-available.svg'
+                "
+              />
+            </q-avatar>
+            Toggle Favorite
+          </div>
+          <div class="column items-center">
+            <q-avatar size="32px" @click="handleToggleFave">
+              <img
+                :src="data.trash ? '/images/restore.svg' : '/images/trash.svg'"
+              />
+            </q-avatar>
+            Archive
+          </div>
+          <div class="column items-center">
+            <q-avatar size="32px" @click="handleToggleFave">
+              <img src="/images/restore.svg" />
+            </q-avatar>
+            Download
+          </div>
+          <!-- <q-btn
             color="accent"
             no-caps
             round
@@ -122,7 +100,6 @@
               <strong>Mint as NFT</strong>
             </q-tooltip>
           </q-btn>
-
           <q-btn
             color="accent"
             round
@@ -152,16 +129,17 @@
             >
               <strong>Share</strong>
             </q-tooltip>
-          </q-btn>
+          </q-btn> -->
         </q-card-section>
-        <q-toolbar-title>Colors</q-toolbar-title>
+        <q-toolbar-title class="q-pl-none">Colors</q-toolbar-title>
         <q-card-section class="q-px-none">
-          <SelectColor
-            color="data.hasOwnProperty('color') && data.color!=null?data.color:'none'"
-            @update-note="handleUpdates"
-          />
+          <SelectColor :color="data.color" @update-note="handleUpdates" />
         </q-card-section>
-        Attachments
+        <q-toolbar-title class="q-pl-none">Tags</q-toolbar-title>
+        <q-card-section class="q-px-none">
+          <TagEditor :note="data" />
+        </q-card-section>
+        <!-- Attachments
         <q-card-section
           class="attachment-previews q-px-none"
           v-if="data.attachments"
@@ -179,16 +157,11 @@
             icon="img:/images/create-new.svg"
             @click="handleAddAttachment"
           />
-        </q-card-section>
-        Select Tags ...
-        <q-card-section>
-          <!-- TODO: tag editor prop should just be tags -->
-          <TagEditor :note="data" />
-        </q-card-section>
-        Share with ...
+        </q-card-section> -->
+        <!-- <q-toolbar-title>Share</q-toolbar-title>
         <q-card-section>
           <q-input v-model="shareWith" type="text" label="Share with ..." />
-        </q-card-section>
+        </q-card-section> -->
       </q-scroll-area>
     </q-drawer>
   </q-layout>

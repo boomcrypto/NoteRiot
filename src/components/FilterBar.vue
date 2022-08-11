@@ -71,12 +71,12 @@
           <q-item
             clickable
             v-close-popup
-            @click="handleFilter(`color:${color.idx}`)"
+            @click="handleFilter(`color:${color}`)"
             v-for="color in displayColor"
-            :key="`colorfilter-${color.val}`"
+            :key="`colorfilter-${color}`"
           >
             <q-item-section>
-              <q-item-label>{{ color.val }}</q-item-label>
+              <q-item-label>{{ color }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -179,7 +179,7 @@ export default {
     displayColor() {
       let filterColors = [];
       this.colors.forEach((color) => {
-        filterColors.push(color.val);
+        filterColors.push(this.themes.default[color]);
       });
       return filterColors;
     },
@@ -214,8 +214,8 @@ export default {
     handleSetColorFilter(color) {
       this.setLabelFilter(color);
     },
-    handleSetCurrentSortBy(val) {
-      this.setSortBy(val);
+    handleSetCurrentSortBy(color) {
+      this.setSortBy(color);
     },
   },
 };

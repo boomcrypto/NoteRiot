@@ -24,12 +24,12 @@ export function setLoading(context, payload) {
 
 export async function fetchData(context) {
   await storage.getFile("riotnotes.json").then((data) => {
-    console.log("fetched: ", data);
     let notes = null;
     try {
       notes = JSON.parse(data);
       notes.forEach((note) => {
-        let color = note.color;
+        const color = note.color;
+        console.log("incoming color: ", color);
         let colorVal = 0;
         if (color.includes("red")) colorVal = 1;
         else if (color.includes("orange")) colorVal = 2;
@@ -38,7 +38,8 @@ export async function fetchData(context) {
         else if (color.includes("blue")) colorVal = 5;
         else if (color.includes("purple")) colorVal = 6;
         else if (color.includes("pink")) colorVal = 7;
-
+        else colorVal = 0;
+        console.log("outgoing color: ", colorVal);
         note.color = colorVal;
       });
     } catch {
