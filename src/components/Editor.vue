@@ -68,7 +68,7 @@
                 "
               />
             </q-avatar>
-            Toggle Favorite
+            Favorite
           </div>
           <div class="column items-center">
             <q-avatar size="32px" @click="handleToggleFave">
