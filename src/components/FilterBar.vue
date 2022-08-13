@@ -72,7 +72,7 @@
             clickable
             v-close-popup
             @click="handleFilter(`color:${color}`)"
-            v-for="color in displayColor"
+            v-for="color in colors"
             :key="`colorfilter-${color}`"
           >
             <q-item-section>
@@ -176,13 +176,6 @@ export default {
   computed: {
     ...mapGetters("app", ["colors", "tags"]),
     ...mapState("app", ["labelFilter", "sortBy", "sortDirection", "themes"]),
-    displayColor() {
-      let filterColors = [];
-      this.colors.forEach((color) => {
-        filterColors.push(this.themes.default[color]);
-      });
-      return filterColors;
-    },
     labelChipLabel() {
       if (
         this.labelFilter === "all" ||

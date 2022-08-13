@@ -27,11 +27,9 @@ export function avatar(state) {
 }
 
 export function colors(state) {
-  let active = state.notes.filter((note) => !note.trash);
-
   let clrs = [];
   state.notes.forEach((note) => {
-    if (!note.trash) {
+    if (!note.trash & (note.color !== "")) {
       clrs.push(note.color);
     }
   });

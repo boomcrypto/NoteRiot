@@ -2,9 +2,9 @@
   <div class="tag-colors">
     <div class="tag-color-row">
       <div
-        v-for="(color, index) in noteColors"
+        v-for="color in noteColors"
         :key="`select-modal-${color}`"
-        @click="handleSelectColor(index)"
+        @click="handleSelectColor(color)"
         :class="
           selectedColor === index
             ? `tag-color ${color} checked`
@@ -38,13 +38,11 @@ export default {
     ...mapGetters("app", ["noteColors"]),
   },
   methods: {
-    handleSelectColor(idx) {
-      this.selectedColor = idx;
-      this.$emit("update-note", { color: this.selectedColor });
+    handleSelectColor(clr) {
+      this.$emit("update-note", { color: clr });
     },
     handleRemoveColor() {
-      this.selectedColor = 0;
-      this.$emit("update-note", { color: this.selectedColor });
+      this.$emit("update-note", { color: "" });
     },
   },
 };

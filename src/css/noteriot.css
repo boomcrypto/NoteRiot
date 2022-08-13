@@ -1480,79 +1480,79 @@ body.body--dark {
   background-size: contain;
 }
 
-.tag-color.red-2 {
+.tag-color.red {
   border-style: none;
   background-color: #ffcdd2;
 }
-.tag-color.pink-2 {
+.tag-color.pink {
   border-style: none;
   background-color: #f8bbd0;
 }
-.tag-color.purple-2 {
+.tag-color.purple {
   border-style: none;
   background-color: #e1bee7;
 }
-.tag-color.deep-purple-2 {
+.tag-color.deep-purple {
   border-style: none;
   background-color: #d1c4e9;
 }
-.tag-color.indigo-2 {
+.tag-color.indigo {
   border-style: none;
   background-color: #c5cae9;
 }
-.tag-color.blue-2 {
+.tag-color.blue {
   border-style: none;
   background-color: #bbdefb;
 }
-.tag-color.light-blue-2 {
+.tag-color.light-blue {
   border-style: none;
   background-color: #b3e5fc;
 }
-.tag-color.cyan-2 {
+.tag-color.cyan {
   border-style: none;
   background-color: #b2ebf2;
 }
-.tag-color.teal-2 {
+.tag-color.teal {
   border-style: none;
   background-color: #b2dfdb;
 }
-.tag-color.green-2 {
+.tag-color.green {
   border-style: none;
   background-color: #c8e6c9;
 }
-.tag-color.light-green-2 {
+.tag-color.light-green {
   border-style: none;
   background-color: #dcedc8;
 }
-.tag-color.lime-2 {
+.tag-color.lime {
   border-style: none;
   background-color: #f0f4c3;
 }
-.tag-color.yellow-2 {
+.tag-color.yellow {
   border-style: none;
   background-color: #fff9c4;
 }
-.tag-color.amber-2 {
+.tag-color.amber {
   border-style: none;
   background-color: #ffecb3;
 }
-.tag-color.orange-2 {
+.tag-color.orange {
   border-style: none;
   background-color: #ffe0b2;
 }
-.tag-color.deep-orange-2 {
+.tag-color.deep-orange {
   border-style: none;
   background-color: #ffccbc;
 }
-.tag-color.brown-2 {
+.tag-color.brown {
   border-style: none;
   background-color: #d7ccc8;
 }
-.tag-color.grey-2 {
+.tag-color.grey {
   border-style: none;
   background-color: #f5f5f5;
 }
-.tag-color.blue-grey-2 {
+.tag-color.blue-grey {
   border-style: none;
   background-color: #cfd8dc;
 }
@@ -1596,7 +1596,7 @@ body.body--dark {
   background-color: #fc3177;
 }
 
-.tag-color.red {
+/* .tag-color.red {
   border-style: none;
   background-color: #ff3728;
 }
@@ -1639,14 +1639,14 @@ body.body--dark {
 .tag-color.blue {
   border-style: none;
   background-color: #2096f3;
-}
+} */
 
 .tag-color.steel {
   border-style: none;
   background-color: #607d8b;
 }
 
-.tag-color.grey {
+/* .tag-color.grey {
   border-style: none;
   background-color: #757575;
 }
@@ -1654,7 +1654,7 @@ body.body--dark {
 .tag-color.brown {
   border-style: none;
   background-color: #795548;
-}
+} */
 
 .tag-color.black {
   border-style: none;

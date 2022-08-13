@@ -4,7 +4,7 @@
       v-if="mode === 'grid'"
       class="q-pa-none boom-card"
       :class="
-        `bg-${displayColor}` + ($q.dark.isActive ? ' boom-card-dark' : '')
+        `bg-${displayColor}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
@@ -61,14 +61,17 @@
           <q-item-section top>
             <q-item-label lines="1">
               <span class="text-weight-medium text-body1">{{
-                  displayTitle
-                }}</span>
+                displayTitle
+              }}</span>
             </q-item-label>
             <div
               :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''"
-              :style="{'max-height': $q.screen.gt.sm?'140px':'70px','overflow': 'hidden'}"
+              :style="{
+                'max-height': $q.screen.gt.sm ? '140px' : '70px',
+                overflow: 'hidden',
+              }"
             >
-              <viewer :initialValue="data.text" :key="data.modified"/>
+              <viewer :initialValue="data.text" :key="data.modified" />
             </div>
             <q-item-label caption lines="1">
               <div class="timestamp">
@@ -101,7 +104,10 @@
             <q-img
               :src="data.attachments[0].url"
               spinner-color="accent"
-              :style="{'height': $q.screen.gt.sm?'140px':'70px','border-radius': '8px'}"
+              :style="{
+                height: $q.screen.gt.sm ? '140px' : '70px',
+                'border-radius': '8px',
+              }"
               spinner-size="48px"
             />
           </q-item-section>
@@ -135,7 +141,7 @@
             </q-btn>
             <q-btn dense round flat @click.stop="showTagManager = true">
               <q-icon>
-                <img src="/images/label.svg"/>
+                <img src="/images/label.svg" />
               </q-icon>
               <q-tooltip
                 anchor="bottom middle"
@@ -147,7 +153,7 @@
             </q-btn>
             <q-btn dense round flat @click.stop="downloadNote()">
               <q-icon>
-                <img src="/images/download.svg"/>
+                <img src="/images/download.svg" />
               </q-icon>
               <q-tooltip
                 anchor="bottom middle"
@@ -159,7 +165,7 @@
             </q-btn>
             <q-btn dense round flat @click.stop="showColorManager = true">
               <q-icon>
-                <img src="/images/palette.svg"/>
+                <img src="/images/palette.svg" />
               </q-icon>
               <q-tooltip
                 anchor="bottom middle"
@@ -171,7 +177,7 @@
             </q-btn>
             <q-btn dense round flat @click.stop="handleShareNote()">
               <q-icon>
-                <img src="/images/share.svg"/>
+                <img src="/images/share.svg" />
               </q-icon>
               <q-tooltip
                 anchor="bottom middle"
@@ -183,7 +189,7 @@
             </q-btn>
             <div v-if="note.trash">
               <q-btn dense round flat @click.stop="restoreNote">
-                <q-icon color="accent" name="img:/images/restore.svg"/>
+                <q-icon color="accent" name="img:/images/restore.svg" />
                 <q-tooltip
                   anchor="bottom middle"
                   self="bottom middle"
@@ -193,7 +199,7 @@
                 </q-tooltip>
               </q-btn>
               <q-btn dense round flat @click.stop="permanentlyDeleteNote">
-                <q-icon color="accent" name="img:/images/delete_forever.svg"/>
+                <q-icon color="accent" name="img:/images/delete_forever.svg" />
                 <q-tooltip
                   anchor="bottom middle"
                   self="bottom middle"
@@ -204,7 +210,7 @@
               </q-btn>
             </div>
             <q-btn dense round flat @click.stop="archiveNote" v-else>
-              <q-icon color="accent" name="img:/images/trash.svg"/>
+              <q-icon color="accent" name="img:/images/trash.svg" />
               <q-tooltip
                 anchor="bottom middle"
                 self="bottom middle"
@@ -215,20 +221,26 @@
             </q-btn>
           </div>
         </q-card-actions>
-
-
       </q-card-section>
       <q-card-section class="q-pa-none" v-else>
         <!--      Added Condensed List Item-->
 
-        <condensed-list-item @handle_fave="handleFave" @download_note="downloadNote"
-                             @handle_share_note="handleShareNote"
-                             @archive_note="archiveNote" @permanently_delete_note="permanentlyDeleteNote"
-                             @restore_note="restoreNote" @show_tag_manager="showTagManager = true"
-                             @show_color_manager="showColorManager = true"
-                             :displayTitle="displayTitle" :lastModified="lastModified"
-                             :button_bar_visibility="buttonBarVisibility" :data="data" :fave="fave"
-                             :note="note"></condensed-list-item>
+        <condensed-list-item
+          @handle_fave="handleFave"
+          @download_note="downloadNote"
+          @handle_share_note="handleShareNote"
+          @archive_note="archiveNote"
+          @permanently_delete_note="permanentlyDeleteNote"
+          @restore_note="restoreNote"
+          @show_tag_manager="showTagManager = true"
+          @show_color_manager="showColorManager = true"
+          :displayTitle="displayTitle"
+          :lastModified="lastModified"
+          :button_bar_visibility="buttonBarVisibility"
+          :data="data"
+          :fave="fave"
+          :note="note"
+        ></condensed-list-item>
       </q-card-section>
     </q-card>
     <q-dialog v-model="showTagManager">
@@ -337,7 +349,7 @@ export default {
     ...mapGetters("app", ["tags", "noteColors"]),
     ...mapState("app", ["mode"]),
     displayColor() {
-      return this.noteColors[this.data.color];
+      return this.note.color;
     },
     hasImage() {
       return this.data.attachments.length > 0;
