@@ -6,7 +6,7 @@
         :key="`select-modal-${color}`"
         @click="handleSelectColor(color)"
         :class="
-          selectedColor === index
+          selectedColor === color
             ? `tag-color ${color} checked`
             : `tag-color ${color}`
         "
@@ -22,8 +22,8 @@ export default {
   name: "SelectColor",
   props: {
     color: {
-      type: Number,
-      required: true,
+      type: String,
+      default: "",
     },
   },
   data() {
