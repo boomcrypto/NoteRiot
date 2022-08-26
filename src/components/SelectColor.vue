@@ -10,11 +10,10 @@
             ? `tag-color ${color} checked`
             : `tag-color ${color}`
         "
-      ></div>
+      />
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 
@@ -39,9 +38,11 @@ export default {
   },
   methods: {
     handleSelectColor(clr) {
+      this.selectedColor = clr;
       this.$emit("update-note", { color: clr });
     },
     handleRemoveColor() {
+      this.selectedColor = "";
       this.$emit("update-note", { color: "" });
     },
   },

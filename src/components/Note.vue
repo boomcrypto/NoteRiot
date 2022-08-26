@@ -15,18 +15,18 @@
           ? 'cursor: pointer'
           : '' + ($q.dark.isActive ? 'color: white' : '')
       "
-      :key="`${data.id}-${data.modified}`"
+      :key="`${note.id}-${note.modified}`"
     >
       <NoteActions
         class="grid-icons absolute-top-right"
-        :note="data"
+        :note="note"
         style="z-index: 99"
         :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
         @update-note="handleUpdates"
       />
       <q-img
         v-if="hasImage"
-        :src="data.attachments[0].url"
+        :src="note.attachments[0].url"
         :ratio="16 / 9"
         spinner-color="accent"
         spinner-size="48px"
@@ -38,8 +38,8 @@
         <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
         <div :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''">
           <viewer
-            :initialValue="data.text"
-            :key="data.modified"
+            :initialValue="note.text"
+            :key="note.modified"
             class="full-width"
           />
         </div>
@@ -50,11 +50,11 @@
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
       :class="
-        `bg-${data.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
+        `bg-${note.color}-2` + ($q.dark.isActive ? ' boom-card-dark' : '')
       "
       class="boom-card-list"
       @click="handleEditNote"
-      :key="`${data.modified}-${data.id}`"
+      :key="`${note.modified}-${note.id}`"
     >
       <q-card-section class="q-pa-none" v-if="mode === 'list'">
         <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">
@@ -71,7 +71,7 @@
                 overflow: 'hidden',
               }"
             >
-              <viewer :initialValue="data.text" :key="data.modified" />
+              <viewer :initialValue="note.text" :key="note.modified" />
             </div>
             <q-item-label caption lines="1">
               <div class="timestamp">
@@ -83,7 +83,7 @@
                   text-color="white"
                   class="solo-tag"
                   @click="$emit('selected', tag)"
-                  v-for="(tag, index) in data.tags"
+                  v-for="(tag, index) in note.tags"
                   :key="`${tag}-${index}`"
                 >
                   <template #default>
@@ -97,12 +97,12 @@
           </q-item-section>
 
           <q-item-section
-            v-if="data.attachments.length"
+            v-if="note.attachments.length"
             :class="$q.screen.gt.sm ? 'col-2' : 'col-4'"
             style="margin-right: -20px"
           >
             <q-img
-              :src="data.attachments[0].url"
+              :src="note.attachments[0].url"
               spinner-color="accent"
               :style="{
                 height: $q.screen.gt.sm ? '140px' : '70px',
@@ -245,7 +245,7 @@
     </q-card>
     <q-dialog v-model="showTagManager">
       <q-card flat class="boom-card">
-        <TagEditor :note="this.data" @update-note="handleUpdates" />
+        <TagEditor :note="this.note" @update-note="handleUpdates" />
         <q-card-actions align="right">
           <q-btn
             color="accent"
@@ -264,7 +264,7 @@
           <q-icon round dense name="img:/images/color-wheel.jpg" />
           <q-toolbar-title>Select a color</q-toolbar-title>
         </q-toolbar>
-        <SelectColor :color="this.data.color" @update-note="handleUpdates" />
+        <SelectColor :color="this.note.color" @update-note="handleUpdates" />
         <q-card-actions align="right">
           <q-btn
             color="accent"
@@ -285,7 +285,7 @@
     >
       <q-card :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
         <Editor
-          :data="this.data"
+          :data="this.note"
           @update-note="handleUpdates"
           @closeEditor="handleCloseEditor"
         />
@@ -352,20 +352,20 @@ export default {
       return this.note.color;
     },
     hasImage() {
-      return this.data.attachments.length > 0;
+      return this.note.attachments.length > 0;
     },
     displayTitle() {
-      const titleLength = this.data.title.length;
+      const titleLength = this.note.title.length;
       if (titleLength > 18) {
-        return `${this.data.title.substring(0, 15)}...`;
+        return `${this.note.title.substring(0, 15)}...`;
       } else if (titleLength === 0) {
         return "Untitled";
       } else {
-        return this.data.title;
+        return this.note.title;
       }
     },
     tagMenuLabel() {
-      if (this.data.tags.length) {
+      if (this.note.tags.length) {
         return "Tags";
       } else {
         return "Add Tags";
@@ -373,37 +373,31 @@ export default {
     },
     lastModified() {
       // return timeago.format(this.data.modified);
-      return new Date(this.data.modified).toLocaleString();
+      return new Date(this.note.modified).toLocaleString();
     },
   },
   methods: {
     ...mapActions("app", ["updateNote", "deleteNote"]),
     async handleUpdates(updates) {
-      this.contentKey = `${updates.id}-${Date.now()}`;
       const notestatus = await this.updateNote({
         id: this.data.id,
         updates: updates,
       });
       console.log("notestatus", notestatus);
       this.note = Object.assign({}, this.note, updates);
+      this.contentKey = `${updates.id}-${Date.now()}`;
     },
     restoreNote() {
       const payload = {
-        id: this.data.id,
-        updates: {
-          trash: false,
-          modified: Date.now(),
-        },
+        trash: false,
+        modified: Date.now(),
       };
       this.handleUpdates(payload);
     },
     archiveNote() {
       const payload = {
-        id: this.data.id,
-        updates: {
-          trash: true,
-          modified: Date.now(),
-        },
+        trash: true,
+        modified: Date.now(),
       };
       this.handleUpdates(payload);
     },
