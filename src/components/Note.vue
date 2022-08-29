@@ -8,7 +8,7 @@
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
-      @click="handleEditNote"
+      :to="`/edit/${data.id}`"
       style="height: 310px; overflow: hidden"
       :style="
         buttonBarVisibility
@@ -58,6 +58,14 @@
     >
       <q-card-section class="q-pa-none" v-if="mode === 'list'">
         <q-item class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-width">
+          <NoteActions
+            class="grid-icons absolute-top-right"
+            :note="note"
+            style="z-index: 99"
+            :style="buttonBarVisibility ? 'display: flex' : 'display: none'"
+            @update-note="handleUpdates"
+          />
+
           <q-item-section top>
             <q-item-label lines="1">
               <span class="text-weight-medium text-body1">{{
@@ -97,9 +105,9 @@
           </q-item-section>
 
           <q-item-section
+            side
             v-if="note.attachments.length"
             :class="$q.screen.gt.sm ? 'col-2' : 'col-4'"
-            style="margin-right: -20px"
           >
             <q-img
               :src="note.attachments[0].url"
@@ -113,7 +121,7 @@
           </q-item-section>
         </q-item>
 
-        <q-card-actions
+        <!-- <q-card-actions
           v-if="buttonBarVisibility"
           style="opacity: 0.8"
           class="q-pt-none bg-white absolute-bottom"
@@ -220,7 +228,7 @@
               </q-tooltip>
             </q-btn>
           </div>
-        </q-card-actions>
+        </q-card-actions> -->
       </q-card-section>
       <q-card-section class="q-pa-none" v-else>
         <!--      Added Condensed List Item-->

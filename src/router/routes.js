@@ -9,6 +9,12 @@ const routes = [
         name: "Index",
         meta: { requiresAuth: true },
       },
+      {
+        path: "/edit/:id",
+        component: () => import("pages/Editor.vue"),
+        name: "Editor",
+        meta: { requiresAuth: true },
+      },
     ],
   },
   // {
