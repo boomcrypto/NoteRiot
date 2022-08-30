@@ -26,10 +26,10 @@
       </q-input>
     </div>
     <q-card-section>
-      <div class="available-tags" v-if="note.tags.length > 0">
+      <div class="available-tags">
         <div class="all-caps-action">CURRENT TAGS</div>
         <div class="available-tag-list">
-          <template v-for="tag in currentTags">
+          <template v-for="tag in updatedTags">
             <q-chip
               square
               clickable
@@ -49,12 +49,12 @@
       <div class="available-tags">
         <div class="all-caps-action">AVAILABLE TAGS</div>
         <div class="available-tag-list">
-          <template v-for="tag in tags">
+          <template v-for="tag in allTags">
             <q-chip
               :ref="`availableTag${tag}`"
               square
               clickable
-              :disabled="note.tags.includes(tag)"
+              :disabled="updatedTags.includes(tag)"
               text-color="white"
               class="tag-orchid solo-tag supercooltag"
               icon="add"
@@ -87,13 +87,17 @@ var isEqual = require("lodash.isequal");
 
 export default {
   name: "TagEditor",
-  props: ["note"],
+  props: {
+    currentTags: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {},
   data() {
     return {
-      currentTags: [],
-      newTagColor: "",
       newTagName: "",
+      newTags: [],
       menu: false,
       icons: [
         "bx-body",
@@ -106,22 +110,23 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["tags", "noteColors"]),
+    ...mapGetters("app", ["allTags", "noteColors"]),
+    updatedTags() {
+      return this.currentTags.concat(this.newTags);
+    },
     showCurrentTags() {
-      if (note.tags.length) return true;
+      if (tags.length) return true;
       else return false;
     },
   },
-  mounted() {
-    this.currentTags = [...this.note.tags];
-  },
+  mounted() {},
   methods: {
     availableTagKey(tag) {
       return `availableTags-${tag}-${Date.now()}`;
     },
     updateTags() {
       console.log("updatetags called");
-      if (isEqual(this.currentTags, this.note.tags)) {
+      if (isEqual(this.currentTags, this.tags)) {
         console.log("no changes found, close ...");
         this.$emit("close");
       } else {
@@ -130,7 +135,7 @@ export default {
     },
     removeTagFromNote(del) {
       console.log("removing tag: ", del);
-      let noteTags = this.note.tags.slice();
+      let noteTags = this.tags.slice();
       noteTags.splice(noteTags.indexOf(del), 1);
       const payload = {
         updates: { tags: noteTags },
@@ -138,11 +143,7 @@ export default {
       this.$emit("update-note", payload);
     },
     async addTag(tag) {
-      if (!this.currentTags.includes(tag)) {
-        this.currentTags.push(tag);
-      }
-      // this.$refs["availableTag" + tag].disabled = true;
-      // this.$forceUpdate();
+      this.newTags.push(tag);
     },
     async createTag() {
       // add tag
@@ -158,11 +159,13 @@ export default {
           validTag = false;
         }
       });
-      if (this.tags.includes(this.newTagName)) {
-        validTag = false;
-      }
+      this.currentTags.forEach((tag) => {
+        if (lowerCaseNewTag === tag.toLowerCase()) {
+          validTag = false;
+        }
+      });
       if (validTag) {
-        this.currentTags.push(this.newTagName);
+        this.newTags.push(this.newTagName);
         this.newTagName = "";
       } else {
         this.$q.notify({

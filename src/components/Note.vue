@@ -8,7 +8,7 @@
       "
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave"
-      :to="`/edit/${data.id}`"
+      @click="handleEditNote"
       style="height: 310px; overflow: hidden"
       :style="
         buttonBarVisibility
@@ -422,9 +422,7 @@ export default {
       this.buttonBarVisibility = false;
     },
     handleEditNote() {
-      // this.component = "Editor";
-      this.showEditor = true;
-      // this.displayComponent = null;
+      this.$router.push(`/edit/${this.data.id}`);
     },
     handleShareNote() {
       this.$root.$emit("userShare", this.data.id);

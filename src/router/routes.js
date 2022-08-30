@@ -1,38 +1,26 @@
 const routes = [
   {
-    path: "/notes",
+    path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "",
+        path: "/notes",
         component: () => import("pages/Index.vue"),
-        name: "Index",
+        name: "Home",
         meta: { requiresAuth: true },
       },
       {
         path: "/edit/:id",
         component: () => import("pages/Editor.vue"),
-        name: "Editor",
-        meta: { requiresAuth: true },
+        name: "Edit",
+        props: true,
+        meta: {
+          requiresAuth: true,
+          transition: "slide-in-right",
+        },
       },
     ],
   },
-  // {
-  //   path: "/editor",
-  //   component: () => import("layouts/EditorLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "/editor/:id",
-  //       component: () => import("pages/Edit.vue"),
-  //       name: "Edit",
-  //       props: true,
-  //       meta: {
-  //         requiresAuth: true,
-  //         transition: "slide-up",
-  //       },
-  //     },
-  //   ],
-  // },
   {
     path: "/",
     component: () => import("layouts/LoginLayout.vue"),

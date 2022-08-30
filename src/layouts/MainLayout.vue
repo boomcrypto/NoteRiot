@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHr lpR fFr">
+  <q-layout view="hHH lpR fFr">
     <q-header
       :class="$q.dark.isActive ? 'bg-transparent' : 'bg-white'"
       v-if="$q.screen.gt.xs"
@@ -15,6 +15,7 @@
           spinner-color="accent"
           spinner-size="28px"
           style="height: 36px"
+          @click="handleLogoClick"
         />
         <q-space />
         <Search />
@@ -33,7 +34,9 @@
           color="accent"
           round
           @click="setModeAction()"
-          :icon="mode === 'grid' ? 'list' : mode === 'list'?'view_list':'grid_on'"
+          :icon="
+            mode === 'grid' ? 'list' : mode === 'list' ? 'view_list' : 'grid_on'
+          "
         />
         <q-btn flat round color="dark" aria-label="Menu">
           <q-avatar size="36px">
@@ -80,7 +83,6 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
-      <FilterBar class="q-mr-auto q-ml-auto q-mt-md" />
     </q-header>
     <q-header reveal bordered height-hint="80" v-else>
       <q-toolbar style="height: 80px">
@@ -113,58 +115,6 @@
         <component :is="component" :data="data" />
       </q-dialog>
     </q-page-container>
-    <q-page-sticky
-      class="override-bottom-space"
-      position="bottom-right"
-      style="z-index: -10"
-    >
-      <img src="/images/bottom-right.svg" />
-    </q-page-sticky>
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[50, 60]"
-      v-if="$q.screen.gt.xs"
-    >
-      <q-btn
-        round
-        size="48px"
-        fab
-        icon="add"
-        color="accent"
-        @click="handleAddNote"
-        padding="30px"
-      />
-    </q-page-sticky>
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[10, -35]"
-      v-else
-      style="z-index: 2010"
-    >
-      <q-btn
-        round
-        size="24px"
-        fab
-        icon="add"
-        color="accent"
-        @click="handleAddNote"
-        padding="25px"
-        style="box-shadow: 0 0 8px gray"
-      />
-    </q-page-sticky>
-    <q-dialog
-      v-model="showEditor"
-      maximized
-      :class="$q.dark.isActive ? 'toastui-editor-dark' : ''"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <editor
-        :data="newNote"
-        @closeEditor="handleCloseEditor"
-        @update-note="handleUpdates"
-      />
-    </q-dialog>
   </q-layout>
 </template>
 
@@ -216,6 +166,13 @@ export default {
       "setMode",
       "addNote",
     ]),
+    handleLogoClick() {
+      if (this.$route.name === "Edit") {
+        this.$router.go(-1);
+      } else {
+        this.$router.push({ name: "Home" });
+      }
+    },
     async handleAddNote() {
       this.setLabelFilter("all");
       this.newNote = await this.addNote();
@@ -296,12 +253,12 @@ export default {
       this.setSortBy(val);
     },
     setModeAction(mode_val) {
-      if (this.mode == 'list') {
-        this.setMode('condensed_list')
-      } else if (this.mode == 'grid') {
-        this.setMode('list')
+      if (this.mode == "list") {
+        this.setMode("condensed_list");
+      } else if (this.mode == "grid") {
+        this.setMode("list");
       } else {
-        this.setMode('grid')
+        this.setMode("grid");
       }
     },
     handleOpenBackupManager() {

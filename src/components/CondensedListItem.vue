@@ -55,6 +55,7 @@ export default {
   name: "condensed_list_item",
   components: {
     Viewer,
+    NoteActions: () => import("components/NoteActions.vue"),
   },
   props: [
     "displayTitle",

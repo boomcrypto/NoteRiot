@@ -11,10 +11,10 @@ export default {
   name: "App",
   async mounted() {
     if (userSession.isUserSignedIn()) {
-      this.$router.push({ name: "Index" });
+      this.$router.push({ name: "Home" });
     } else if (userSession.isSignInPending()) {
       userSession.handlePendingSignIn().then((user) => {
-        this.$router.push({ name: "Index" });
+        this.$router.push({ name: "Home" });
       });
     } else {
       this.$router.push({ name: "Login" });

@@ -1,6 +1,8 @@
 <template>
   <q-page>
     <Container>
+      <FilterBar class="q-mr-auto q-ml-auto q-mt-md" />
+
       <div class="q-mt-sm">
         <div v-if="notes.length">
           <div v-if="filterNotes.length">
@@ -26,6 +28,45 @@
         </div>
       </div>
     </Container>
+    <q-page-sticky
+      class="override-bottom-space"
+      position="bottom-right"
+      style="z-index: -10"
+    >
+      <img src="/images/bottom-right.svg" />
+    </q-page-sticky>
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[50, 60]"
+      v-if="$q.screen.gt.xs"
+    >
+      <q-btn
+        round
+        size="48px"
+        fab
+        icon="add"
+        color="accent"
+        @click="handleAddNote"
+        padding="30px"
+      />
+    </q-page-sticky>
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[10, -35]"
+      v-else
+      style="z-index: 2010"
+    >
+      <q-btn
+        round
+        size="24px"
+        fab
+        icon="add"
+        color="accent"
+        @click="handleAddNote"
+        padding="25px"
+        style="box-shadow: 0 0 8px gray"
+      />
+    </q-page-sticky>
   </q-page>
 </template>
 
@@ -36,12 +77,13 @@ import NoNotes from "../components/NoNotes.vue";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 
 export default {
-  name: "PageIndex",
+  name: "PageHome",
   components: {
     Note: () => import("components/Note.vue"),
     Container: () => import("components/Container.vue"),
     EmptyFilter,
     NoNotes,
+    FilterBar: () => import("components/FilterBar.vue"),
   },
   data() {
     return {

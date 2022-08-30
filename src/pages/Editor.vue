@@ -1,94 +1,85 @@
 <template>
-  <q-layout view="Lhh lpR fff" container class="bg-white">
-    <q-page-container>
-      <q-card flat class="my-card">
-        <q-toolbar class="bg-transparent row q-pt-md">
-          <q-toolbar-title class="col-10">
-            <q-input
-              autogrow
-              borderless
-              v-model="currentTitle"
-              type="text"
-              :input-class="
-                currentTitle.length < 50
-                  ? 'text-h3 ellipsis'
-                  : 'text-h5 ellipsis'
-              "
-              maxlength="80"
-              placeholder="Untitled note"
-              :input-style="
-                $q.dark.isActive
-                  ? { color: 'white', 'font-weight': 'bold' }
-                  : { color: 'grey', 'font-weight': 'bold' }
+  <q-page padding>
+    <q-card flat class="my-card">
+      <q-toolbar class="bg-transparent row q-pt-md">
+        <q-toolbar-title class="col-10">
+          <q-input
+            autogrow
+            borderless
+            v-model="currentTitle"
+            type="text"
+            :input-class="
+              currentTitle.length < 50 ? 'text-h3 ellipsis' : 'text-h5 ellipsis'
+            "
+            maxlength="80"
+            placeholder="Untitled note"
+            :input-style="
+              $q.dark.isActive
+                ? { color: 'white', 'font-weight': 'bold' }
+                : { color: 'grey', 'font-weight': 'bold' }
+            "
+          />
+        </q-toolbar-title>
+        <q-space />
+        <div class="text-caption text-grey q-mr-sm">
+          {{ savingMessage }}
+        </div>
+        <q-btn
+          color="accent"
+          no-caps
+          outline
+          label="Done"
+          class="q-mr-md"
+          @click="handleClose"
+        />
+        <q-btn flat round icon="menu" @click="showSidebar = !showSidebar" />
+      </q-toolbar>
+
+      <q-card-section :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
+        <editor
+          ref="noteEditor"
+          :initialValue="currentNote.text"
+          :options="editorOptions"
+          :previewStyle="previewStyle"
+          :initialEditType="initialEditType"
+          style="width: 100%; border: 1px solid #9c27b0 !important"
+          :style="{ height: editorHeight }"
+          @change="onContentChange"
+        />
+      </q-card-section>
+    </q-card>
+    <q-drawer side="right" v-model="showSidebar" bordered :width="300">
+      <q-toolbar-title>Actions</q-toolbar-title>
+      <q-card-section class="row justify-around q-px-none">
+        <div class="column items-center">
+          <q-avatar size="32px" @click="handleToggleFave">
+            <img
+              :src="
+                currentNote.fave
+                  ? '/images/favorited.svg'
+                  : '/images/favorite-available.svg'
               "
             />
-          </q-toolbar-title>
-          <q-space />
-          <div class="text-caption text-grey q-mr-sm">
-            {{ savingMessage }}
-          </div>
-          <q-btn
-            color="accent"
-            no-caps
-            outline
-            label="Done"
-            class="q-mr-md"
-            @click="handleClose"
-          />
-          <q-btn flat round icon="menu" @click="showSidebar = !showSidebar" />
-        </q-toolbar>
-
-        <q-card-section :class="$q.dark.isActive ? 'toastui-editor-dark' : ''">
-          <editor
-            ref="noteEditor"
-            :initialValue="currentNote.text"
-            :options="editorOptions"
-            :previewStyle="previewStyle"
-            :initialEditType="initialEditType"
-            style="width: 100%; border: 1px solid #9c27b0 !important"
-            :style="{ height: editorHeight }"
-            @change="onContentChange"
-          />
-        </q-card-section>
-      </q-card>
-    </q-page-container>
-
-    <!-- sidebar actions -->
-    <q-drawer side="right" v-model="showSidebar" bordered :width="300">
-      <q-scroll-area class="fit q-px-sm" style="margin-top: 93px">
-        <q-toolbar-title>Actions</q-toolbar-title>
-        <q-card-section class="row justify-around q-px-none">
-          <div class="column items-center">
-            <q-avatar size="32px" @click="handleToggleFave">
-              <img
-                :src="
-                  currentNote.fave
-                    ? '/images/favorited.svg'
-                    : '/images/favorite-available.svg'
-                "
-              />
-            </q-avatar>
-            Favorite
-          </div>
-          <div class="column items-center">
-            <q-avatar size="32px" @click="handleToggleFave">
-              <img
-                :src="
-                  currentNote.trash
-                    ? '/images/restore.svg'
-                    : '/images/trash.svg'
-                "
-              />
-            </q-avatar>
-            Archive
-          </div>
-          <div class="column items-center">
-            <q-avatar size="32px" @click="handleToggleFave">
-              <img src="/images/restore.svg" />
-            </q-avatar>
-            Download
-          </div>
-          <!-- <q-btn
+          </q-avatar>
+          Favorite
+        </div>
+        <div class="column items-center">
+          <q-avatar size="32px" @click="handleToggleFave">
+            <img
+              :src="
+                currentNote.trash ? '/images/restore.svg' : '/images/trash.svg'
+              "
+            />
+          </q-avatar>
+          Archive
+        </div>
+        <div class="column items-center">
+          <q-avatar size="32px" @click="handleToggleFave">
+            <img src="/images/restore.svg" />
+          </q-avatar>
+          Download
+        </div>
+        <!-- <q-btn
             color="accent"
             no-caps
             round
@@ -134,19 +125,16 @@
               <strong>Share</strong>
             </q-tooltip>
           </q-btn> -->
-        </q-card-section>
-        <q-toolbar-title class="q-pl-none">Colors</q-toolbar-title>
-        <q-card-section class="q-px-none">
-          <SelectColor
-            :color="currentNote.color"
-            @update-note="handleUpdates"
-          />
-        </q-card-section>
-        <q-toolbar-title class="q-pl-none">Tags</q-toolbar-title>
-        <q-card-section class="q-px-none">
-          <TagEditor :note="data" />
-        </q-card-section>
-        <!-- Attachments
+      </q-card-section>
+      <q-toolbar-title class="q-pl-none">Colors</q-toolbar-title>
+      <q-card-section class="q-px-none">
+        <SelectColor :color="currentNote.color" @update-note="handleUpdates" />
+      </q-card-section>
+      <q-toolbar-title class="q-pl-none">Tags</q-toolbar-title>
+      <q-card-section class="q-px-none">
+        <TagEditor :tags="currentNote.tags" />
+      </q-card-section>
+      <!-- Attachments
         <q-card-section
           class="attachment-previews q-px-none"
           v-if="currentNote.attachments"
@@ -165,13 +153,12 @@
             @click="handleAddAttachment"
           />
         </q-card-section> -->
-        <!-- <q-toolbar-title>Share</q-toolbar-title>
+      <!-- <q-toolbar-title>Share</q-toolbar-title>
         <q-card-section>
           <q-input v-model="shareWith" type="text" label="Share with ..." />
         </q-card-section> -->
-      </q-scroll-area>
     </q-drawer>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>
@@ -198,8 +185,8 @@ export default {
   data() {
     return {
       initialEditType: "markdown",
-      currentTitle: this.currentNote.title,
-      currentContent: this.currentNote.text,
+      currentTitle: "",
+      currentContent: "",
       showSidebar: true,
       previewStyle: "tab",
       shareWith: "",
@@ -223,11 +210,14 @@ export default {
   },
   created() {
     this.currentNote = this.notes.find((note) => note.id === this.id);
+    this.currentTitle = this.currentNote.title;
+    this.currentContent = this.currentNote.text;
     this.onContentChange = debounce(this.onContentChange, 1000, {
       maxWait: 3000,
     });
   },
   computed: {
+    ...mapState("app", ["notes"]),
     savingMessage() {
       if (this.saving) {
         return "Saving...";

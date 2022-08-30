@@ -1,4 +1,4 @@
-export function tags(state) {
+export function allTags(state) {
   let active = state.notes.filter((note) => !note.trash);
   let tags = [];
   active.forEach(function (note) {

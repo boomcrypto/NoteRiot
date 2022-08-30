@@ -1,28 +1,14 @@
 <template>
-  <div class="row q-gutter-md justify-center">
-    Filter By:&nbsp;
-    <q-btn
-      round
-      unelevated
-      outlined
-      no-caps
-      :icon="
-        labelFilter === 'all'
-          ? 'img:/images/clear-inactive.svg'
-          : 'img:/images/clear-active.svg'
-      "
-      @click="handleClearFilter"
-    >
-    </q-btn>
-    <q-btn
-      :outline="labelFilter !== 'favorite'"
-      no-caps
-      square
-      color="accent"
-      label="Favorites"
+  <div class="row q-gutter-md justify-center boom-card">
+    <div class="q-pt-sm">Filter By:</div>
+    <q-separator spaced inset vertical dark />
+
+    <div
+      :class="labelFilter !== 'favorite' ? 'bg-accent text-white' : ''"
       @click="handleFilter('favorite')"
     >
-    </q-btn>
+      Favorites
+    </div>
     <q-btn
       :outline="labelFilter !== 'archive'"
       no-caps
@@ -32,7 +18,7 @@
       @click="handleFilter('archive')"
     />
     <q-btn
-      :outline="!tags.includes(labelFilter)"
+      :outline="!allTags.includes(labelFilter)"
       no-caps
       square
       color="accent"
@@ -46,7 +32,7 @@
             clickable
             v-close-popup
             @click="handleFilter(tag)"
-            v-for="tag in tags"
+            v-for="tag in allTags"
             :key="`labelfilter-${tag}`"
           >
             <q-item-section>
@@ -159,6 +145,19 @@
         </q-list>
       </q-menu>
     </q-btn>
+    <q-btn
+      round
+      unelevated
+      outlined
+      no-caps
+      :icon="
+        labelFilter === 'all'
+          ? 'img:/images/clear-inactive.svg'
+          : 'img:/images/clear-active.svg'
+      "
+      @click="handleClearFilter"
+    >
+    </q-btn>
   </div>
 </template>
 
@@ -174,7 +173,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("app", ["colors", "tags"]),
+    ...mapGetters("app", ["colors", "allTags"]),
     ...mapState("app", ["labelFilter", "sortBy", "sortDirection", "themes"]),
     labelChipLabel() {
       if (

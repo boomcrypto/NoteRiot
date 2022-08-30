@@ -23,32 +23,32 @@ export function setLoading(context, payload) {
 }
 
 export async function fetchData(context) {
-  await storage.getFile("riotnotes.json").then((data) => {
-    let notes = null;
-    try {
-      notes = JSON.parse(data);
-      notes.forEach((note) => {
-        const color = note.color;
-        console.log("incoming color: ", color);
-        let colorVal = 0;
-        if (color.includes("red")) colorVal = 1;
-        else if (color.includes("orange")) colorVal = 2;
-        else if (color.includes("yellow")) colorVal = 3;
-        else if (color.includes("green")) colorVal = 4;
-        else if (color.includes("blue")) colorVal = 5;
-        else if (color.includes("purple")) colorVal = 6;
-        else if (color.includes("pink")) colorVal = 7;
-        else colorVal = 0;
-        console.log("outgoing color: ", colorVal);
-        note.color = colorVal;
-      });
-    } catch {
-      notes = [];
-    }
-    console.log("notes: ", notes);
-
+  let notes = null;
+  try {
+    await storage.getFile("riotnotes.json").then((data) => {
+      if (data) {
+        notes = JSON.parse(data);
+        notes.forEach((note) => {
+          const color = note.color;
+          console.log("incoming color: ", color);
+          let colorVal = 0;
+          if (color.includes("red")) colorVal = 1;
+          else if (color.includes("orange")) colorVal = 2;
+          else if (color.includes("yellow")) colorVal = 3;
+          else if (color.includes("green")) colorVal = 4;
+          else if (color.includes("blue")) colorVal = 5;
+          else if (color.includes("purple")) colorVal = 6;
+          else if (color.includes("pink")) colorVal = 7;
+          else colorVal = 0;
+          console.log("outgoing color: ", colorVal);
+          note.color = colorVal;
+        });
+      }
+    });
     context.commit("setNotes", notes);
-  });
+  } catch {
+    notes = [];
+  }
 }
 
 export async function fetchContacts(context) {
