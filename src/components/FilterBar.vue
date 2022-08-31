@@ -1,18 +1,26 @@
 <template>
-  <q-btn-group outline>
+  <q-btn-group outline spread>
     <q-btn
       no-caps
+      outline
       color="accent"
       label="Favorite"
       @click="handleFilter('favorite')"
     />
     <q-btn
       no-caps
+      outline
       color="accent"
       label="Archive"
       @click="handleFilter('archive')"
     />
-    <q-btn-dropdown no-caps color="accent" auto-close :label="labelChipLabel">
+    <q-btn-dropdown
+      no-caps
+      outline
+      color="accent"
+      auto-close
+      :label="labelChipLabel"
+    >
       <q-list class="effin-border">
         <q-item
           clickable
@@ -27,7 +35,7 @@
         </q-item>
       </q-list>
     </q-btn-dropdown>
-    <q-btn-dropdown no-caps color="accent" auto-close label="Colors">
+    <q-btn-dropdown no-caps outline color="accent" auto-close label="Colors">
       <q-list class="effin-border">
         <q-item
           clickable
@@ -42,7 +50,7 @@
         </q-item>
       </q-list>
     </q-btn-dropdown>
-    <q-btn-dropdown no-caps color="accent" label="Sort">
+    <q-btn-dropdown no-caps outline color="accent" label="Sort">
       <q-list class="effin-border">
         <q-item
           :active="sortBy === 'createdAt'"
@@ -114,7 +122,8 @@
       round
       size="sm"
       unelevated
-      outlined
+      color="accent"
+      outline
       no-caps
       :icon="
         labelFilter === 'all'
@@ -142,15 +151,32 @@ export default {
     ...mapGetters("app", ["colors", "allTags"]),
     ...mapState("app", ["labelFilter", "sortBy", "sortDirection", "themes"]),
     labelChipLabel() {
+      const defaultLabel = "Tags";
+      let taglen = 4;
+      this.allTags.forEach((tag) => {
+        if (tag.length > taglen) {
+          taglen = tag.length;
+        }
+      });
       if (
         this.labelFilter === "all" ||
         this.labelFilter === "favorite" ||
         this.labelFilter === "archive" ||
         this.labelFilter.startsWith("color:")
       ) {
-        return "Tags";
+        // const tagextrachars = Math.ceil((taglen - 4) / 2);
+        // console.log("tagextrachars", tagextrachars);
+        // // return "Tags".padStart(tagextrachars, " ").padEnd(tagextrachars, " ");
+        // let paddedStart = "Tags".padStart(tagextrachars + 4);
+        // let padded = paddedStart.padEnd(2 * tagextrachars + 4);
+        return defaultLabel.padEnd(taglen);
       } else {
-        return this.labelFilter;
+        const tagextrachars = Math.ceil((taglen - this.labelFilter.length) / 2);
+        console.log("tagextrachars", tagextrachars);
+
+        return this.labelFilter
+          .padStart(tagextrachars, " ")
+          .padEnd(tagextrachars, " ");
       }
     },
   },
