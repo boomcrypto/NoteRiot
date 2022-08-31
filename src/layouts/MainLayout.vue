@@ -131,7 +131,6 @@ export default {
     BackupManager,
     ImportTool,
     Search: () => import("components/Search.vue"),
-    FilterBar: () => import("components/FilterBar.vue"),
     Editor: () => import("components/Editor.vue"),
   },
   data() {

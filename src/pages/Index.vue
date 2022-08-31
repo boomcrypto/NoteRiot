@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <Container>
-      <FilterBar class="q-mr-auto q-ml-auto q-mt-md" />
+      <FilterBar class="q-mr-auto q-ml-auto q-my-md" />
 
       <div class="q-mt-sm">
         <div v-if="notes.length">
