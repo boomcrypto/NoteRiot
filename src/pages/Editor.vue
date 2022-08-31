@@ -6,10 +6,10 @@
           <q-input
             autogrow
             borderless
-            v-model="currentTitle"
+            v-model="activeTitle"
             type="text"
             :input-class="
-              currentTitle.length < 50 ? 'text-h3 ellipsis' : 'text-h5 ellipsis'
+              activeTitle.length < 50 ? 'text-h3 ellipsis' : 'text-h5 ellipsis'
             "
             maxlength="80"
             placeholder="Untitled note"
@@ -184,9 +184,13 @@ export default {
   },
   data() {
     return {
+      activeColor: "",
+      activeContent: "",
+      activeTitle: "",
+      activeTags: [],
+      activeFave: false,
+      activeArchive: false,
       initialEditType: "markdown",
-      currentTitle: "",
-      currentContent: "",
       showSidebar: true,
       previewStyle: "tab",
       shareWith: "",
@@ -210,8 +214,12 @@ export default {
   },
   created() {
     this.currentNote = this.notes.find((note) => note.id === this.id);
-    this.currentTitle = this.currentNote.title;
-    this.currentContent = this.currentNote.text;
+    this.activeTitle = this.currentNote.title;
+    this.activeContent = this.currentNote.text;
+    this.activeColor = this.currentNote.color;
+    this.activeTags = this.currentNote.tags;
+    this.activeFave = this.currentNote.fave;
+    this.activeArchive = this.currentNote.trash;
     this.onContentChange = debounce(this.onContentChange, 1000, {
       maxWait: 3000,
     });
@@ -298,7 +306,7 @@ export default {
       let payload = {
         id: this.currentNote.id,
         updates: {
-          title: this.currentTitle,
+          title: this.activeTitle,
           modified: now,
           text: mdContent,
         },
@@ -316,15 +324,19 @@ export default {
       const content = this.$refs.noteEditor.invoke("getMarkdown");
       console.log("looking for changes");
       if (
-        this.currentTitle !== this.currentNote.title ||
-        content !== this.currentNote.text
+        this.activeTitle !== this.currentNote.title ||
+        this.activeContent !== this.currentNote.text ||
+        this.activeColor !== this.currentNote.color ||
+        this.activeTags !== this.currentNote.tags ||
+        this.activeFave !== this.currentNote.fave ||
+        this.activeArchive !== this.currentNote.trash
       ) {
         console.log("changes found");
         await this.saveNote();
       } else {
         console.log("no changes");
       }
-      this.$emit("closeEditor");
+      this.$router.go(-1);
     },
   },
 };
