@@ -18,7 +18,7 @@
         <span class="text-weight-medium text-body1">{{ displayTitle }}</span>
       </q-item-label>
       <q-item-label caption lines="1">
-        <div class="timestamp">
+        <div class="text-caption">
           <span class="q-mt-md">{{ lastModified }}</span>
           <span
             :class="

@@ -570,25 +570,6 @@ body.body--dark {
   font-weight: 700;
 }
 
-.timestamp {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: visible;
-  margin-top: 4px;
-  margin-right: 0px;
-  margin-bottom: 8px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  color: #adadad;
-  font-size: 10px;
-  line-height: 10px;
-  font-weight: 400;
-}
-
 .note-basic-details {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3377,13 +3358,6 @@ attach-3 {
     margin-right: 16px;
     margin-left: 16px;
     padding-left: 0px;
-  }
-
-  .timestamp {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
   }
 
   .note-preview {

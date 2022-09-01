@@ -35,7 +35,7 @@
         <q-item-label class="note-title text-no-wrap">{{
           displayTitle
         }}</q-item-label>
-        <q-item-label class="timestamp">{{ lastModified }}</q-item-label>
+        <q-item-label class="text-caption">{{ lastModified }}</q-item-label>
         <div :class="$q.dark.isActive ? 'toastui-editor-contents-dark' : ''">
           <viewer
             :initialValue="note.text"
@@ -82,7 +82,7 @@
               <viewer :initialValue="note.text" :key="note.modified" />
             </div>
             <q-item-label caption lines="1">
-              <div class="timestamp">
+              <div class="text-caption">
                 <span class="q-mt-xs">{{ lastModified }}</span>
                 <q-chip
                   clickable
