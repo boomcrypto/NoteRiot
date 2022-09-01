@@ -30,17 +30,15 @@ export async function fetchData(context) {
         notes = JSON.parse(data);
         notes.forEach((note) => {
           const color = note.color;
-          console.log("incoming color: ", color);
-          let colorVal = 0;
-          if (color.includes("red")) colorVal = 1;
-          else if (color.includes("orange")) colorVal = 2;
-          else if (color.includes("yellow")) colorVal = 3;
-          else if (color.includes("green")) colorVal = 4;
-          else if (color.includes("blue")) colorVal = 5;
-          else if (color.includes("purple")) colorVal = 6;
-          else if (color.includes("pink")) colorVal = 7;
-          else colorVal = 0;
-          console.log("outgoing color: ", colorVal);
+          let colorVal = "";
+          if (color.includes("red")) colorVal = "red";
+          else if (color.includes("orange")) colorVal = "orange";
+          else if (color.includes("yellow")) colorVal = "yellow";
+          else if (color.includes("green")) colorVal = "green";
+          else if (color.includes("blue")) colorVal = "blue";
+          else if (color.includes("purple")) colorVal = "purple";
+          else if (color.includes("pink")) colorVal = "pink";
+          else colorVal = "";
           note.color = colorVal;
         });
       }
