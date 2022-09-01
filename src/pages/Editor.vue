@@ -55,7 +55,7 @@
           <q-avatar size="32px" @click="handleToggleFave">
             <img
               :src="
-                currentNote.fave
+                activeFave
                   ? '/images/favorited.svg'
                   : '/images/favorite-available.svg'
               "
@@ -64,7 +64,7 @@
           Favorite
         </div>
         <div class="column items-center">
-          <q-avatar size="32px" @click="handleToggleFave">
+          <q-avatar size="32px" @click="handleToggleArchive">
             <img
               :src="
                 currentNote.trash ? '/images/restore.svg' : '/images/trash.svg'
@@ -74,8 +74,8 @@
           Archive
         </div>
         <div class="column items-center">
-          <q-avatar size="32px" @click="handleToggleFave">
-            <img src="/images/restore.svg" />
+          <q-avatar size="32px" @click="handleDownload">
+            <img src="/images/download.svg" />
           </q-avatar>
           Download
         </div>
@@ -168,6 +168,7 @@ import { Editor } from "@toast-ui/vue-editor";
 import { mapActions, mapState } from "vuex";
 import { debounce } from "quasar";
 import Note from "src/models/Note";
+import { exportFile } from "quasar";
 
 export default {
   name: "EditorPage",
@@ -250,31 +251,31 @@ export default {
       });
     },
     handleToggleFave() {
-      this.updateNote({
-        id: this.currentNote.id,
-        updates: {
-          fave: !this.currentNote.fave,
-        },
-      });
+      this.activeFave = !this.activeFave;
     },
-    handleArchiveRestore() {
-      this.updateNote({
-        id: this.currentNote.id,
-        updates: {
-          trash: !this.currentNote.trash,
-        },
-      });
+    handleToggleArchive() {
+      this.activeArchive = !this.activeArchive;
     },
     handleDownload() {
+      const status = exportFile(`${this.activeTitle}.md`, this.activeContent);
+      let currentMsg = "Downloading ...";
+      let currentColor = "accent";
       this.$q.notify({
-        color: "positive",
+        position: "bottom",
+        timeout: 2500,
         textColor: "white",
-        message: "Downloading...",
+        color: currentColor,
+        message: currentMsg,
+        actions: [{ icon: "close", color: "white" }],
       });
-      this.$q.download({
-        url: this.currentNote.url,
-        filename: this.currentNote.title,
-      });
+
+      if (status === true) {
+        currentMsg = "Download complete.";
+      } else {
+        // browser denied it
+        currentMsg = "Download failed.";
+        currentColor = "red";
+      }
     },
     handleMintNote() {
       this.$q.notify({
